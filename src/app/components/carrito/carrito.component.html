@@ -1,0 +1,63 @@
+<h2>🧺 Carrito de Cotización</h2>
+
+<!-- Estado de sesión -->
+<div class="estado-sesion" 
+     style="margin-bottom: 20px; padding: 10px; border-radius: 5px;"
+     [ngStyle]="usuarioLogueado ? {'background': '#d4edda', 'color': '#155724'} : {'background': '#f8d7da', 'color': '#721c24'}">
+  
+  <span *ngIf="usuarioLogueado">✅ Sesión iniciada</span>
+  <span *ngIf="!usuarioLogueado">🔒 No has iniciado sesión</span>
+
+  <button *ngIf="usuarioLogueado" (click)="cerrarSesion()"
+          style="margin-left: 10px; background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 3px;">
+    Cerrar Sesión
+  </button>
+
+  <button *ngIf="!usuarioLogueado" (click)="irAlLogin()"
+          style="margin-left: 10px; background: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 3px;">
+    Iniciar Sesión
+  </button>
+</div>
+
+<div class="carrito-grid">
+  <!-- Columna de productos -->
+  <div class="carrito-productos">
+    <div *ngIf="productosCarrito.length === 0">
+      <p>No hay productos en el carrito de cotización.</p>
+    </div>
+
+    <div *ngFor="let producto of productosCarrito" class="producto-carrito">
+      <img [src]="producto.image" alt="{{ producto.name }}">
+      <div class="producto-info">
+        <h4>{{ producto.name }}</h4>
+        <p>{{ producto.description }}</p>
+        <p><strong>Categoría:</strong> {{ producto.category }}</p>
+
+        <div class="cantidad-control">
+          <label for="cantidad">Cantidad:</label>
+          <div>
+            <button (click)="actualizarCantidad(producto._id!, producto.cantidad - 1)">-</button>
+            <input
+              type="number"
+              [value]="producto.cantidad"
+              (input)="onCantidadInput(producto._id!, $event)"
+              min="1">
+            <button (click)="actualizarCantidad(producto._id!, producto.cantidad + 1)">+</button>
+          </div>
+        </div>
+
+        <button class="btn-eliminar" (click)="eliminarDelCarrito(producto._id!)">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columna lateral -->
+  <div class="carrito-resumen" *ngIf="productosCarrito.length > 0">
+    <h3>Resumen de Cotización</h3>
+    <p>Verifica los productos que deseas incluir en tu solicitud de cotización.</p>
+
+    <button class="btn btn-primary mt-3" (click)="cotizarCarrito()">
+      📄 Generar Cotización
+    </button>
+  </div>
+</div>

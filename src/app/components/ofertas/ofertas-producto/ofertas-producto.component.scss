@@ -1,0 +1,98 @@
+.titulo-seccion {
+  font-size: 32px;
+  color: #164d6c;
+  margin-bottom: 40px;
+  border-left: 8px solid #2c8ead;
+  padding-left: 16px;
+  font-weight: 700;
+}
+
+/* Buscador */
+input.form-control {
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 2px solid #2c8ead;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input.form-control:focus {
+  border-color: #164d6c;
+  box-shadow: 0 0 0 0.2rem rgba(22, 77, 108, 0.25);
+}
+
+/* Tarjeta de producto */
+.producto-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.producto-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+  height: 230px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.btn-primary {
+  background-color: #2c8ead;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #164d6c;
+}
+
+/* Botón de WhatsApp flotante */
+.whatsapp-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25d366;
+  padding: 10px 20px;
+  border-radius: 50px;
+  color: white;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease;
+  z-index: 10;
+}
+
+.whatsapp-button:hover {
+  background: #1ebe5d;
+}
+
+.whatsapp-button img {
+  height: 28px;
+  margin-right: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .titulo-seccion {
+    text-align: center;
+    border-left: none;
+    border-bottom: 4px solid #2c8ead;
+    padding-left: 0;
+  }
+
+  .whatsapp-button {
+    right: 10px;
+    bottom: 10px;
+    padding: 8px 16px;
+  }
+}

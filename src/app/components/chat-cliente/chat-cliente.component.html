@@ -1,0 +1,110 @@
+<div class="chat-container">
+  <!-- Header -->
+  <div class="chat-header">
+    <div class="header-content">
+      <div class="status-indicator"></div>
+      <h3>Chat con Soporte</h3>
+    </div>
+  </div>
+
+  <!-- Mensajes -->
+  <div class="mensajes">
+    <div class="fecha-separador" *ngIf="mensajes.length > 0">
+      {{ mensajes[0].fecha | date:'fullDate':'es-PE' }}
+    </div>
+
+    <div 
+      *ngFor="let msg of mensajes"
+      class="mensaje-wrapper"
+      [ngClass]="{'mensaje-cliente': msg.remitente === 'cliente', 'mensaje-admin': msg.remitente === 'admin'}">
+      
+      <!-- Avatar para mensajes del admin -->
+      <div class="avatar" *ngIf="msg.remitente === 'admin'">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+
+      <div class="mensaje-content">
+        <div class="bubble">
+          <!-- Mostrar nombre correcto según remitente -->
+          <strong class="nombre">
+            {{ msg.remitente === 'admin' ? 'Dinsac' : msg.nombre }}
+          </strong>
+
+          <!-- 🖼️ Imagen -->
+          <img 
+            *ngIf="msg.mensaje.includes('uploads') && (msg.mensaje.endsWith('.png') || msg.mensaje.endsWith('.jpg') || msg.mensaje.endsWith('.jpeg'))" 
+            [src]="msg.mensaje"
+            class="imagen-chat"
+            alt="Imagen enviada"
+          />
+
+          <!-- 📄 PDF -->
+          <a 
+            *ngIf="msg.mensaje.includes('uploads') && msg.mensaje.endsWith('.pdf')" 
+            [href]="msg.mensaje" 
+            target="_blank"
+            class="archivo-pdf"
+          >
+            📄 Ver documento PDF
+          </a>
+
+          <!-- 💬 Texto -->
+          <p *ngIf="!msg.mensaje.includes('uploads')">
+            {{ msg.mensaje }}
+          </p>
+
+          <span class="hora">{{ obtenerHora(msg.fecha) }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estado vacío -->
+    <div class="empty-state" *ngIf="mensajes.length === 0">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+      <p>Inicia una conversación</p>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="input-container">
+    <div class="input-wrapper">
+      <button class="btn-adjunto" type="button" title="Adjuntar archivo" (click)="abrirSelector()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+        </svg>
+      </button>
+
+      <input 
+        type="text" 
+        [(ngModel)]="mensajeEscrito" 
+        (keyup.enter)="enviarMensaje()"
+        placeholder="Escribe un mensaje..."
+        class="input-mensaje" 
+      />
+
+      <button 
+        class="btn-enviar" 
+        (click)="enviarMensaje()"
+        [disabled]="!mensajeEscrito.trim()"
+        type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+
+      <input 
+        type="file" 
+        id="fileInput"
+        accept="image/*,.pdf"
+        (change)="enviarArchivo($event)"
+        hidden
+      />
+    </div>
+  </div>
+</div>

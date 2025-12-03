@@ -1,0 +1,32 @@
+<div class="videos-page">
+
+  <!-- Título con raya -->
+  <div class="title-row">
+    <span class="bar">|</span>
+    <h2 class="videos-title">Todos los Videos</h2>
+  </div>
+
+  <!-- FILTRO -->
+  <div class="filter-container">
+    <label for="category">Filtrar por categoría:</label>
+    <select id="category" [(ngModel)]="selectedCategory">
+      <option value="">Todas</option>
+      <option *ngFor="let category of categories" [value]="category">
+        {{ category }}
+      </option>
+    </select>
+  </div>
+
+  <!-- GRID DE VIDEOS -->
+  <div class="video-grid">
+    <div class="video-card" *ngFor="let video of videos | videoFilter:selectedCategory">
+      <div class="video-header">
+        <h3>{{ video.title }}</h3>
+      </div>
+
+      <video controls>
+        <source [src]="video.src" type="video/mp4" />
+      </video>
+    </div>
+  </div>
+</div>

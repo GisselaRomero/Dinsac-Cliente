@@ -1,0 +1,49 @@
+<footer class="footer">
+  <div class="footer-content">
+    <!-- Logo y slogan -->
+    <div class="footer-logo">
+      <img src="assets/logoB.png" alt="DINSAC Logo" class="footer-logo-img" />
+      <p class="slogan">Innovación y fuerza para el campo</p>
+    </div>
+
+    <!-- Información de contacto -->
+    <div class="footer-info">
+          <!-- Redes sociales -->
+    <div class="footer-social">
+      <h3>Redes Sociales</h3>
+      <div class="social-icons">
+        <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <br><br>
+
+      <p><i class="fas fa-phone-alt"></i> <a href="tel:+51999999999">01-800-DINSAC</a></p>
+      <p><i class="fas fa-envelope"></i> <a href="mailto:contacto&#64;dinsac.com.pe">contacto&#64;dinsac.com.pe</a></p>
+      <p><i class="fas fa-map-marker-alt"></i> Av. La Agricultura 123, Lima, Perú</p>
+      
+    </div>
+    <!-- Información sobre la empresa -->
+
+
+    <!-- Suscripción -->
+    <div class="footer-newsletter">
+      <h3>Suscríbete</h3>
+      <form (ngSubmit)="registrar()">
+  <input type="text" placeholder="Tu nombre" [(ngModel)]="registroData.nombre" name="nombre" required />
+  <input type="email" placeholder="Tu correo electrónico" [(ngModel)]="registroData.email" name="email" required />
+  <input type="password" placeholder="Tu contraseña" [(ngModel)]="registroData.password" name="password" required />
+  <input type="text" placeholder="Tu teléfono" [(ngModel)]="registroData.telefono" name="telefono" required />
+  <input type="text" placeholder="Tu dirección" [(ngModel)]="registroData.direccion" name="direccion" required />
+  <button type="submit" class="ghost">Registrarse</button>
+</form>
+
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© DINSAC - Todos los derechos reservados {{ year }}</p>
+  </div>
+</footer>

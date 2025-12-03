@@ -1,0 +1,202 @@
+@charset "UTF-8";
+/* =============================== */
+/*        CONTENEDOR GENERAL       */
+/* =============================== */
+.productos-container {
+  padding: 80px 25px;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #f8fafc;
+}
+
+.productos-container h2 {
+  font-size: 2.8rem;
+  color: #164d6c;
+  margin-bottom: 40px;
+  border-left: 8px solid #2c8ead;
+  padding-left: 16px;
+  font-weight: 800;
+}
+
+/* =============================== */
+/*             BUSCADOR            */
+/* =============================== */
+input.form-control {
+  max-width: 600px;
+  margin: 0 auto 45px;
+  padding: 16px;
+  border-radius: 14px;
+  border: 2px solid #cce4ef;
+  font-size: 1.1rem;
+  transition: 0.3s ease;
+}
+
+input.form-control:focus {
+  border-color: #1a4d6c;
+  box-shadow: 0 0 12px rgba(26, 77, 108, 0.25);
+}
+
+/* =============================== */
+/*         GRID DE PRODUCTOS       */
+/* =============================== */
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 35px;
+}
+
+/* =============================== */
+/*         CARD DEL PRODUCTO       */
+/* =============================== */
+.producto-card {
+  background: #ffffff;
+  border: 2px solid #cce4ef;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: all 0.35s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.producto-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 45px rgba(26, 77, 108, 0.25);
+  border-color: #1a4d6c;
+}
+
+/* --- Imagen arriba --- */
+.producto-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.producto-card:hover img {
+  transform: scale(1.07);
+}
+
+/* =============================== */
+/*      INFORMACIÓN DEL PRODUCTO   */
+/* =============================== */
+.producto-info {
+  padding: 28px 24px;
+}
+
+.producto-info h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #164d6c;
+  margin-bottom: 12px;
+}
+
+.producto-info p {
+  color: #3a5a73;
+  font-size: 1rem;
+  margin-bottom: 18px;
+}
+
+/* =============================== */
+/*          BOTONES                */
+/* =============================== */
+.botones {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+/* Ver detalles */
+.btn-detalle {
+  flex: 1;
+  padding: 12px 0;
+  background: linear-gradient(90deg, #2c8ead, #1a4d6c);
+  color: #fff;
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn-detalle:hover {
+  background: linear-gradient(90deg, #1a4d6c, #164d6c);
+  transform: translateY(-3px);
+}
+
+/* Cotizar */
+.btn-cotizar {
+  flex: 1;
+  padding: 12px 0;
+  background: #0f515ad6;
+  color: #fff;
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn-cotizar:hover {
+  background: #174a80 !important;
+  transform: translateY(-3px);
+}
+
+/* =============================== */
+/*      BOTÓN DE FAVORITO          */
+/* =============================== */
+.favorito-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: white;
+  border: 2px solid #1a4d6c;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: 0.3s;
+  z-index: 20;
+}
+
+.favorito-btn:hover {
+  background: #1a4d6c;
+  border-color: #1a4d6c;
+  transform: scale(1.1);
+}
+
+.favorito-btn .heart {
+  color: #1a4d6c;
+  font-size: 1.4rem;
+  transition: 0.3s;
+}
+
+.favorito-btn.active .heart {
+  color: #e63946;
+  transform: scale(1.25);
+}
+
+/* =============================== */
+/*           RESPONSIVE            */
+/* =============================== */
+@media (max-width: 992px) {
+  .productos-container h2 {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .botones {
+    flex-direction: column;
+  }
+  .producto-card img {
+    height: 200px;
+  }
+}
+
+/*# sourceMappingURL=categoria-productos.component.css.map */

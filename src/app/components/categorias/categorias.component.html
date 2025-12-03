@@ -1,0 +1,28 @@
+<div class="container py-5">
+  <h2 class="titulo-categorias">Nuestras Categorías</h2>
+
+  <!-- Buscador de Categorías -->
+  <div class="mb-4">
+    <input 
+      type="text" 
+      class="form-control" 
+      placeholder="Buscar Categorías..."
+      [(ngModel)]="searchQuery"
+      (input)="filterCategories()"
+    />
+  </div>
+
+  <!-- Categorías Filtradas -->
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let categoria of filteredCategorias">
+      <div class="card h-100 shadow-sm">
+        <a [routerLink]="['/categoria-productos', categoria.name]" class="text-decoration-none">
+          <img [src]="categoria.image" alt="{{ categoria.name }}" class="card-img-top" />
+          <div class="card-body">
+            <h5 class="card-title text-center">{{ categoria.name }}</h5>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

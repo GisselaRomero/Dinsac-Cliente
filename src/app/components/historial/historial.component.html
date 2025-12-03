@@ -1,0 +1,137 @@
+<div class="historial-container">
+  <!-- Encabezado -->
+  <div class="header-section">
+    <div class="title-wrapper">
+      <h1 class="page-title">Historial de Cotizaciones</h1>
+      <p class="page-subtitle">Consulta tus cotizaciones realizadas</p>
+    </div>
+  </div>
+
+  <!-- Estado de carga -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Cargando historial...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="alert alert-error">
+    <p class="alert-title">Error al cargar</p>
+    <p class="alert-message">{{ error }}</p>
+  </div>
+
+  <!-- Sin cotizaciones -->
+  <div *ngIf="!loading && !error && cotizaciones.length === 0" class="empty-state">
+    <h3>No hay cotizaciones registradas</h3>
+    <p>Aún no has realizado ninguna solicitud de cotización</p>
+    <button class="btn-primary" (click)="navegarACotizar()">Nueva Cotización</button>
+  </div>
+
+  <!-- Tabla -->
+  <div *ngIf="!loading && !error && cotizaciones.length > 0" class="table-container">
+    <table class="tabla-cotizaciones">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fecha</th>
+          <th>Productos</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+          <th>Eliminar</th>
+
+        </tr>
+      </thead>
+      <tbody>
+<tr *ngFor="let cotizacion of cotizacionesPaginadas; let i = index">
+          <td>#{{ formatearId(i + 1) }}</td>
+          <td>{{ cotizacion.fecha | date: 'dd/MM/yyyy' }} - {{ cotizacion.fecha | date: 'HH:mm' }}</td>
+          <td>{{ cotizacion.productos.length || 0 }} producto{{ (cotizacion.productos.length || 0) !== 1 ? 's' : '' }}</td>
+          <td>
+            <span class="estado-badge" [ngClass]="getEstadoClass(cotizacion.estado)">
+              {{ formatearEstado(cotizacion.estado) }}
+            </span>
+          </td>
+          <td>
+            <button class="btn-ver" (click)="abrirModal(cotizacion)" title="Ver detalles">
+              <svg class="icono-ver" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 
+                         8.268 2.943 9.542 7-1.274 4.057-5.064 
+                         7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+              <span class="texto-ver">Ver Detalle</span>
+            </button>
+          </td>
+           <!-- ELIMINAR -->
+<td class="col-eliminar">
+  <button class="btn-trash" (click)="eliminar(cotizacion._id)" title="Eliminar">
+    <svg class="icon-trash" viewBox="0 0 24 24">
+      <path fill="currentColor"
+        d="M9 3h6l1 1h5v2H3V4h5l1-1zm1 7v7h2v-7h-2zm4 0v7h2v-7h-2zM6 6h12l-1.5 14h-9L6 6z"/>
+    </svg>
+  </button>
+</td>
+
+
+
+
+        </tr>
+      </tbody>
+    </table>
+    
+  </div>
+  <!-- 🔵 Paginación -->
+<div class="paginacion" *ngIf="totalPaginas > 1">
+  <button 
+    class="page-btn" 
+    [disabled]="paginaActual === 1"
+    (click)="cambiarPagina(paginaActual - 1)">
+    ‹ Anterior
+  </button>
+
+  <button 
+    class="page-number"
+    *ngFor="let p of paginas"
+    [class.active]="p === paginaActual"
+    (click)="cambiarPagina(p)">
+    {{ p }}
+  </button>
+
+  <button 
+    class="page-btn" 
+    [disabled]="paginaActual === totalPaginas"
+    (click)="cambiarPagina(paginaActual + 1)">
+    Siguiente ›
+  </button>
+</div>
+
+</div>
+
+<!-- 🟢 Modal de Detalles -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-contenido">
+    <button class="cerrar-modal" (click)="cerrarModal()">✕</button>
+    <h2>Detalles de Cotización</h2>
+
+    <p><strong>N° Cotización:</strong> {{ cotizacionSeleccionada?._id }}</p>
+    <p><strong>Fecha:</strong> {{ cotizacionSeleccionada?.fecha | date: 'medium' }}</p>
+    <p><strong>Estado:</strong> {{ formatearEstado(cotizacionSeleccionada?.estado || '') }}</p>
+
+    <div class="productos-lista">
+      <h3>Productos</h3>
+     <ul>
+  <li *ngFor="let p of cotizacionSeleccionada?.productos">
+    <img *ngIf="p.imagen" [src]="p.imagen" class="imagen-producto" />
+    <span class="nombre-producto">{{ p.nombre }}</span> —
+    {{ p.cantidad }} und —
+    <span *ngIf="p.precio">S/ {{ p.precio }}</span>
+  </li>
+</ul>
+
+    </div>
+
+    <button class="btn-cerrar" (click)="cerrarModal()">Cerrar</button>
+  </div>
+  
+</div>

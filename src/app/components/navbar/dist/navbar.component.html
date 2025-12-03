@@ -1,0 +1,124 @@
+<!-- ===================== NAVBAR SUPERIOR ===================== -->
+<nav class="navbar navbar-expand-lg custom-navbar-social">
+  <div class="container-fluid">
+
+    <!-- Logo -->
+    <a class="navbar-brand" href="#">
+      <img src="assets/logoB.png" alt="Logo" class="navbar-logo">
+    </a>
+
+    <!-- Información de contacto centrada -->
+    <div class="navbar-contact-container">
+      <a href="https://wa.me/51934307489" target="_blank" class="contact-link">
+        <i class="fa-brands fa-whatsapp"></i> 934 307 489
+      </a>
+      <span class="separator">|</span>
+      <a href="https://www.google.com/maps?q=Av.+Cesar+Vallejo+1005" target="_blank" class="contact-link">
+        <i class="fa-solid fa-location-dot"></i> Av. Cesar Vallejo 1005
+      </a>
+    </div>
+
+    <!-- Redes Sociales -->
+    <div class="redes-sociales">
+      <a href="https://www.instagram.com" target="_blank">
+        <img src="assets/Instagram.png" alt="Instagram">
+      </a>
+      <a href="https://www.facebook.com" target="_blank">
+        <img src="assets/Facebook.png" alt="Facebook">
+      </a>
+      <a href="https://www.tiktok.com" target="_blank">
+        <img src="assets/Tiktok.png" alt="TikTok">
+      </a>
+    </div>
+
+
+
+  </div>
+</nav>
+
+<!-- ===================== NAVBAR PRINCIPAL ===================== -->
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar-main">
+  <div class="container-fluid">
+
+    <!-- Toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarMain">
+
+      <!-- Menú principal -->
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+  <li class="nav-item"><a class="nav-link" routerLink="/" (click)="cerrarMenu()">INICIO</a></li>
+  <li class="nav-item"><a class="nav-link" routerLink="/categorias" (click)="cerrarMenu()">CATEGORÍAS</a></li>
+  <li class="nav-item"><a class="nav-link" routerLink="/ofertas" (click)="cerrarMenu()">OFERTAS</a></li>
+  <li class="nav-item"><a class="nav-link" routerLink="/favoritos" (click)="cerrarMenu()">FAVORITOS</a></li>
+  <li class="nav-item"><a class="nav-link" routerLink="/nosotros" (click)="cerrarMenu()">NOSOTROS</a></li>
+  <li class="nav-item"><a class="nav-link" routerLink="/contactenos" (click)="cerrarMenu()">CONTACTENOS</a></li>
+  <li class="nav-item"><a class="nav-link" routerLink="/chat-cliente" (click)="cerrarMenu()">CHATS</a></li>
+</ul>
+
+
+      <!-- Buscador funcional -->
+   <!-- Reemplaza el form del buscador con esto -->
+<form class="d-flex me-5 search-container" (ngSubmit)="buscarProducto()">
+  <div class="search-wrapper">
+    <input
+      class="form-control me-2"
+      type="search"
+      placeholder="Buscar producto..."
+      aria-label="Buscar"
+      [(ngModel)]="terminoBusqueda"
+      name="busqueda"
+      (input)="onInputChange()"
+      (keydown)="onKeyDown($event)"
+      autocomplete="off"
+    >
+    
+    <!-- 🔥 DROPDOWN DE SUGERENCIAS -->
+    <div class="sugerencias-dropdown" *ngIf="mostrarSugerencias && sugerencias.length > 0">
+      <div 
+        class="sugerencia-item"
+        *ngFor="let producto of sugerencias; let i = index"
+        [class.selected]="i === indiceSeleccionado"
+        (click)="seleccionarSugerencia(producto)"
+      >
+        <img [src]="producto.image" [alt]="producto.name" class="sugerencia-img">
+        <div class="sugerencia-info">
+          <div class="sugerencia-nombre">{{ producto.name }}</div>
+          <div class="sugerencia-categoria">{{ producto.category }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔥 MENSAJE CUANDO NO HAY RESULTADOS -->
+    <div class="sugerencias-dropdown no-results" *ngIf="mostrarSugerencias && sugerencias.length === 0 && terminoBusqueda.length > 0">
+      <div class="no-results-text">
+        ❌ No se encontraron productos con "{{ terminoBusqueda }}"
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-outline-light" type="submit">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+</form>
+
+      <!-- Iconos después del buscador -->
+      <div class="navbar-icons d-flex align-items-center gap-4">
+        <a routerLink="/carrito" class="icon-btn position-relative">
+          <i class="fa-solid fa-shopping-cart fa-lg" (click)="cerrarMenu()"></i>
+          <span class="badge">{{ cantidadProductos }}</span>
+        </a>
+        <a routerLink="/historial" class="icon-btn">
+          <i class="fa-solid fa-clock-rotate-left fa-lg" (click)="cerrarMenu()"></i>
+        </a>
+        <a routerLink="/login" class="icon-btn">
+          <i class="fa-solid fa-user fa-lg"></i>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</nav>

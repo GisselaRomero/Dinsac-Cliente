@@ -1,0 +1,43 @@
+<div class="container mt-5">
+  <h2 class="mb-4 titulo-seccion">Catálogo de Maquinaria</h2>
+
+  <!-- Buscador -->
+  <div class="mb-3">
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="searchQuery"
+      (input)="filtrarProductos()"
+      placeholder="Buscar maquinaria o categoría..."
+    />
+  </div>
+
+  <!-- Mensajes de estado -->
+  <div *ngIf="loading" class="alert alert-info">Cargando maquinaria...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <!-- Grilla de productos -->
+  <div class="row">
+    <div *ngFor="let producto of filteredProductos" class="col-md-4 mb-4">
+      <div class="card h-100 shadow-sm border-0 producto-card">
+        <img [src]="producto.image" class="card-img-top" [alt]="producto.name" />
+        <div class="card-body">
+          <h5 class="card-title">{{ producto.name }}</h5>
+          <p class="card-text">{{ producto.description }}</p>
+          <p><strong>Categoría:</strong> {{ producto.category }}</p>
+          <p><strong>Stock disponible:</strong> {{ producto.stock }}</p>
+
+          <button class="btn btn-primary w-100 mt-3" (click)="verDetalles(producto)">
+            Ver detalles 
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón flotante de contacto -->
+  <a href="https://wa.me/51934307489" target="_blank" class="whatsapp-button">
+    <img src="assets/img/productos/whatsapp.png" alt="WhatsApp" />
+    Cotizar vía WhatsApp
+  </a>
+</div>

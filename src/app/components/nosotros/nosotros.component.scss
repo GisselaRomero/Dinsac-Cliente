@@ -1,0 +1,257 @@
+/* =========================
+   BANNER SUPERIOR
+========================= */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  max-height: 750px;
+  overflow: hidden;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.45);
+}
+
+.banner .banner-texto {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.banner .banner-texto h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  margin-bottom: 25px;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.8);
+}
+
+.banner .redes-sociales {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.banner .redes-sociales a img {
+  width: 48px;
+  height: 48px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: drop-shadow(0 0 7px rgba(0, 0, 0, 0.5));
+}
+
+.banner .redes-sociales a img:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 12px #ffffff);
+}
+
+/* =========================
+   NOSOTROS
+========================= */
+.nosotros-container {
+  display: flex;
+  flex-wrap: wrap;
+  background: linear-gradient(135deg, #ffffff, #eefcf3);
+  padding: 60px 40px;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.nosotros-container .texto {
+  flex: 1 1 500px;
+  padding: 20px 10px;
+}
+
+.nosotros-container .texto h1 {
+  font-size: 2.7rem;
+  color: #126f44;
+  margin-bottom: 25px;
+  font-weight: 800;
+}
+
+.nosotros-container .texto p {
+  font-size: 1.2rem;
+  line-height: 1.9;
+  color: #444;
+}
+
+.nosotros-container .imagen {
+  flex: 1 1 450px;
+  display: flex;
+  justify-content: center;
+}
+
+.nosotros-container .imagen img {
+  width: 100%;
+  max-width: 520px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================
+   FONDO SECCIONES
+========================= */
+.fondo-gris {
+  background-color: #f7f7f7;
+  padding: 60px 20px;
+}
+
+/* =========================
+   MISION Y VISION
+========================= */
+.mision-vision-section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.mision, .vision {
+  flex: 1 1 380px;
+  text-align: center;
+  color: #0a3628;
+  font-size: 1.25rem;
+}
+
+.underline {
+  width: 150px;
+  height: 5px;
+  background-color: #084843;
+  margin: 12px auto 25px auto;
+  border: none;
+}
+
+/* =========================
+   VALORES
+========================= */
+.valores-section {
+  margin-top: 60px;
+}
+
+.valores-section h2 {
+  text-align: center;
+  font-size: 2.8rem;
+  font-weight: bold;
+  color: #222;
+}
+
+.valores-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 35px;
+  margin-top: 40px;
+}
+
+.valor {
+  flex: 1 1 230px;
+  max-width: 270px;
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.valor:hover {
+  transform: translateY(-8px);
+}
+
+.valor img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 15px;
+}
+
+.valor h3 {
+  font-size: 1.4rem;
+  color: #15686c;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.valor p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+/* Tablets */
+@media (max-width: 992px) {
+  .banner .banner-texto h1 {
+    font-size: 3rem;
+  }
+
+  .banner .redes-sociales a img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .nosotros-container {
+    padding: 40px 20px;
+  }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+  .banner {
+    height: 60vh;
+  }
+
+  .banner .banner-texto h1 {
+    font-size: 2.5rem;
+  }
+
+  .banner .redes-sociales a img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .nosotros-container .texto h1 {
+    font-size: 2.2rem;
+  }
+
+  .nosotros-container .texto p {
+    font-size: 1.05rem;
+  }
+
+  .valores-section h2 {
+    font-size: 2.3rem;
+  }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+  .banner .banner-texto h1 {
+    font-size: 2rem;
+  }
+
+  .banner .redes-sociales {
+    gap: 10px;
+  }
+
+  .banner .redes-sociales a img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .nosotros-container {
+    padding: 30px 15px;
+  }
+
+  .valores-section h2 {
+    font-size: 2rem;
+  }
+}

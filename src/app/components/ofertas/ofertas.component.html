@@ -1,0 +1,69 @@
+<section class="banner-ofertas" *ngIf="bannerUrl">
+  <img 
+    [src]="bannerUrl" 
+    alt="Banner de Ofertas" 
+    class="banner-img"
+    (click)="irAOfertas()"
+    style="cursor:pointer;"
+  >
+</section>
+
+
+<!-- ==================== LISTA DE PRODUCTOS ==================== -->
+<div class="productos-container" id="productos">
+
+  <div class="section-header">
+    <div class="header-bar"></div>
+    <h2>Catálogo de Maquinaria</h2>
+  </div>
+
+  <p class="section-subtitle">Encuentra las mejores máquinas industriales listas para cotizar hoy mismo.</p>
+
+  <!-- Buscador -->
+  <div class="mb-4">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Buscar maquinaria o categoría..."
+      [(ngModel)]="searchQuery"
+      (input)="filtrarProductos()"
+    />
+  </div>
+
+  <!-- Estado -->
+  <div class="loading-message" *ngIf="loading"><p>Cargando maquinaria...</p></div>
+  <div class="error-message" *ngIf="error"><p>{{ error }}</p></div>
+  <div class="no-products" *ngIf="filteredProductos.length === 0 && !loading && !error">
+    <p>No se encontraron resultados.</p>
+  </div>
+
+  <!-- Grilla de productos -->
+  <div class="productos-grid">
+    <div class="producto-card" *ngFor="let producto of filteredProductos">
+
+      <img [src]="producto.image" [alt]="producto.name" />
+
+      <div class="producto-info">
+        <h3>{{ producto.name }}</h3>
+        <p><strong>Descripción:</strong> {{ producto.description }}</p>
+
+        <!-- BOTONES LADO A LADO -->
+     <div class="producto-buttons">
+  <button class="btn-detalles" (click)="verDetalles(producto)">
+    Ver detalles
+  </button>
+
+  <button class="btn-cotizar" (click)="cotizarProducto(producto)">
+    Cotizar
+  </button>
+</div>
+
+      </div>
+
+      <div class="etiqueta-oferta">Disponible</div>
+    </div>
+  </div>
+
+
+
+</div>

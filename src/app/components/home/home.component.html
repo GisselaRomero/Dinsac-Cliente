@@ -1,0 +1,305 @@
+<!-- ==================== CARRUSEL PRINCIPAL PREMIUM ==================== -->
+<!-- ==================== CARRUSEL PRINCIPAL PREMIUM ==================== -->
+<div id="carouselMain" class="carousel slide carousel-fade premium-carousel" data-bs-ride="carousel" data-bs-interval="3000">
+
+  <!-- Indicadores Premium -->
+  <div class="carousel-indicators">
+    <button 
+      *ngFor="let b of bannersPrincipal; let i = index"
+      type="button"
+      data-bs-target="#carouselMain"
+      [attr.data-bs-slide-to]="i"
+      [class.active]="i === 0">
+    </button>
+  </div>
+
+  <!-- Slides del carrusel -->
+  <div class="carousel-inner">
+
+    <div 
+      class="carousel-item"
+      *ngFor="let b of bannersPrincipal; let i = index"
+      [class.active]="i === 0">
+
+      <div class="overlay-gradient"></div>
+      <img [src]="b.image" class="d-block w-100 hero-img" alt="banner principal">
+    </div>
+
+  </div>
+
+  <!-- Controles del carrusel -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselMain" data-bs-slide="prev">
+    <div class="control-circle">‹</div>
+  </button>
+
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselMain" data-bs-slide="next">
+    <div class="control-circle">›</div>
+  </button>
+
+  <!-- Botón de cotización -->
+  <button class="btn-cotizacion" (click)="irACotizar()">
+    Cotiza tu producto
+  </button>
+
+</div>
+
+
+
+
+
+<!-- ==================== SECCIÓN HERO DE COTIZACIÓN (PRINCIPAL) ==================== -->
+<section class="cotizacion-hero">
+  <div class="container">
+    <div class="cotizacion-hero-box">
+      <!-- Decoración de fondo -->
+      <div class="hero-decoration-1"></div>
+      <div class="hero-decoration-2"></div>
+      
+      <div class="hero-content">
+        <!-- Encabezado -->
+        <div class="hero-header">
+          <div class="hero-icon">
+            <i class="bi bi-calculator-fill"></i>
+          </div>
+          <h2 class="hero-title">¡Solicita tu Cotización Gratis!</h2>
+          <p class="hero-subtitle">Obtén el mejor precio para tus equipos industriales en menos de 24 horas</p>
+        </div>
+
+        <!-- BOTÓN PRINCIPAL: Ir a Cotizar -->
+        <div class="hero-cta-container">
+         <button class="btn-cotizar-mega" (click)="irACotizar()">
+  <i class="bi bi-calculator-fill"></i>
+
+  <span>Crear Cotización Completa</span>
+  <small>Formulario detallado con selección de productos</small>
+
+  <!-- NUEVO TEXTO -->
+  <small class="cta-extra">Presiona aquí para cotizar</small>
+</button>
+
+          
+          <p class="cta-info">
+            <i class="bi bi-check-circle-fill"></i>
+            Selecciona categorías, equipos y cantidades específicas
+          </p>
+        </div>
+
+        <!-- Información de contacto alternativa -->
+        <div class="hero-contact-info">
+          <div class="contact-item">
+            <i class="bi bi-telephone-fill"></i>
+            <span>934 307 489</span>
+          </div>
+          <div class="contact-item">
+            <i class="bi bi-envelope-fill"></i>
+            <span>Dinsac2021&#64;gmail.com</span>
+          </div>
+          <div class="contact-item">
+            <i class="bi bi-clock-fill"></i>
+            <span>Lun - Sáb: 9:00 AM - 6:00 PM</span>
+          </div>
+        </div>
+
+        <!-- Beneficios -->
+        <div class="hero-beneficios">
+          <div class="beneficio-item">
+            <div class="beneficio-icon">⚡</div>
+            <p>Respuesta en 24h</p>
+          </div>
+          <div class="beneficio-item">
+            <div class="beneficio-icon">💰</div>
+            <p>Mejores Precios</p>
+          </div>
+          <div class="beneficio-item">
+            <div class="beneficio-icon">🎯</div>
+            <p>Asesoría Experta</p>
+          </div>
+          <div class="beneficio-item">
+            <div class="beneficio-icon">🚚</div>
+            <p>Envío Nacional</p>
+          </div>
+        </div>
+
+        <!-- Mini preview de lo que incluye -->
+        <div class="preview-incluye">
+          <h3>Tu cotización incluye:</h3>
+          <div class="preview-grid">
+            <div class="preview-item">
+              <i class="bi bi-card-checklist"></i>
+              <span>Selección múltiple de productos</span>
+            </div>
+            <div class="preview-item">
+              <i class="bi bi-funnel"></i>
+              <span>Filtrado por categorías</span>
+            </div>
+            <div class="preview-item">
+              <i class="bi bi-file-earmark-pdf"></i>
+              <span>Cotización en PDF</span>
+            </div>
+            <div class="preview-item">
+              <i class="bi bi-envelope-check"></i>
+              <span>Envío automático por email</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ==================== SECCIÓN OFERTAS ==================== -->
+
+<!-- ==================== SECCIÓN OFERTAS ==================== -->
+<section class="ofertas-home">
+  <div class="container">
+
+    <!-- Header con barra vertical -->
+    <div class="section-header">
+      <div class="header-bar"></div>
+      <h2>Ofertas Destacadas</h2>
+    </div>
+
+    <p class="section-subtitle">
+      Productos disponibles con las mejores condiciones del mercado.
+    </p>
+<section class="banner-ofertas" *ngIf="bannerOfertasUrl">
+  <img [src]="bannerOfertasUrl" alt="Banner Ofertas" class="banner-img">
+</section>
+
+    <!-- GRID DE PRODUCTOS -->
+    <div class="productos-grid">
+      <div class="producto-card" *ngFor="let producto of ofertasDestacadas">
+        
+        <img [src]="producto.image" [alt]="producto.name">
+
+        <div class="producto-info">
+          <h3>{{ producto.name }}</h3>
+          <p>{{ producto.description }}</p>
+
+          <button class="btn-ver-detalles" (click)="verDetalles(producto)">
+            Ver más detalles
+          </button>
+        </div>
+
+        <!-- Etiqueta -->
+        <div class="etiqueta-disponible">Disponible</div>
+      </div>
+    </div>
+
+    <!-- BOTÓN VER MÁS -->
+    <div class="ver-mas-container">
+      <button class="btn-ver-mas" (click)="irAOfertas()">
+        Ver más ofertas
+      </button>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- ==================== MARCAS PARTNERS ==================== -->
+<section class="partners-section">
+  <div class="partners-wrapper">
+
+    <!-- HEADER -->
+    <div class="partners-heading">
+      <span class="decor-line"></span>
+      <div>
+        <h2>Marcas que Confían en Nosotros</h2>
+        <p>Representantes oficiales de fabricantes líderes en tecnología industrial.</p>
+      </div>
+    </div>
+
+    <!-- GRID DE LOGOS -->
+    <div class="partners-logos">
+      <div *ngFor="let marca of marcas" class="logo-card">
+        <a [href]="marca.url" target="_blank">
+          <img [src]="marca.logo" [alt]="marca.name">
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+<!-- ==================== VIDEO PRINCIPAL ==================== -->
+<!-- ==================== VIDEO PRINCIPAL ==================== -->
+<div class="main-video-section">
+  <video
+    #mainVideo
+    muted
+    loop
+    playsinline
+    preload="auto"
+    class="main-video"
+  >
+    <source src="assets/videos/v1.mp4" type="video/mp4" />
+    Tu navegador no soporta videos HTML5.
+  </video>
+
+  <div class="main-video-overlay">
+    <h3 class="main-video-text">
+      Máquinas que mueven el progreso
+    </h3>
+  </div>
+</div>
+
+
+
+
+
+<!-- ==================== CARRUSEL DE VIDEOS ==================== -->
+<app-videos-home></app-videos-home>
+
+
+<!-- ==================== BOTONES FLOTANTES ==================== -->
+<!-- ==================== BOTONES FLOTANTES ==================== -->
+<!-- ==================== BOTONES FLOTANTES ==================== -->
+
+<!-- Botón flotante de WhatsApp -->
+<a href="https://wa.me/51934307489" class="whatsapp-float" target="_blank">
+  <div class="whatsapp-pulse"></div>
+  <img src="assets/whatsapp.png" alt="WhatsApp">
+  <span class="whatsapp-tooltip">¡Chatea con nosotros!</span>
+</a>
+
+<!-- Botón flotante de Chatbot con IA -->
+<a href="/chatbot-prueba" class="chatbot-float">
+  <div class="chatbot-pulse"></div>
+  <div class="chatbot-message">
+    <span class="message-icon">🤖</span>
+    <span class="message-text">¿Necesitas ayuda? ¡Pregúntame!</span>
+  </div>
+  <div class="chatbot-icon">
+    <img src="assets/ia2.png" alt="Asistente Virtual">
+    <span class="online-indicator"></span>
+  </div>
+</a>
+
+<!-- Botón flotante de Chat en Vivo (Admin-Cliente) -->
+<a routerLink="/chat-cliente" class="chat-live-float">
+  <div class="chat-pulse"></div>
+  <div class="chat-badge">
+    <span class="badge-dot"></span>
+  </div>
+  <div class="chat-live-message">
+    <span class="message-icon">👨‍💼</span>
+    <span class="message-text">Habla con un asesor</span>
+  </div>
+  <div class="chat-live-icon">
+    <i class="fa-solid fa-headset"></i>
+    <span class="available-indicator">
+      <i class="fa-solid fa-circle"></i>
+    </span>
+  </div>
+</a>
+
+<!-- Script Tidio Chatbot -->
+<script src="//code.tidio.co/glqvw5arrqvfxeyzbtw8niv4uksxhxar.js" async></script>

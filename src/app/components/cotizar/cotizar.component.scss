@@ -1,0 +1,262 @@
+.cotizar-form {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 40px 60px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+}
+
+.cotizar-form h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #2e7d32;
+  font-weight: 700;
+}
+
+.cotizar-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+}
+
+.cotizar-form label {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+.cotizar-form input,
+.cotizar-form select,
+.cotizar-form textarea {
+  font-size: 15px;
+  padding: 14px 18px;
+  border: 1.5px solid #ccc;
+  border-radius: 10px;
+  background: #fafafa;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.cotizar-form input:focus,
+.cotizar-form select:focus,
+.cotizar-form textarea:focus {
+  border-color: #4caf50;
+  background: #fff;
+  outline: none;
+}
+
+.cotizar-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.cotizar-form .form-check {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.cotizar-form .form-check input[type="radio"],
+.cotizar-form .form-check input[type="checkbox"] {
+  margin-right: 10px;
+  accent-color: #4caf50;
+}
+
+.cotizar-form .form-check label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #444;
+}
+
+.cotizar-form .contact-methods {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.cotizar-form button {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.cotizar-form button:hover {
+  background-color: #388e3c;
+  transform: scale(1.02);
+}
+
+.cotizar-form button:disabled {
+  background-color: #bbb;
+  cursor: not-allowed;
+}
+
+.cotizar-form a {
+  color: #2e7d32;
+  text-decoration: none;
+}
+
+.cotizar-form a:hover {
+  text-decoration: underline;
+}
+
+/* Dropdowns */
+.dropdown-container {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-container.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.dropdown-header {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px 14px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.dropdown-header:hover {
+  border-color: #4caf50;
+  background: #fafafa;
+}
+
+.arrow {
+  transition: transform 0.2s ease;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-body {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 4px;
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.buscador {
+  border-radius: 0;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+.dropdown-option {
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dropdown-option:hover {
+  background: #f1f1f1;
+}
+
+.dropdown-empty {
+  padding: 10px 14px;
+  color: #777;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Grid de productos */
+.producto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  align-items: center;
+}
+
+.producto-group {
+  margin-bottom: 25px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+.producto-group label {
+  font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 15px;
+  display: block;
+  font-size: 1.1rem;
+}
+
+/* Botón eliminar más visible */
+.eliminar-btn {
+  justify-self: center;
+  min-width: 90px;
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+  .producto-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* Texto truncado en dropdown */
+.dropdown-header .selected {
+  display: inline-block;
+  max-width: 160px; /* ajusta según el espacio que quieras */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+/* Igual para las opciones largas dentro del menú */
+.dropdown-option {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tooltip elegante */
+.dropdown-option:hover {
+  position: relative;
+}
+
+.dropdown-option:hover::after {
+  content: attr(title);
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #333;
+  color: #fff;
+  font-size: 13px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: normal;
+  min-width: 180px;
+  max-width: 250px;
+  z-index: 2000;
+}

@@ -1,0 +1,22 @@
+<section class="videos-section">
+  <h2 class="section-title">Últimos Videos de Nuestras Máquinas</h2>
+
+  <div class="videos-wrapper">
+    <div class="video-card" *ngFor="let video of limitedVideos">
+      <video class="video-player" controls>
+        <source [src]="video.src" type="video/mp4" />
+        Tu navegador no soporta el video.
+      </video>
+      <div class="video-info">
+        <h3 class="video-title">{{ video.title }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="ver-mas-container">
+    <a routerLink="/videos" class="ver-mas-btn">
+      Ver más videos
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+</section>

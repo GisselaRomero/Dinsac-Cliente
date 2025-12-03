@@ -1,0 +1,107 @@
+.favoritos-container {
+  padding: 30px 15px;
+  max-width: 1200px;
+  margin: auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.favoritos-container h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 25px;
+  color: #1a4d6c; /* Azul profundo */
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.loading, .error, .no-favorites {
+  text-align: center;
+  font-size: 1.1rem;
+  margin: 15px 0;
+  color: #555;
+}
+
+.error {
+  color: #c62828;
+}
+
+.favoritos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.producto-card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(26, 77, 108, 0.15);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.producto-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(26, 77, 108, 0.2);
+  border-color: #1a4d6c;
+}
+
+.img-container {
+  position: relative;
+}
+
+.img-container img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.fav-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: white;
+  border: 2px solid #1a4d6c;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, background 0.3s, border-color 0.3s;
+}
+
+.fav-btn:hover {
+  transform: scale(1.1);
+  background: #1a4d6c;
+  border-color: #1a4d6c;
+}
+
+.heart {
+  font-size: 1.4rem;
+  color: #1a4d6c;
+  transition: color 0.3s, transform 0.2s;
+}
+
+.heart.active {
+  color: #e63946; /* Rojo para corazones activos */
+  transform: scale(1.2);
+}
+
+.producto-card h3 {
+  font-size: 1.2rem;
+  margin: 15px 10px 8px;
+  color: #1a4d6c;
+}
+
+.producto-card p {
+  font-size: 0.95rem;
+  color: #444;
+  margin: 0 15px 20px;
+  min-height: 45px;
+}

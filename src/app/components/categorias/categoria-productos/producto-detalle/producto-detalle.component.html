@@ -1,0 +1,88 @@
+<div *ngIf="loading">Cargando producto...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<div *ngIf="producto" class="detalle-container">
+
+  <!-- SECCIÓN DE GALERÍA -->
+  <div class="galeria">
+    <!-- Imagen principal -->
+    <div class="imagen-principal">
+      <img [src]="imagenSeleccionada" [alt]="producto.name" />
+    </div>
+
+    <!-- Miniaturas -->
+    <div class="miniaturas">
+      <img 
+        *ngFor="let img of [producto.image, producto.image1, producto.image2, producto.image3]"
+        [src]="img"
+        [alt]="producto.name"
+        [class.activa]="imagenSeleccionada === img"
+        (click)="seleccionarImagen(img)"
+      />
+    </div>
+
+    <!-- Video del producto -->
+    <div *ngIf="producto.videoURL" class="video-section">
+      <h3>🎬 Video del producto</h3>
+      <iframe [src]="producto.videoURL | safeUrl" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- SECCIÓN DE INFORMACIÓN -->
+  <div class="info">
+    <h1>{{ producto.name }}</h1>
+    <p class="categoria">Categoría: {{ producto.category }}</p>
+    <p class="descripcion">{{ producto.description }}</p>
+
+    <!-- INFO EXTRA -->
+    <div class="extra-info">
+      <p><strong>Tipo:</strong> {{ producto.estado }}</p>
+      <p *ngIf="producto.destacado"><strong>🔥 Producto destacado</strong></p>
+
+      <!-- Características -->
+      <div *ngIf="producto.featuresText">
+        <h3>Características:</h3>
+        <ul>
+          <li *ngFor="let feature of producto.featuresText.split('\n')">{{ feature }}</li>
+        </ul>
+      </div>
+
+      <!-- Etiquetas -->
+      <div *ngIf="producto.tagsText">
+        <h3>Etiquetas:</h3>
+        <div class="tags">
+          <span class="tag" *ngFor="let tag of producto.tagsText.split(',')">
+            #{{ tag.trim() }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTÓN DE COTIZACIÓN -->
+    <div class="acciones">
+      <button (click)="agregarAlCarrito(producto)" class="btn-cotizar">
+        Agregar al carrito de cotización
+      </button>
+    </div>
+
+    <!-- CONTACTO RÁPIDO -->
+    <div class="contacto-rapido">
+      <h3>¿Deseas una rebaja o tienes dudas?</h3>
+      <p>Habla directamente con nuestro asesor:</p>
+      <a href="https://wa.me/51934307489" target="_blank" class="btn-whatsapp">
+        <i class="fa-brands fa-whatsapp"></i> Contactar por WhatsApp
+      </a>
+    </div>
+
+    <!-- UBICACIÓN -->
+    <div class="ubicacion-seccion">
+      <h3>📍 Encuéntranos fácilmente</h3>
+      <p><strong>Dirección:</strong> {{ direccion }}</p>
+      <p><strong>Teléfono:</strong> 904 190 146</p>
+      <p><strong>Correo:</strong> <a [href]="'mailto:' + email">{{ email }}</a></p>
+      <button class="btn-maps" (click)="abrirEnGoogleMapsPorDireccion()">
+        Ver en Google Maps
+      </button>
+    </div>
+  </div>
+</div>

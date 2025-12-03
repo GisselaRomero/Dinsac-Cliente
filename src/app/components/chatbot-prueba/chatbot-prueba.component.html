@@ -1,0 +1,45 @@
+<div id="container" class="container">
+  <div id="chat" class="chatbot-container">
+    <h2>Consulta sobre alguna máquina industrial</h2>
+
+    <div id="messages" class="messages-display" role="log" aria-live="polite">
+      <div
+        *ngFor="let message of messages"
+        class="message"
+        [ngClass]="{ 'user-message': message.sender === 'user', 'gemini-message': message.sender === 'gemini' }"
+      >
+        <div class="sender-name">{{ message.sender === 'user' ? 'Tú' : 'Bot Dinsac' }}</div>
+        <div class="message-text">{{ message.text }}</div>
+      </div>
+
+      <div *ngIf="isLoading" class="loading-indicator">
+        Dinsac está escribiendo...
+      </div>
+    </div>
+
+    <div class="message-input-area">
+      <input
+        id="input"
+        type="text"
+        placeholder="Escribe tu consulta..."
+        autocomplete="off"
+        autofocus
+        [(ngModel)]="newMessage"
+        (keyup.enter)="sendMessage()"
+        [disabled]="isLoading"
+        aria-label="Escribir mensaje"
+      />
+      <button (click)="sendMessage()" [disabled]="isLoading || newMessage.trim() === ''">
+        Enviar
+      </button>
+    </div>
+
+    <button (click)="voiceEnabled = !voiceEnabled">
+      {{ voiceEnabled ? '🔊 Silenciar voz' : '🔈 Activar voz' }}
+    </button>
+  </div>
+
+  <div class="bot-image-container">
+    <img src="assets/bot.png" alt="Ilustración de un robot asistente" />
+  </div>
+</div>

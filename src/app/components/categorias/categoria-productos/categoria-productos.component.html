@@ -1,0 +1,44 @@
+<div class="productos-container">
+  <h2>Catálogo de {{ categoriaNombre }}</h2>
+
+  <!-- Buscador -->
+  <div class="mb-4">
+    <input 
+      type="text" 
+      class="form-control" 
+      placeholder="Buscar máquinas o modelos..."
+      [(ngModel)]="searchQuery"
+      (input)="filtrarProductos()"
+    />
+  </div>
+
+  <!-- Productos -->
+  <div class="productos-grid">
+    <div class="producto-card" *ngFor="let producto of filteredProductos">
+      <img [src]="producto.image" [alt]="producto.name" />
+      <div class="producto-info">
+        <h3>{{ producto.name }}</h3>
+        <p><strong>Descripción:</strong> {{ producto.description }}</p>
+
+        <!-- 🔹 Sin precios -->
+        <!-- <p class="precio">{{ producto.price | currency }}</p> -->
+
+        <div class="botones">
+          <button (click)="verDetalles(producto)" class="btn-detalle">Ver más detalles</button>
+           <button (click)="cotizarProducto(producto)" class="btn-cotizar">
+    Cotizar
+  </button>
+  
+          <button (click)="agregarAFavoritos(producto)" 
+                  class="favorito-btn" 
+                  [class.active]="esFavorito(producto._id || producto.id)">
+            <i class="heart">♥</i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WhatsApp -->
+ 
+</div>

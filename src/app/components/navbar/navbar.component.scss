@@ -1,0 +1,348 @@
+/* ===================== NAVBAR SUPERIOR ===================== */
+.custom-navbar-social {
+  background-color: #1a4d6c;
+  padding: 10px 30px;
+  border-bottom: 2px solid #368a91;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  flex-wrap: nowrap;
+  gap: 20px;
+  color: #fff;
+}
+
+.navbar-logo {
+  max-height: 80px;
+}
+
+/* Contacto centrado en desktop */
+.navbar-contact-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.contact-link {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.contact-link:hover { color: #00e676; }
+
+.contact-link i { font-size: 22px; }
+
+.separator {
+  color: #00e676;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Redes Sociales */
+.redes-sociales {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+}
+
+.redes-sociales a img {
+  width: 42px;
+  height: 42px;
+  transition: 0.3s;
+  filter: drop-shadow(0 0 4px rgba(0,0,0,0.4));
+}
+
+.redes-sociales a img:hover {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 10px #fff);
+}
+
+/* ===================== NAVBAR PRINCIPAL ===================== */
+.custom-navbar-main {
+  background-color: #1a4d6c;
+  padding: 12px 26px;
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  font-size: 19px;
+}
+
+.custom-navbar-main .nav-link {
+  color: #fff !important;
+  margin-right: 20px;
+  transition: .3s;
+}
+
+.custom-navbar-main .nav-link:hover {
+  color: #66bb6a !important;
+}
+
+/* Buscador */
+.search-container {
+  position: relative;
+  width: auto;
+}
+
+.custom-navbar-main input.form-control {
+  width: 340px;
+  height: 42px;
+  font-size: 17px;
+  border-radius: 6px;
+  padding: 0 12px;
+  transition: all .3s ease;
+}
+
+.custom-navbar-main input.form-control:focus {
+  width: 370px;
+  box-shadow: 0 0 8px rgba(102, 187, 106, .7);
+}
+
+/* Íconos */
+.navbar-icons {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+
+.icon-btn {
+  color: white;
+  font-size: 20px;
+  position: relative;
+}
+
+.icon-btn .badge {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  font-size: 11px;
+  background: #ff3d00;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+/* ===================== RESPONSIVE ===================== */
+
+/* Tablets */
+@media (max-width: 991px) {
+  .custom-navbar-social {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .navbar-contact-container {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .redes-sociales {
+    order: 2;
+  }
+
+  .custom-navbar-main input.form-control {
+    width: 250px;
+  }
+
+  .custom-navbar-main input.form-control:focus {
+    width: 280px;
+  }
+
+  .navbar-icons {
+    gap: 25px;
+  }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+
+  /* NAVBAR SUPERIOR */
+  .custom-navbar-social {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .navbar-logo {
+    max-height: 70px;
+  }
+
+  .navbar-contact-container {
+    flex-direction: column;
+    gap: 8px;
+    font-size: 16px;
+    order: 2;
+  }
+
+  .separator {
+    display: none;
+  }
+
+  .redes-sociales {
+    order: 3;
+    gap: 18px;
+  }
+
+  .redes-sociales a img {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* NAVBAR PRINCIPAL */
+  .custom-navbar-main {
+    padding: 10px 18px;
+  }
+
+  .custom-navbar-main .nav-link {
+    margin: 10px 0;
+  }
+
+  .custom-navbar-main input.form-control {
+    width: 180px;
+    height: 36px;
+    font-size: 15px;
+  }
+
+  .custom-navbar-main input.form-control:focus {
+    width: 210px;
+  }
+
+  .navbar-icons {
+    gap: 18px;
+  }
+}
+
+/* Muy pequeño */
+@media (max-width: 450px) {
+  .custom-navbar-main input.form-control {
+    width: 150px;
+  }
+
+  .custom-navbar-main input.form-control:focus {
+    width: 170px;
+  }
+
+  .navbar-icons {
+    gap: 14px;
+  }
+}
+/* ===========================
+   🔍 ESTILO DROPDOWN BUSCADOR
+   =========================== */
+.sugerencias-dropdown {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 8px 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  max-height: 320px;
+  overflow-y: auto;
+  z-index: 9999;
+}
+
+.sugerencia-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.25s;
+}
+
+.sugerencia-item:hover,
+.sugerencia-item.selected {
+  background: #e6f5f0;
+}
+
+.sugerencia-img {
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.sugerencia-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.sugerencia-nombre {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a4d6c;
+}
+
+.sugerencia-categoria {
+  font-size: 13px;
+  color: #777;
+}
+
+/* ❌ No resultados */
+.no-results {
+  padding: 14px;
+  text-align: center;
+  font-size: 15px;
+  color: #777;
+}
+
+/* ===========================
+   📱 RESPONSIVE
+   =========================== */
+
+/* Tablets */
+@media (max-width: 991px) {
+  .sugerencias-dropdown {
+    max-height: 260px;
+  }
+  .sugerencia-img {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+  .sugerencias-dropdown {
+    top: 40px;
+    max-height: 240px;
+  }
+  .sugerencia-item {
+    padding: 8px 10px;
+  }
+  .sugerencia-img {
+    width: 45px;
+    height: 45px;
+  }
+  .sugerencia-nombre {
+    font-size: 15px;
+  }
+  .sugerencia-categoria {
+    font-size: 12px;
+  }
+}
+
+/* Muy pequeño */
+@media (max-width: 450px) {
+  .sugerencias-dropdown {
+    top: 38px;
+  }
+  .sugerencia-img {
+    width: 40px;
+    height: 40px;
+  }
+  .sugerencia-nombre {
+    font-size: 14px;
+  }
+}

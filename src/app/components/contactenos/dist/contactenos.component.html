@@ -1,0 +1,99 @@
+<section class="contact-page">
+  <!-- Banner -->
+  <div class="banner">
+    <div class="banner-text">
+      <h1>DINSAC</h1>
+      <p>Contáctenos</p>
+    </div>
+  </div>
+
+  <!-- Contenedor principal -->
+  <div class="contact-container">
+
+    <!-- Información -->
+    <div class="contact-info">
+      <h2>Contáctenos y con gusto te atenderemos</h2>
+      <p>Si tienes alguna consulta no dudes en contactarnos.</p>
+
+      <div class="info-item">
+        <img src="assets/img/ubicacion/ubicanos.png" alt="Ubicación" />
+        <div>
+          <strong>Ubicación</strong><br>
+          Av. César Vallejo N° 1005 - Barrio Aranjuez - Trujillo, Perú.
+        </div>
+      </div>
+
+      <div class="info-item">
+        <img src="assets/img/ubicacion/horario.png" alt="Horario" />
+        <div>
+          <strong>Horarios de atención</strong><br>
+          09:00 am – 06:00 pm
+        </div>
+      </div>
+
+      <div class="info-item">
+        <img src="assets/img/ubicacion/correo.png" alt="Correo" />
+        <div>
+          <strong>Correo</strong><br>
+DINSAC2021&#64;GMAIL.COM
+        </div>
+      </div>
+
+      <div class="info-item">
+        <img src="assets/img/ubicacion/telefono.png" alt="Celular" />
+        <div>
+          <strong>Celular</strong><br>
+          934 307 489
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulario -->
+    <div class="contact-form">
+      <p>Estamos listos para resolver todas tus dudas. Llena el siguiente formulario y envíalo para ayudarte.</p>
+
+      <form (ngSubmit)="enviarFormulario()" #contactForm="ngForm">
+
+        <input
+          type="text"
+          placeholder="Nombres y apellidos"
+          [(ngModel)]="nombre"
+          name="nombre"
+          required
+        />
+
+        <div class="form-row">
+          <input
+            type="email"
+            placeholder="Correo electrónico"
+            [(ngModel)]="correo"
+            name="correo"
+            required
+          />
+          <input
+            type="tel"
+            placeholder="Número de celular"
+            [(ngModel)]="celular"
+            name="celular"
+            required
+          />
+        </div>
+
+        <textarea
+          placeholder="Mensaje"
+          rows="4"
+          [(ngModel)]="mensaje"
+          name="mensaje"
+          required
+        ></textarea>
+
+        <p class="note">(*) Todos los campos son obligatorios.</p>
+
+        <button type="submit" [disabled]="!contactForm.form.valid">
+          ENVIAR MENSAJE
+        </button>
+
+      </form>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,61 @@
+<div class="chatbot-container">
+  <h2>Chat con Dinsac</h2>
+
+  <div class="messages-display">
+    <div *ngFor="let message of messages"
+         class="message"
+         [ngClass]="{
+            'user-message': message.remitente === 'cliente',
+            'admin-message': message.remitente === 'admin'
+         }">
+
+      <div class="sender-name">
+        {{ message.remitente === 'cliente' ? message.nombre : 'DINSAC' }}
+      </div>
+
+      <div class="message-text">
+        <!-- Imagen -->
+        <img *ngIf="message.mensaje.includes('http')"
+             [src]="message.mensaje"
+             class="chat-image" />
+
+        <!-- Texto -->
+        <span *ngIf="!message.mensaje.includes('http')">
+          {{ message.mensaje }}
+        </span>
+      </div>
+
+      <div class="message-time" *ngIf="message.fecha">
+        {{ formatTime(message.fecha) }}
+      </div>
+    </div>
+  </div>
+
+  <!-- ⭐ Input Area -->
+  <div class="message-input-area">
+
+    <!-- 📎 BOTÓN -->
+    <button class="btn-adjunto" type="button" (click)="abrirSelector()">
+      📎
+    </button>
+
+    <!-- INPUT OCULTO -->
+    <input 
+      type="file" 
+      id="fileInputCliente"
+      (change)="sendFile($event)"
+      hidden
+    />
+
+    <input
+      type="text"
+      [(ngModel)]="newMessage"
+      (keyup.enter)="sendMessage()"
+      placeholder="Escribe tu mensaje..."
+    />
+
+    <button (click)="sendMessage()" [disabled]="newMessage.trim() === ''">
+      Enviar
+    </button>
+  </div>
+</div>
