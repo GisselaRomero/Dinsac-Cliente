@@ -72,7 +72,7 @@ ngOnInit() {
 // Banner de la sección "Ofertas Destacadas" en Home
 cargarBannerOfertas() {
   const timestamp = new Date().getTime();
-  this.http.get<{ image: string }>(`https://backend-dinsac-hlf0.onrender.com//banner?tipo=ofertasHome&_=${timestamp}`)
+  this.http.get<{ image: string }>(`https://backend-dinsac-hlf0.onrender.com/banner?tipo=ofertasHome&_=${timestamp}`)
     .subscribe({
       next: (res) => {
         console.log('🏷️ Banner ofertas home recibido:', res);
