@@ -62,7 +62,7 @@ export class ChatClienteComponent implements OnInit, OnDestroy {
 
   // 🔌 Conectar a Socket.IO
   conectarSocket(): void {
-    this.socket = io('http://localhost:3000');
+    this.socket = io('https://backend-dinsac-hlf0.onrender.com/');
 
     this.socket.on('connect', () => {
       console.log('✅ Conectado al chat:', this.clienteId);
@@ -97,7 +97,7 @@ export class ChatClienteComponent implements OnInit, OnDestroy {
 
   // 📜 Cargar historial
   cargarHistorial(): void {
-    this.http.get<Mensaje[]>(`http://localhost:3000/chats/${this.clienteId}`)
+    this.http.get<Mensaje[]>(`https://backend-dinsac-hlf0.onrender.com//chats/${this.clienteId}`)
       .subscribe({
         next: (res) => {
           this.mensajes = res;
@@ -140,7 +140,7 @@ export class ChatClienteComponent implements OnInit, OnDestroy {
     formData.append('archivo', archivo);
     formData.append('clienteId', this.clienteId);
 
-    this.http.post<{ url: string }>('http://localhost:3000/upload-chat', formData)
+    this.http.post<{ url: string }>('https://backend-dinsac-hlf0.onrender.com/upload-chat', formData)
       .subscribe({
         next: (res) => {
           const nuevoMensaje: Mensaje = {
