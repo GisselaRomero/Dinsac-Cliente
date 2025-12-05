@@ -1,13 +1,31 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { VideosHomeComponent } from '../videos-home/videos-home.component';
 import { CotizarComponent } from '../cotizar/cotizar.component';
-import { RouterModule } from '@angular/router';
-import { Router } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { Product, ProductService } from '../../services/product.service';
 import { HttpClient } from '@angular/common/http';
 
+declare var bootstrap: any;
+
+interface BannerCarrusel {
+  id: string;
+  orden: number;
+  image: string;
+  contentType: string;
+}
+
+interface BannerResponse {
+  success: boolean;
+  imagenes: BannerCarrusel[];
+}
+
+interface BannerIndividualResponse {
+  success: boolean;
+  image: string;
+  contentType: string;
+}
 
 @Component({
   selector: 'app-home',
@@ -22,9 +40,12 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('mainVideo', { static: false }) mainVideo!: ElementRef<HTMLVideoElement>;
+  
+  // Banners
+  bannersPrincipal: BannerCarrusel[] = [];
+  bannerOfertasUrl: string = '';
   
   // Productos destacados
   ofertasDestacadas: Product[] = [];
@@ -46,75 +67,142 @@ export class HomeComponent implements OnInit, AfterViewInit {
     { logo: 'assets/img/marcas/campbell7.png', name: 'Campbell', url: 'https://www.campbell.com' }
   ];
 
+  private carouselInstance: any = null;
+  private bannerListener: any;
+
   constructor(
     private router: Router, 
     private productService: ProductService,
-      private http: HttpClient  // <-- aquí
-
+    private http: HttpClient
   ) {}
-bannersPrincipal: any[] = [];
 
-  bannerOfertasUrl: string = ''; // <-- declarada aquí
-
-ngOnInit() {
-  this.cargarOfertasDestacadas();
-  this.cargarBannerOfertas();
-  this.cargarBannersCarrusel();  // ← Cambié el nombre
-
-  window.addEventListener('bannerActualizado', () => {
+  ngOnInit() {
+    this.cargarOfertasDestacadas();
     this.cargarBannerOfertas();
-    this.cargarBannersCarrusel();  // ← Cambié el nombre
-  });
-}
+    this.cargarBannersCarrusel();
 
+    // Escuchar evento de actualización de banners
+    this.bannerListener = () => {
+      console.log('🔄 Evento bannerActualizado recibido');
+      this.cargarBannerOfertas();
+      this.cargarBannersCarrusel();
+    };
+    window.addEventListener('bannerActualizado', this.bannerListener);
+  }
 
-
-// Banner de la sección "Ofertas Destacadas" en Home
-cargarBannerOfertas() {
-  const timestamp = new Date().getTime();
-  this.http.get<{ image: string }>(`https://backend-dinsac-hlf0.onrender.com/banner?tipo=ofertasHome&_=${timestamp}`)
-    .subscribe({
-      next: (res) => {
-        console.log('🏷️ Banner ofertas home recibido:', res);
-        this.bannerOfertasUrl = res.image;
-      },
-      error: (err) => console.error('Error cargando banner ofertas home', err)
-    });
-}
-
-
-cargarBannersCarrusel() {
-  const timestamp = new Date().getTime();
-  this.http.get<any[]>(`https://backend-dinsac-hlf0.onrender.com/banner?tipo=carrusel&_=${timestamp}`)
-    .subscribe({
-      next: (res) => {
-        console.log('🎠 Banners carrusel recibidos:', res);
-        this.bannersPrincipal = res;
-      },
-      error: (err) => console.error("Error cargando banners del carrusel", err)
-    });
-}
+  ngOnDestroy() {
+    // Limpiar listener
+    if (this.bannerListener) {
+      window.removeEventListener('bannerActualizado', this.bannerListener);
+    }
+    
+    // Destruir instancia del carrusel
+    if (this.carouselInstance) {
+      this.carouselInstance.dispose();
+    }
+  }
 
   ngAfterViewInit() {
     // Observador para el video principal
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = this.mainVideo.nativeElement;
-          if (entry.isIntersecting) {
-            video.play().catch((err) => {
-              console.error('Error reproduciendo el video:', err);
-            });
-          } else {
-            video.pause();
-          }
-        });
+    if (this.mainVideo) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const video = this.mainVideo.nativeElement;
+            if (entry.isIntersecting) {
+              video.play().catch((err) => {
+                console.error('Error reproduciendo el video:', err);
+              });
+            } else {
+              video.pause();
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+      observer.observe(this.mainVideo.nativeElement);
+    }
+  }
+
+  /**
+   * ✅ Cargar banners del carrusel
+   */
+  cargarBannersCarrusel() {
+    const timestamp = new Date().getTime();
+    this.http.get<BannerResponse>(
+      `https://backend-dinsac-hlf0.onrender.com/banner?tipo=carrusel&_=${timestamp}`
+    ).subscribe({
+      next: (res) => {
+        console.log('🎠 Response completa del carrusel:', res);
+        
+        // ✅ CLAVE: Acceder a res.imagenes (no directamente a res)
+        if (res.success && res.imagenes && res.imagenes.length > 0) {
+          // Ordenar por orden
+          this.bannersPrincipal = res.imagenes.sort((a, b) => a.orden - b.orden);
+          console.log('✅ Banners cargados:', this.bannersPrincipal);
+          
+          // Reinicializar carrusel de Bootstrap después de actualizar datos
+          this.inicializarCarrusel();
+        } else {
+          console.warn('⚠️ No hay banners en el carrusel');
+          this.bannersPrincipal = [];
+        }
       },
-      {
-        threshold: 0.5,
+      error: (err) => {
+        console.error('❌ Error cargando banners del carrusel:', err);
+        this.bannersPrincipal = [];
       }
-    );
-    observer.observe(this.mainVideo.nativeElement);
+    });
+  }
+
+  /**
+   * ✅ Inicializar carrusel de Bootstrap
+   */
+  private inicializarCarrusel() {
+    setTimeout(() => {
+      const carouselEl = document.getElementById('carouselMain');
+      if (carouselEl && this.bannersPrincipal.length > 0) {
+        // Destruir instancia previa si existe
+        if (this.carouselInstance) {
+          this.carouselInstance.dispose();
+        }
+        
+        // Crear nueva instancia
+        this.carouselInstance = new bootstrap.Carousel(carouselEl, { 
+          interval: 3000, 
+          ride: 'carousel',
+          wrap: true
+        });
+        
+        console.log('✅ Carrusel inicializado');
+      }
+    }, 100);
+  }
+
+  /**
+   * ✅ Cargar banner de ofertas
+   */
+  cargarBannerOfertas() {
+    const timestamp = new Date().getTime();
+    this.http.get<BannerIndividualResponse>(
+      `https://backend-dinsac-hlf0.onrender.com/banner?tipo=ofertasHome&_=${timestamp}`
+    ).subscribe({
+      next: (res) => {
+        console.log('🏷️ Response del banner ofertas:', res);
+        
+        if (res.success && res.image) {
+          this.bannerOfertasUrl = res.image;
+          console.log('✅ Banner ofertas cargado');
+        } else {
+          console.warn('⚠️ No hay banner de ofertas');
+          this.bannerOfertasUrl = '';
+        }
+      },
+      error: (err) => {
+        console.error('❌ Error cargando banner ofertas home:', err);
+        this.bannerOfertasUrl = '';
+      }
+    });
   }
 
   /**
@@ -123,7 +211,6 @@ cargarBannersCarrusel() {
   cargarOfertasDestacadas() {
     this.productService.getProductsByEstado('Oferta').subscribe({
       next: (productos) => {
-        // Solo tomamos los primeros 6 productos
         this.ofertasDestacadas = productos.slice(0, 6);
       },
       error: (err) => {
@@ -161,8 +248,17 @@ cargarBannersCarrusel() {
       cotizacionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
-  irAOfertas() {
-  this.router.navigate(['/ofertas']);
-}
 
+  /**
+   * Ir a página de ofertas
+   */
+  irAOfertas() {
+    this.router.navigate(['/ofertas']);
+  }
+  /**
+ * TrackBy para optimizar renderizado
+ */
+trackByBanner(index: number, banner: BannerCarrusel): string {
+  return banner.id;
+}
 }

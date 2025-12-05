@@ -1,48 +1,80 @@
 <!-- ==================== CARRUSEL PRINCIPAL PREMIUM ==================== -->
-<!-- ==================== CARRUSEL PRINCIPAL PREMIUM ==================== -->
-<div id="carouselMain" class="carousel slide carousel-fade premium-carousel" data-bs-ride="carousel" data-bs-interval="3000">
+<div 
+  id="carouselMain" 
+  class="carousel slide carousel-fade premium-carousel" 
+  data-bs-ride="carousel" 
+  data-bs-interval="3000"
+  *ngIf="bannersPrincipal.length > 0">
 
   <!-- Indicadores Premium -->
   <div class="carousel-indicators">
     <button 
-      *ngFor="let b of bannersPrincipal; let i = index"
+      *ngFor="let banner of bannersPrincipal; let i = index; trackBy: trackByBanner"
       type="button"
       data-bs-target="#carouselMain"
       [attr.data-bs-slide-to]="i"
-      [class.active]="i === 0">
+      [class.active]="i === 0"
+      [attr.aria-current]="i === 0 ? 'true' : null"
+      [attr.aria-label]="'Slide ' + (i + 1)">
     </button>
   </div>
 
   <!-- Slides del carrusel -->
   <div class="carousel-inner">
-
     <div 
       class="carousel-item"
-      *ngFor="let b of bannersPrincipal; let i = index"
+      *ngFor="let banner of bannersPrincipal; let i = index; trackBy: trackByBanner"
       [class.active]="i === 0">
 
       <div class="overlay-gradient"></div>
-      <img [src]="b.image" class="d-block w-100 hero-img" alt="banner principal">
+      <img 
+        [src]="banner.image" 
+        class="d-block w-100 hero-img" 
+        [alt]="'Banner ' + (i + 1)"
+        loading="lazy">
     </div>
-
   </div>
 
   <!-- Controles del carrusel -->
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselMain" data-bs-slide="prev">
+  <button 
+    class="carousel-control-prev" 
+    type="button" 
+    data-bs-target="#carouselMain" 
+    data-bs-slide="prev">
     <div class="control-circle">‹</div>
+    <span class="visually-hidden">Anterior</span>
   </button>
 
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselMain" data-bs-slide="next">
+  <button 
+    class="carousel-control-next" 
+    type="button" 
+    data-bs-target="#carouselMain" 
+    data-bs-slide="next">
     <div class="control-circle">›</div>
+    <span class="visually-hidden">Siguiente</span>
   </button>
 
   <!-- Botón de cotización -->
   <button class="btn-cotizacion" (click)="irACotizar()">
     Cotiza tu producto
   </button>
-
 </div>
 
+<!-- Mensaje si no hay banners -->
+<div 
+  class="no-carousel-message" 
+  *ngIf="bannersPrincipal.length === 0">
+  <p>📸 No hay imágenes en el carrusel</p>
+</div>
+
+<!-- ==================== BANNER DE OFERTAS ==================== -->
+<div class="banner-ofertas-home" *ngIf="bannerOfertasUrl">
+  <img 
+    [src]="bannerOfertasUrl" 
+    alt="Ofertas destacadas" 
+    class="img-fluid"
+    loading="lazy">
+</div>
 
 
 

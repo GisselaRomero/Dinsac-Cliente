@@ -64,6 +64,40 @@ $shadow-medium: 0 10px 30px rgba(0, 0, 0, 0.3);
 
 
 
+
+
+
+
+
+.no-carousel-message {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin: 2rem 0;
+  
+  p {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin: 0;
+  }
+}
+
+.banner-ofertas-home {
+  margin: 2rem 0;
+  
+  img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+}
+
+
+
+
+
+
 // ===================== CARRUSEL PREMIUM =====================
 .premium-carousel {
   position: relative;
