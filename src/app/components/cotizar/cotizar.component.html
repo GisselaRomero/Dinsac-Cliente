@@ -29,131 +29,133 @@
     </div>
 
     <!-- Productos -->
-  <!-- Productos -->
-<div *ngFor="let producto of formData.productos; let i = index" class="producto-group">
-  <label>Producto {{ i + 1 }}</label>
-  
-  <div class="producto-grid">
-    <!-- Dropdown Categoría -->
-    <div class="dropdown-container">
-      <div class="dropdown-header" (click)="toggleCategoria(i)">
-        <span class="selected">
-          {{ producto.categoria || 'Selecciona una categoría' }}
-        </span>
-        <span class="arrow" [class.open]="dropdownAbiertoCategoria[i]">▾</span>
-      </div>
+    <div *ngFor="let producto of formData.productos; let i = index" class="producto-group">
+      <label>Producto {{ i + 1 }}</label>
+      
+      <div class="producto-grid">
+        <!-- Dropdown Categoría -->
+        <div class="dropdown-container">
+          <div class="dropdown-header" (click)="toggleCategoria(i)">
+            <span class="selected">
+              {{ producto.categoria || 'Selecciona una categoría' }}
+            </span>
+            <span class="arrow" [class.open]="dropdownAbiertoCategoria[i]">▾</span>
+          </div>
 
-      <div class="dropdown-body" *ngIf="dropdownAbiertoCategoria[i]">
-        <input type="text"
-               placeholder="Buscar categoría..."
-               [(ngModel)]="categoriaBusqueda[i]"
-               name="categoriaBusqueda{{i}}"
-               class="form-control buscador" />
+          <div class="dropdown-body" *ngIf="dropdownAbiertoCategoria[i]">
+            <input type="text"
+                   placeholder="Buscar categoría..."
+                   [(ngModel)]="categoriaBusqueda[i]"
+                   name="categoriaBusqueda{{i}}"
+                   class="form-control buscador" />
 
-        <div class="dropdown-option"
-             *ngFor="let categoria of getCategoriasFiltradas(i)"
-             (click)="selectCategoria(i, categoria)">
-          {{ categoria }}
-          <small class="muted"> ({{ countProductsInCategory(categoria) }})</small>
+            <div class="dropdown-option"
+                 *ngFor="let categoria of getCategoriasFiltradas(i)"
+                 (click)="selectCategoria(i, categoria)">
+              {{ categoria }}
+              <small class="muted"> ({{ countProductsInCategory(categoria) }})</small>
+            </div>
+            <div *ngIf="getCategoriasFiltradas(i).length === 0" class="dropdown-empty">
+              No hay categorías que coincidan
+            </div>
+          </div>
         </div>
-        <div *ngIf="getCategoriasFiltradas(i).length === 0" class="dropdown-empty">
-          No hay categorías que coincidan
+
+        <!-- Dropdown Equipo -->
+        <div class="dropdown-container" [class.disabled]="!producto.categoria">
+          <div class="dropdown-header" (click)="producto.categoria ? toggleEquipo(i) : null">
+            <span class="selected">
+              {{ producto.equipo || (producto.categoria ? 'Selecciona un equipo' : 'Selecciona categoría primero') }}
+            </span>
+            <span class="arrow" [class.open]="dropdownAbiertoEquipo[i]">▾</span>
+          </div>
+
+          <div class="dropdown-body" *ngIf="dropdownAbiertoEquipo[i]">
+            <input type="text"
+                   placeholder="Buscar equipo..."
+                   [(ngModel)]="equipoBusqueda[i]"
+                   name="equipoBusqueda{{i}}"
+                   class="form-control buscador" />
+
+            <div class="dropdown-option"
+                 *ngFor="let equipo of getEquiposFiltrados(producto.categoria, equipoBusqueda[i])"
+                 (click)="selectEquipo(i, equipo)">
+              {{ equipo }}
+            </div>
+
+            <div *ngIf="getEquiposFiltrados(producto.categoria, equipoBusqueda[i]).length === 0" class="dropdown-empty">
+              No hay equipos en esta categoría
+            </div>
+          </div>
         </div>
+
+        <!-- Cantidad -->
+        <input type="number"
+               class="form-control"
+               [(ngModel)]="producto.cantidad"
+               name="cantidad{{i}}"
+               min="1"
+               placeholder="Cant."
+               required>
+
+        <!-- Botón eliminar -->
+        <button type="button"
+                class="btn btn-danger btn-sm eliminar-btn"
+                (click)="quitarProducto(i)"
+                *ngIf="formData.productos.length > 1">
+          Eliminar
+        </button>
       </div>
     </div>
-
-    <!-- Dropdown Equipo -->
-    <div class="dropdown-container" [class.disabled]="!producto.categoria">
-      <div class="dropdown-header" (click)="producto.categoria ? toggleEquipo(i) : null">
-        <span class="selected">
-          {{ producto.equipo || (producto.categoria ? 'Selecciona un equipo' : 'Selecciona categoría primero') }}
-        </span>
-        <span class="arrow" [class.open]="dropdownAbiertoEquipo[i]">▾</span>
-      </div>
-
-      <div class="dropdown-body" *ngIf="dropdownAbiertoEquipo[i]">
-        <input type="text"
-               placeholder="Buscar equipo..."
-               [(ngModel)]="equipoBusqueda[i]"
-               name="equipoBusqueda{{i}}"
-               class="form-control buscador" />
-
-        <div class="dropdown-option"
-             *ngFor="let equipo of getEquiposFiltrados(producto.categoria, equipoBusqueda[i])"
-             (click)="selectEquipo(i, equipo)">
-          {{ equipo }}
-        </div>
-
-        <div *ngIf="getEquiposFiltrados(producto.categoria, equipoBusqueda[i]).length === 0" class="dropdown-empty">
-          No hay equipos en esta categoría
-        </div>
-      </div>
-    </div>
-
-    <!-- Cantidad -->
-    <input type="number"
-           class="form-control"
-           [(ngModel)]="producto.cantidad"
-           name="cantidad{{i}}"
-           min="1"
-           placeholder="Cant.">
-
-  
-
-    <!-- Botón eliminar -->
-    <button type="button"
-            class="btn btn-danger btn-sm eliminar-btn"
-            (click)="quitarProducto(i)"
-            *ngIf="formData.productos.length > 1">
-      Eliminar
-    </button>
-  </div>
-</div>
 
     <!-- Botón agregar producto -->
     <button type="button" class="btn btn-outline-secondary btn-sm mb-3" (click)="agregarProducto()">
       + Agregar otro producto
     </button>
 
-    <!-- Mensaje -->
+    <!-- Mensaje (AHORA OPCIONAL) -->
     <div class="form-group">
-      <label for="mensaje">Mensaje *</label>
-      <textarea id="mensaje" class="form-control" name="mensaje" [(ngModel)]="formData.mensaje" rows="4" required></textarea>
+      <label for="mensaje">Mensaje (opcional)</label>
+      <textarea id="mensaje" 
+                class="form-control" 
+                name="mensaje" 
+                [(ngModel)]="formData.mensaje" 
+                rows="4" 
+                placeholder="Escribe aquí cualquier detalle adicional sobre tu cotización..."></textarea>
     </div>
 
     <!-- Contacto -->
- <!-- Contacto -->
-<div class="form-group">
-  <label>¿Cómo deseas que te contactemos? *</label>
-  
-  <div class="form-check">
-    <input type="radio" 
-           id="telefono" 
-           name="contacto" 
-           [(ngModel)]="formData.contacto" 
-           value="Telefono"
-           required>
-    <label for="telefono">Teléfono</label>
-  </div>
-  
-  <div class="form-check">
-    <input type="radio" 
-           id="whatsapp" 
-           name="contacto" 
-           [(ngModel)]="formData.contacto" 
-           value="Whatsapp">
-    <label for="whatsapp">WhatsApp</label>
-  </div>
-  
-  <div class="form-check">
-    <input type="radio" 
-           id="correo" 
-           name="contacto" 
-           [(ngModel)]="formData.contacto" 
-           value="Correo">
-    <label for="correo">Correo</label>
-  </div>
-</div>
+    <div class="form-group">
+      <label>¿Cómo deseas que te contactemos? *</label>
+      
+      <div class="form-check">
+        <input type="radio" 
+               id="telefono" 
+               name="contacto" 
+               [(ngModel)]="formData.contacto" 
+               value="Telefono"
+               required>
+        <label for="telefono">Teléfono</label>
+      </div>
+      
+      <div class="form-check">
+        <input type="radio" 
+               id="whatsapp" 
+               name="contacto" 
+               [(ngModel)]="formData.contacto" 
+               value="Whatsapp">
+        <label for="whatsapp">WhatsApp</label>
+      </div>
+      
+      <div class="form-check">
+        <input type="radio" 
+               id="correo" 
+               name="contacto" 
+               [(ngModel)]="formData.contacto" 
+               value="Correo">
+        <label for="correo">Correo</label>
+      </div>
+    </div>
 
     <!-- Términos -->
     <div class="form-check">
@@ -162,7 +164,7 @@
     </div>
 
     <!-- Botón PDF -->
-    <button  type="button" class="btn btn-outline-primary mt-3" (click)="generarPDF()">
+    <button type="button" class="btn btn-outline-primary mt-3" (click)="generarPDF()">
       🧾 Generar Cotización PDF
     </button>
   </form>
