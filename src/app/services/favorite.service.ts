@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FavoriteService {
-  private apiUrl = 'http://localhost:3000/favorites'; // 👈 tu ruta base
+  private apiUrl = 'https://backend-dinsac-hlf0.onrender.com/favorites'; // 👈 tu ruta base
 
   constructor(private http: HttpClient) {}
 

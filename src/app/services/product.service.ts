@@ -32,7 +32,7 @@ export interface Product {
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:3000/products';
+  private apiUrl = 'https://backend-dinsac-hlf0.onrender.com/products';
   
   constructor(private http: HttpClient) {}
   
@@ -73,7 +73,7 @@ getProductosEnOferta(): Observable<Product[]> {
 
 
 getOfertas(): Observable<Product[]> {
-  return this.http.get<Product[]>('http://localhost:3000/ofertas'); // Cambia la URL según tu API
+  return this.http.get<Product[]>('https://backend-dinsac-hlf0.onrender.com/ofertas'); // Cambia la URL según tu API
 }
 // En tu product.service.ts
 

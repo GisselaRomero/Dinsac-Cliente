@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class LogiclienteService {
 
-  private apiUrl = 'http://localhost:3000/clientes'; // Cambia si usas otro puerto
+  private apiUrl = 'https://backend-dinsac-hlf0.onrender.com/clientes'; // Cambia si usas otro puerto
 
   constructor(private http: HttpClient) {}
 

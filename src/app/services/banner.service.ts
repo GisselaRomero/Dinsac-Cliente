@@ -9,6 +9,6 @@ export class BannerService {
   constructor(private http: HttpClient) {}
 
   getBanner(tipo: string): Observable<{ image: string }> {
-    return this.http.get<{ image: string }>(`http://localhost:3000/banner?tipo=${tipo}`);
+    return this.http.get<{ image: string }>(`https://backend-dinsac-hlf0.onrender.com/banner?tipo=${tipo}`);
   }
 }
