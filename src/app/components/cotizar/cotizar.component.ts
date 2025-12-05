@@ -98,7 +98,7 @@ export class CotizarComponent implements OnInit {
   }
 
   obtenerUltimoNumero(): void {
-    this.http.get<{ total: number }>('http://localhost:3000/cotizaciones/total')
+    this.http.get<{ total: number }>('https://backend-dinsac-hlf0.onrender.com/cotizaciones/total')
       .subscribe({
         next: (res) => {
           this.ultimoNumero = res.total;
@@ -182,7 +182,7 @@ generarPDF(): void {
         userId: this.usuarioActual._id
       };
 
-      this.http.post('http://localhost:3000/cotizaciones', body).subscribe({
+      this.http.post('https://backend-dinsac-hlf0.onrender.com/cotizaciones', body).subscribe({
         next: (res: any) => {
           alert(`✅ ${res.message || 'Cotización guardada y enviada correctamente'}`);
 

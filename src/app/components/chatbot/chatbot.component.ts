@@ -31,7 +31,7 @@ export class ChatbotComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.clienteId = this.generarClienteId();
 
-    this.socket = io('http://localhost:3000');
+    this.socket = io('https://backend-dinsac-hlf0.onrender.com');
 
  this.socket.on('connect', () => {
 this.socket.emit('registrar', { 
@@ -128,7 +128,7 @@ generarClienteId(): string {
     const formData = new FormData();
     formData.append('archivo', archivo);
 
-    fetch('http://localhost:3000/upload-chat', {
+    fetch('https://backend-dinsac-hlf0.onrender.com/upload-chat', {
       method: 'POST',
       body: formData
     })

@@ -41,7 +41,7 @@ export class HistorialComponent implements OnInit {
   mostrarModal = false;
   cotizacionSeleccionada: Cotizacion | null = null;
 
-  private readonly API_URL = 'http://localhost:3000';
+  private readonly API_URL = 'https://backend-dinsac-hlf0.onrender.com';
 
   constructor(
     private http: HttpClient,

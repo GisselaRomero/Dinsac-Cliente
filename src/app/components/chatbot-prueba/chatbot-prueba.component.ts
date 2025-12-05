@@ -41,7 +41,7 @@ export class ChatbotPruebaComponent implements OnInit {
     this.isLoading = true;
 
     // 👉 REGISTRA LA INTERACCIÓN EN EL BACKEND
-    this.http.post('http://localhost:3000/interacciones', {
+    this.http.post('https://backend-dinsac-hlf0.onrender.com/interacciones', {
       usuario: 'Usuario Anónimo',
       mensaje: userMessage,
       fecha: new Date().toISOString()

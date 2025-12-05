@@ -85,7 +85,7 @@ cargarBannerOfertas() {
 
 cargarBannersCarrusel() {
   const timestamp = new Date().getTime();
-  this.http.get<any[]>(`http://localhost:3000/banner?tipo=carrusel&_=${timestamp}`)
+  this.http.get<any[]>(`https://backend-dinsac-hlf0.onrender.com/banner?tipo=carrusel&_=${timestamp}`)
     .subscribe({
       next: (res) => {
         console.log('🎠 Banners carrusel recibidos:', res);
