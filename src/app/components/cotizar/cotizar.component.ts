@@ -162,79 +162,91 @@ generarPDF(): void {
   };
 
   if (!this.validarFormulario()) {
-    alert('⚠️ Completa todos los campos obligatorios antes de generar la cotización.');
-    return;
+    return; // El validar ya muestra el alert
   }
 
-  console.log('📋 Datos del formulario antes de enviar:', this.formData);
+  console.log('📋 Generando PDF...');
 
   try {
     pdfMake.createPdf(this.getDocumentDefinition()).getBase64((data: string) => {
       
+      // ✅ Validar que el PDF se generó correctamente
+      if (!data || data.length === 0) {
+        alert('❌ Error al generar el PDF. Intenta nuevamente.');
+        return;
+      }
+
       // ✅ CONSTRUIR EL BODY COMPLETO
       const body = {
         userId: this.usuarioActual._id,
         numeroCotizacion: this.numeroGenerado,
-        nombre: this.formData.nombre,
-        dniRuc: this.formData.dniRuc,
-        email: this.formData.email,
-        telefonoMovil: this.formData.telefonoMovil,
-        mensaje: this.formData.mensaje || '',
-        contacto: this.formData.contacto,
-        terminos: this.formData.terminos,
+        nombre: this.formData.nombre.trim(),
+        dniRuc: this.formData.dniRuc.trim(),
+        email: this.formData.email.trim().toLowerCase(),
+        telefonoMovil: this.formData.telefonoMovil.trim(),
+        mensaje: this.formData.mensaje?.trim() || '',
+        contacto: this.formData.contacto.trim(),
         productos: this.formData.productos.map(p => ({
-          categoria: p.categoria || '',
-          equipo: p.equipo || '',
-          cantidad: p.cantidad || 1,
-          precioUnitario: 0 // Backend espera este campo
+          categoria: p.categoria?.trim() || '',
+          equipo: p.equipo?.trim() || '',
+          cantidad: parseInt(p.cantidad.toString()) || 1,
+          precioUnitario: 0
         })),
         pdfBase64: data
       };
 
-      // ✅ LOG COMPLETO ANTES DE ENVIAR
-      console.log('📤 Enviando datos completos al backend:', {
-        userId: body.userId,
+      // ✅ LOG DETALLADO
+      console.log('📤 Enviando cotización:', {
         numeroCotizacion: body.numeroCotizacion,
         nombre: body.nombre,
-        dniRuc: body.dniRuc,
         email: body.email,
-        telefonoMovil: body.telefonoMovil,
-        contacto: body.contacto,
         productos: body.productos.length,
-        pdfBase64Length: body.pdfBase64.length
+        pdfLength: body.pdfBase64.length,
+        userId: body.userId
       });
 
+      // ✅ Enviar al backend
       this.http.post('https://backend-dinsac-hlf0.onrender.com/cotizaciones', body).subscribe({
         next: (res: any) => {
           console.log('✅ Respuesta del servidor:', res);
-          alert(`✅ ${res.message || 'Cotización guardada y enviada correctamente'}`);
+          
+          if (res.success) {
+            alert(`✅ Cotización ${res.numeroCotizacion} generada correctamente.\n\nSe ha enviado una copia a tu correo electrónico.`);
 
-          // 🧩 Mostrar el PDF en una nueva pestaña
-          const pdfWindow = window.open('', '_blank');
-          if (pdfWindow) {
-            pdfWindow.document.write(
-              `<iframe width='100%' height='100%' src='data:application/pdf;base64,${encodeURI(data)}'></iframe>`
-            );
+            // Mostrar el PDF en nueva pestaña
+            const pdfWindow = window.open('', '_blank');
+            if (pdfWindow) {
+              pdfWindow.document.write(
+                `<iframe width='100%' height='100%' src='data:application/pdf;base64,${encodeURI(data)}'></iframe>`
+              );
+            }
+
+            this.obtenerUltimoNumero();
+            this.limpiarFormulario();
+          } else {
+            alert(`❌ ${res.message || 'Error al procesar la cotización'}`);
           }
-
-          this.obtenerUltimoNumero();
-          this.limpiarFormulario();
         },
         error: (err: any) => {
-          console.error('❌ Error al enviar cotización:', err);
-          console.error('❌ Detalles del error:', {
-            status: err.status,
-            statusText: err.statusText,
-            error: err.error,
-            message: err.message
-          });
-          alert('❌ Error al guardar o enviar la cotización. Revisa la consola para más detalles.');
+          console.error('❌ Error completo:', err);
+          
+          let mensajeError = 'Error al guardar la cotización.';
+          
+          if (err.error?.message) {
+            mensajeError = err.error.message;
+          } else if (err.status === 0) {
+            mensajeError = 'No se pudo conectar con el servidor. Verifica tu conexión.';
+          } else if (err.status === 500) {
+            mensajeError = 'Error en el servidor. Por favor intenta nuevamente.';
+          }
+          
+          alert(`❌ ${mensajeError}\n\nDetalles: ${err.error?.error || err.message || 'Error desconocido'}`);
         }
       });
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('❌ Error al generar PDF:', error);
-    alert('⚠️ Error al generar el PDF. Verifica que todos los campos estén completos.');
+    alert(`⚠️ Error al generar el PDF: ${error.message || 'Error desconocido'}`);
   }
 }
 
