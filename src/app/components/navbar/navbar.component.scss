@@ -17,7 +17,6 @@
   max-height: 80px;
 }
 
-/* Contacto centrado en desktop */
 .navbar-contact-container {
   display: flex;
   align-items: center;
@@ -36,7 +35,6 @@
 }
 
 .contact-link:hover { color: #00e676; }
-
 .contact-link i { font-size: 22px; }
 
 .separator {
@@ -128,10 +126,14 @@
   font-weight: bold;
 }
 
-/* ===================== RESPONSIVE ===================== */
+/* =====================
+   RESPONSIVE GENERAL
+   ===================== */
 
 /* Tablets */
 @media (max-width: 991px) {
+
+  /* NAVBAR SUPERIOR */
   .custom-navbar-social {
     flex-wrap: wrap;
     justify-content: center;
@@ -148,12 +150,9 @@
     order: 2;
   }
 
+  /* NAVBAR PRINCIPAL */
   .custom-navbar-main input.form-control {
     width: 250px;
-  }
-
-  .custom-navbar-main input.form-control:focus {
-    width: 280px;
   }
 
   .navbar-icons {
@@ -161,7 +160,7 @@
   }
 }
 
-/* Móviles */
+/* ===================== 📱 MÓVILES ===================== */
 @media (max-width: 768px) {
 
   /* NAVBAR SUPERIOR */
@@ -198,44 +197,62 @@
 
   /* NAVBAR PRINCIPAL */
   .custom-navbar-main {
-    padding: 10px 18px;
+    padding: 12px 20px;
+  }
+
+  .navbar-nav .nav-item {
+    margin: 5px 0;
   }
 
   .custom-navbar-main .nav-link {
-    margin: 10px 0;
+    margin: 8px 0;
+    font-size: 17px;
   }
 
+  /* Buscador */
   .custom-navbar-main input.form-control {
-    width: 180px;
+    width: 100%;
+    max-width: 200px;
     height: 36px;
     font-size: 15px;
   }
 
   .custom-navbar-main input.form-control:focus {
-    width: 210px;
+    max-width: 230px;
   }
 
+  /* Íconos */
   .navbar-icons {
-    gap: 18px;
+    gap: 20px;
+  }
+
+  .icon-btn i {
+    font-size: 18px;
   }
 }
 
-/* Muy pequeño */
+/* ===================== 📱 EXTRA SMALL ===================== */
 @media (max-width: 450px) {
+
   .custom-navbar-main input.form-control {
-    width: 150px;
+    max-width: 150px;
   }
 
   .custom-navbar-main input.form-control:focus {
-    width: 170px;
+    max-width: 170px;
   }
 
   .navbar-icons {
     gap: 14px;
   }
+
+  .icon-btn i {
+    font-size: 17px;
+  }
 }
+
 /* ===========================
-   🔍 ESTILO DROPDOWN BUSCADOR
+   🔍 DROPDOWN BUSCADOR
    =========================== */
 .sugerencias-dropdown {
   position: absolute;
@@ -297,22 +314,10 @@
   color: #777;
 }
 
-/* ===========================
-   📱 RESPONSIVE
-   =========================== */
+/* =====================
+   RESPONSIVE DROPDOWN
+   ===================== */
 
-/* Tablets */
-@media (max-width: 991px) {
-  .sugerencias-dropdown {
-    max-height: 260px;
-  }
-  .sugerencia-img {
-    width: 48px;
-    height: 48px;
-  }
-}
-
-/* Móviles */
 @media (max-width: 768px) {
   .sugerencias-dropdown {
     top: 40px;
@@ -328,12 +333,8 @@
   .sugerencia-nombre {
     font-size: 15px;
   }
-  .sugerencia-categoria {
-    font-size: 12px;
-  }
 }
 
-/* Muy pequeño */
 @media (max-width: 450px) {
   .sugerencias-dropdown {
     top: 38px;
