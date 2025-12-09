@@ -62,7 +62,9 @@ export class ChatClienteComponent implements OnInit, OnDestroy {
 
   // 🔌 Conectar a Socket.IO
   conectarSocket(): void {
-    this.socket = io('https://backend-dinsac-hlf0.onrender.com/');
+    this.socket = io('https://backend-dinsac-hlf0.onrender.com/', {
+      transports: ['websocket', 'polling']
+    });
 
     this.socket.on('connect', () => {
       console.log('✅ Conectado al chat:', this.clienteId);
@@ -75,21 +77,28 @@ export class ChatClienteComponent implements OnInit, OnDestroy {
       this.cargarHistorial();
     });
 
+    this.socket.on('connect_error', (error) => {
+      console.error('❌ Error de conexión:', error);
+    });
+
     // 📩 Recibir mensajes del admin
     this.socket.on('mensaje', (msg: Mensaje) => {
+      console.log('📩 Mensaje recibido del socket:', msg);
+      
       if (msg.clienteId === this.clienteId && msg.remitente === 'admin') {
-
-        // Evitar duplicados
+        // ✅ Evitar duplicados comparando solo mensaje y remitente
         const existe = this.mensajes.some(
-          m =>
-            m.mensaje === msg.mensaje &&
-            m.fecha === msg.fecha &&
-            m.remitente === msg.remitente
+          m => m.mensaje === msg.mensaje && 
+               m.remitente === msg.remitente &&
+               Math.abs(new Date(m.fecha || '').getTime() - new Date(msg.fecha || '').getTime()) < 2000
         );
 
         if (!existe) {
           this.mensajes.push(msg);
+          console.log('✅ Mensaje del admin agregado al chat');
           setTimeout(() => this.scrollToBottom(), 100);
+        } else {
+          console.log('⚠️ Mensaje duplicado, no se agrega');
         }
       }
     });
@@ -97,9 +106,10 @@ export class ChatClienteComponent implements OnInit, OnDestroy {
 
   // 📜 Cargar historial
   cargarHistorial(): void {
-    this.http.get<Mensaje[]>(`https://backend-dinsac-hlf0.onrender.com//chats/${this.clienteId}`)
+    this.http.get<Mensaje[]>(`https://backend-dinsac-hlf0.onrender.com/chats/${this.clienteId}`)
       .subscribe({
         next: (res) => {
+          console.log('✅ Historial cargado:', res.length, 'mensajes');
           this.mensajes = res;
           setTimeout(() => this.scrollToBottom(), 100);
         },
@@ -108,59 +118,37 @@ export class ChatClienteComponent implements OnInit, OnDestroy {
   }
 
   // 📤 Enviar mensaje normal
-  enviarMensaje(): void {
-    if (!this.mensajeEscrito.trim()) return;
+// 📤 Enviar archivo con nombre de usuario
+// 📤 Enviar archivo con nombre de usuario
+enviarArchivo(event: any): void {
+  const archivo = event.target.files[0];
+  if (!archivo) return;
 
-    const nuevoMensaje: Mensaje = {
-      remitente: 'cliente',
-      mensaje: this.mensajeEscrito.trim(),
-      clienteId: this.clienteId,
-      nombre: this.nombre,
-      fecha: new Date().toISOString()
-    };
+  const formData = new FormData();
+  formData.append('archivo', archivo);
+  formData.append('clienteId', this.clienteId);
 
-    this.mensajes.push(nuevoMensaje);
-    this.socket.emit('mensaje', nuevoMensaje);
+  this.http.post('https://backend-dinsac-hlf0.onrender.com/upload-chat', formData)
+    .subscribe((res: any) => {
 
-    this.mensajeEscrito = '';
-    setTimeout(() => this.scrollToBottom(), 50);
-  }
+      const nuevoMsg: Mensaje = {
+        remitente: 'cliente',
+        clienteId: this.clienteId,
+        mensaje: res.url,
+        nombre: this.nombre,  // ✅ Enviar el nombre real del usuario
+        fecha: new Date().toISOString()
+      };
 
-  // 📎 Abrir selector de archivos
-  abrirSelector(): void {
-    document.getElementById('fileInput')?.click();
-  }
+      this.mensajes.push(nuevoMsg);
+      this.socket.emit('mensaje', nuevoMsg);
+      setTimeout(() => this.scrollToBottom(), 100);
+    });
 
-  // 📤 Enviar archivo (PDF o imagen)
-  enviarArchivo(event: any): void {
-    const archivo = event.target.files[0];
-    if (!archivo) return;
+  event.target.value = '';
+}
 
-    const formData = new FormData();
-    formData.append('archivo', archivo);
-    formData.append('clienteId', this.clienteId);
 
-    this.http.post<{ url: string }>('https://backend-dinsac-hlf0.onrender.com/upload-chat', formData)
-      .subscribe({
-        next: (res) => {
-          const nuevoMensaje: Mensaje = {
-            remitente: 'cliente',
-            mensaje: res.url, // 📁 URL del archivo
-            clienteId: this.clienteId,
-            nombre: this.nombre,
-            fecha: new Date().toISOString()
-          };
 
-          this.mensajes.push(nuevoMensaje);
-          this.socket.emit('mensaje', nuevoMensaje);
-
-          setTimeout(() => this.scrollToBottom(), 100);
-        },
-        error: (err) => console.error('❌ Error al subir archivo:', err)
-      });
-
-    event.target.value = '';
-  }
 
   // 🕒 Formatear hora
   obtenerHora(fecha?: string): string {
@@ -172,6 +160,38 @@ export class ChatClienteComponent implements OnInit, OnDestroy {
     });
   }
 
+  // 📄 Detectar si es un archivo
+  esArchivo(mensaje: string): boolean {
+    return mensaje.includes('https://backend-dinsac-hlf0.onrender.com/uploads/');
+  }
+
+  // 📝 Obtener nombre del archivo
+  obtenerNombreArchivo(url: string): string {
+    const partes = url.split('/');
+    const nombreCompleto = partes[partes.length - 1];
+    
+    // Remover timestamp y decodificar
+    const nombreSinTimestamp = nombreCompleto.substring(nombreCompleto.indexOf('-') + 1);
+    return decodeURIComponent(nombreSinTimestamp);
+  }
+
+  // 📎 Obtener extensión del archivo
+  obtenerExtension(url: string): string {
+    const extension = url.split('.').pop()?.toLowerCase() || '';
+    return extension;
+  }
+
+  // 🖼️ Verificar si es imagen
+  esImagen(url: string): boolean {
+    const ext = this.obtenerExtension(url);
+    return ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext);
+  }
+
+  // 📄 Verificar si es PDF
+  esPDF(url: string): boolean {
+    return this.obtenerExtension(url) === 'pdf';
+  }
+
   // ⬇️ Scroll automático
   scrollToBottom(): void {
     const contenedor = document.querySelector('.mensajes');
@@ -181,5 +201,31 @@ export class ChatClienteComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.socket) this.socket.disconnect();
   }
+// 📎 Abrir selector de archivos
+abrirSelector(): void {
+  const input: any = document.getElementById('fileInput');
+  if (input) {
+    input.click();
+  }
+}
+
+// 💬 Enviar mensaje de texto normal
+enviarMensaje(): void {
+  if (!this.mensajeEscrito.trim()) return;
+
+  const nuevoMsg: Mensaje = {
+    remitente: 'cliente',
+    clienteId: this.clienteId,
+    mensaje: this.mensajeEscrito,
+    nombre: this.nombre,  // ✅ Enviar el nombre real del usuario
+    fecha: new Date().toISOString()
+  };
+
+  this.mensajes.push(nuevoMsg);
+  this.socket.emit('mensaje', nuevoMsg);
+
+  this.mensajeEscrito = '';
+  setTimeout(() => this.scrollToBottom(), 100);
+}
 
 }
