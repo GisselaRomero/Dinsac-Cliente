@@ -20,6 +20,8 @@ import { ChatbotComponent } from './components/chatbot/chatbot.component';
 import { ChatbotPruebaComponent } from './components/chatbot-prueba/chatbot-prueba.component';
 import { HistorialComponent } from './components/historial/historial.component';
 import { ChatClienteComponent } from './components/chat-cliente/chat-cliente.component';
+import { ProductosTodosComponent } from './components/productos-todos/productos-todos.component';
+
 
 export const routes = [
   { path: '', component: HomeComponent },
@@ -38,6 +40,7 @@ export const routes = [
   { path: 'categoria-productos/:nombre', component: CategoriaProductosComponent },
   { path: 'historial', component: HistorialComponent },
   { path: 'chat-cliente', component: ChatClienteComponent },
+  { path: 'productos-todos', component: ProductoDetalleComponent },
 
 
   // Ruta lazy load para videos
@@ -46,7 +49,13 @@ export const routes = [
     loadComponent: () =>
       import('./components/videos-page/videos-page.component').then(m => m.VideosPageComponent),
   },
-  
+  {
+  path: 'productos',
+  loadComponent: () =>
+    import('./components/productos-todos/productos-todos.component')
+    .then(m => m.ProductosTodosComponent)
+},
+
   // Redirección por defecto
   { path: '**', redirectTo: '' }
 ];

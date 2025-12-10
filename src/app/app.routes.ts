@@ -15,6 +15,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ChatbotComponent } from './components/chatbot/chatbot.component';
 import { HistorialComponent } from './components/historial/historial.component';
 import { ChatClienteComponent } from './components/chat-cliente/chat-cliente.component';
+import { ProductosTodosComponent } from './components/productos-todos/productos-todos.component';
 
 
 export const routes = [
@@ -31,6 +32,7 @@ export const routes = [
   { path: 'chatbot', component: ChatbotComponent },
   { path: 'producto-detalle/:id', component: ProductoDetalleComponent },
   { path: 'chat-cliente', component: ChatClienteComponent },
+  { path: 'productos-todos', component: ProductoDetalleComponent },
 
 
   {

@@ -161,5 +161,12 @@ toggleCategorias(event: Event) {
   }
 }
 
+cerrarMenuBusqueda() {
+  const navbar = document.getElementById('navbarMain');
+  if (navbar?.classList.contains('show')) {
+    navbar.classList.remove('show');
+  }
+}
+
 
 }
