@@ -206,8 +206,8 @@ generarPDF(): void {
       });
 
       // ✅ Enviar al backend
-      this.http.post('https://backend-dinsac-hlf0.onrender.com/cotizaciones', body).subscribe({
-        next: (res: any) => {
+this.http.post('https://backend-dinsac-hlf0.onrender.com/cotizaciones', body).subscribe({
+  next: (res: any) => {
           console.log('✅ Respuesta del servidor:', res);
           
           if (res.success) {
