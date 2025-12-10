@@ -67,13 +67,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
       const tags = (p.tagsText || '').toLowerCase();
       const features = (p.featuresText || '').toLowerCase();
       const estado = (p.estado || '').toLowerCase();
+    const codigo = (p.codigo || '').toString().toLowerCase(); // 🔥 NUEVO
+
 
       return nombre.includes(query) ||
              descripcion.includes(query) ||
              categoria.includes(query) ||
              tags.includes(query) ||
              features.includes(query) ||
-             estado.includes(query);
+             estado.includes(query)||
+       codigo.includes(query); // ✔️ Ahora sí
+
     }).slice(0, 8); // 🔥 Máximo 8 sugerencias
 
     this.mostrarSugerencias = this.sugerencias.length > 0;
