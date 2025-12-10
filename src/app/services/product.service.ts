@@ -8,6 +8,7 @@ export interface Product {
   id: any;
   _id?: string;
   name: string;
+  codigo?: string;
   description: string;
   image: string;
   image1: string;

@@ -149,4 +149,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 }
 
+toggleCategorias(event: Event) {
+  if (window.innerWidth <= 991) {
+    event.preventDefault(); // evita navegar
+    const item = (event.target as HTMLElement).closest('.categories-menu');
+    item?.classList.toggle('open');
+  }
+}
+
+
 }

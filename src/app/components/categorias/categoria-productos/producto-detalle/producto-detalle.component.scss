@@ -107,6 +107,18 @@
       color: #6c757d;
       margin-bottom: 1rem;
     }
+    .codigo {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #164d6c;        /* el mismo azul del título */
+  margin-bottom: 0.8rem;
+  background: #e9f2f8;   /* suave azul para destacar */
+  padding: 8px 12px;
+  border-left: 4px solid #164d6c;
+  border-radius: 8px;
+  display: inline-block;
+}
+
 
     .descripcion {
       font-size: 1.2rem;
@@ -160,6 +172,10 @@
         }
       }
     }
+
+
+
+
 
     /* ===== BOTÓN COTIZAR ===== */
     .acciones {
