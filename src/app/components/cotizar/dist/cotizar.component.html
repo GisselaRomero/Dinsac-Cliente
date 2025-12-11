@@ -1,3 +1,60 @@
+<form id="contactForm">
+    <label for="email">Tu Correo Electrónico:</label>
+    <input type="email" id="email" required><br><br>
+
+    <label for="subject">Asunto:</label>
+    <input type="text" id="subject" required><br><br>
+
+    <label for="message">Mensaje:</label>
+    <textarea id="message" required></textarea><br><br>
+
+    <button type="submit">Enviar Mensaje</button>
+
+    <p id="statusMessage"></p>
+</form>
+
+<script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Evita el envío tradicional del formulario
+
+        const statusMessage = document.getElementById('statusMessage');
+        statusMessage.textContent = 'Enviando...';
+
+        // index.html (Fragmento de JavaScript)
+
+const data = {
+    // CAMBIO CLAVE: Cambia el nombre de la variable aquí
+    email_del_destinatario: document.getElementById('email').value, 
+    asunto: document.getElementById('subject').value,
+    mensaje: document.getElementById('message').value
+};
+
+        // Cambia esta URL por la URL donde desplegaste tu servidor Node.js
+        const SERVER_URL = 'http://localhost:3000/send-email'; 
+
+        fetch(SERVER_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                statusMessage.textContent = '✅ ' + data.message;
+                document.getElementById('contactForm').reset(); // Limpia el formulario
+            } else {
+                statusMessage.textContent = '❌ ' + data.error;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            statusMessage.textContent = '❌ Error de conexión con el servidor.';
+        });
+    });
+</script>
+
 <div *ngIf="!usuarioActual" class="alerta-sesion">
   ⚠️ Debes iniciar sesión para poder generar una cotización.
   <button routerLink="/login-cliente" class="btn-iniciar">Iniciar sesión</button>
