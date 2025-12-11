@@ -494,4 +494,37 @@ private validarFormulario(): boolean {
       this.equipoBusqueda.splice(i, 1);
     }
   }
+
+  enviarEmail(event: any) {
+  event.preventDefault();
+
+  const email = (document.getElementById('email') as HTMLInputElement).value;
+  const subject = (document.getElementById('subject') as HTMLInputElement).value;
+  const message = (document.getElementById('message') as HTMLTextAreaElement).value;
+
+  const statusMessage = document.getElementById('statusMessage') as HTMLElement;
+  statusMessage.textContent = 'Enviando...';
+
+  const data = {
+    email_del_destinatario: email,
+    asunto: subject,
+    mensaje: message
+  };
+
+  this.http.post('https://backend-dinsac-77sq.onrender.com/send-email', data)
+    .subscribe({
+      next: (res: any) => {
+        if (res.message) {
+          statusMessage.textContent = '✅ ' + res.message;
+          (document.getElementById('contactForm') as HTMLFormElement).reset();
+        } else {
+          statusMessage.textContent = '❌ ' + res.error;
+        }
+      },
+      error: () => {
+        statusMessage.textContent = '❌ Error de conexión con el servidor.';
+      }
+    });
+}
+
 }
