@@ -30,7 +30,7 @@ const data = {
 };
 
         // Cambia esta URL por la URL donde desplegaste tu servidor Node.js
-        const SERVER_URL = 'http://localhost:3000/send-email'; 
+        const SERVER_URL = 'https://backend-dinsac-77sq.onrender.com/send-email'; 
 
         fetch(SERVER_URL, {
             method: 'POST',
@@ -54,6 +54,10 @@ const data = {
         });
     });
 </script>
+
+
+
+
 
 <div *ngIf="!usuarioActual" class="alerta-sesion">
   ⚠️ Debes iniciar sesión para poder generar una cotización.
