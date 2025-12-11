@@ -1,32 +1,14 @@
-<form id="contactForm" (submit)="enviarEmail($event)">
-    <label for="email">Tu Correo Electrónico:</label>
-    <input type="email" id="email" required /><br><br>
-
-    <label for="subject">Asunto:</label>
-    <input type="text" id="subject" required /><br><br>
-
-    <label for="message">Mensaje:</label>
-    <textarea id="message" required></textarea><br><br>
-
-    <button type="submit">Enviar Mensaje</button>
-
-    <p id="statusMessage"></p>
-</form>
-
-
-
-
-
-
 <div *ngIf="!usuarioActual" class="alerta-sesion">
   ⚠️ Debes iniciar sesión para poder generar una cotización.
   <button routerLink="/login-cliente" class="btn-iniciar">Iniciar sesión</button>
 </div>
 
 <div class="cotizar-form">
-  <h2>Llena el formulario para cotizar</h2>
+  <h2>📧 Solicitar Cotización</h2>
 
-  <form (ngSubmit)="onSubmit()" #cotizarForm="ngForm">
+  <!-- ✅ FORMULARIO UNIFICADO - Solo envía correo -->
+  <form (submit)="enviarEmail($event)" #cotizarForm="ngForm">
+    
     <!-- Datos personales -->
     <div class="form-group">
       <label for="nombre">Nombres y apellidos *</label>
@@ -44,8 +26,8 @@
     </div>
 
     <div class="form-group">
-      <label for="telefonoMovil">Teléfono móvil *</label>
-      <input type="text" id="telefonoMovil" class="form-control" name="telefonoMovil" [(ngModel)]="formData.telefonoMovil" required>
+      <label for="telefonoMovil">Teléfono móvil (9 dígitos) *</label>
+      <input type="text" id="telefonoMovil" class="form-control" name="telefonoMovil" [(ngModel)]="formData.telefonoMovil" required maxlength="9">
     </div>
 
     <!-- Productos -->
@@ -133,9 +115,9 @@
       + Agregar otro producto
     </button>
 
-    <!-- Mensaje (AHORA OPCIONAL) -->
+    <!-- Mensaje (OPCIONAL) -->
     <div class="form-group">
-      <label for="mensaje">Mensaje (opcional)</label>
+      <label for="mensaje">Mensaje adicional (opcional)</label>
       <textarea id="mensaje" 
                 class="form-control" 
                 name="mensaje" 
@@ -183,9 +165,9 @@
       <label for="terminos">Acepto términos y condiciones *</label>
     </div>
 
-    <!-- Botón PDF -->
-    <button type="button" class="btn btn-outline-primary mt-3" (click)="generarPDF()">
-      🧾 Generar Cotización PDF
-    </button>
+    <!-- ✅ BOTÓN PRINCIPAL - Envía correo -->
+<button type="button" class="btn btn-outline-primary" (click)="generarPDF()">
+  🧾 Generar Cotización PDF
+</button>
   </form>
 </div>
