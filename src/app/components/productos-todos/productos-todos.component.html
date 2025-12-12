@@ -1,39 +1,70 @@
 <div class="productos-container">
 
   <h2>Todos los productos</h2>
-<div class="search-box">
-  <input 
-    type="text" 
-    placeholder="Buscar productos..."
-    [(ngModel)]="searchQuery"
-    (input)="filtrarProductos()"
-  >
-</div>
 
-  <!-- GRID -->
-  <div class="productos-grid">
+  <!-- BUSCADOR -->
+  <div class="search-box">
+    <input 
+      type="text" 
+      placeholder="Buscar productos por nombre, descripción o categoría..."
+      [(ngModel)]="searchQuery"
+      (input)="filtrarProductos()"
+    >
+  </div>
+
+  <!-- ESTADOS -->
+  <div class="loading-message" *ngIf="loading">
+    <p>Cargando productos...</p>
+  </div>
+
+  <div class="error-message" *ngIf="error">
+    <p>{{ error }}</p>
+  </div>
+
+  <div class="no-products" *ngIf="productosPaginados.length === 0 && !loading && !error">
+    <p>No se encontraron productos.</p>
+  </div>
+
+  <!-- GRID DE PRODUCTOS -->
+  <div class="productos-grid" *ngIf="!loading && !error">
     <div 
       class="producto-card" 
       *ngFor="let producto of productosPaginados"
       (click)="verDetalle(producto)"
     >
 
-      <!-- Favorito -->
-      <button class="favorito-btn">
+      <!-- FAVORITO -->
+      <button 
+        class="favorito-btn" 
+        [class.active]="esFavorito(producto.id ?? producto._id)"
+        (click)="toggleFavorito($event, producto)"
+        title="Agregar a favoritos"
+      >
         <i class="fa-solid fa-heart heart"></i>
       </button>
 
-      <!-- Imagen -->
+      <!-- IMAGEN -->
       <img [src]="producto.image" [alt]="producto.name">
 
-      <!-- Información -->
+      <!-- INFORMACIÓN -->
       <div class="producto-info">
         <h3>{{ producto.name }}</h3>
         <p>{{ producto.description }}</p>
 
+        <!-- BOTONES -->
         <div class="botones">
-          <button class="btn-detalle">Ver Detalles</button>
-          <button class="btn-cotizar">Cotizar</button>
+          <button 
+            class="btn-detalle"
+            (click)="verDetalle(producto)"
+          >
+            Ver Detalles
+          </button>
+          <button 
+            class="btn-cotizar"
+            (click)="cotizarProducto($event, producto)"
+          >
+            Cotizar
+          </button>
         </div>
       </div>
 
@@ -41,11 +72,13 @@
   </div>
 
   <!-- PAGINACIÓN -->
-  <div class="pagination-container" *ngIf="totalPaginas > 1">
+  <div class="pagination-container" *ngIf="totalPaginas > 1 && !loading">
     <button 
       class="page-btn" 
       [disabled]="paginaActual === 1"
-      (click)="cambiarPagina(paginaActual - 1)">
+      (click)="cambiarPagina(paginaActual - 1)"
+      title="Página anterior"
+    >
       «
     </button>
 
@@ -53,14 +86,17 @@
       class="page-btn"
       *ngFor="let page of paginas"
       [class.active]="page === paginaActual"
-      (click)="cambiarPagina(page)">
+      (click)="cambiarPagina(page)"
+    >
       {{ page }}
     </button>
 
     <button 
       class="page-btn" 
       [disabled]="paginaActual === totalPaginas"
-      (click)="cambiarPagina(paginaActual + 1)">
+      (click)="cambiarPagina(paginaActual + 1)"
+      title="Página siguiente"
+    >
       »
     </button>
   </div>

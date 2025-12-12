@@ -38,32 +38,36 @@
   </div>
 
   <!-- Grilla de productos -->
-  <div class="productos-grid">
-    <div class="producto-card" *ngFor="let producto of filteredProductos">
+<div class="productos-grid">
+  <div class="producto-card" *ngFor="let producto of paginatedProductos">
+    <img [src]="producto.image" [alt]="producto.name" />
+    <div class="producto-info">
+      <h3>{{ producto.name }}</h3>
+      <p><strong>Descripción:</strong> {{ producto.description }}</p>
 
-      <img [src]="producto.image" [alt]="producto.name" />
+      <div class="producto-buttons">
+        <button class="btn-detalles" (click)="verDetalles(producto)">Ver detalles</button>
+        <button class="btn-cotizar" (click)="cotizarProducto(producto)">Cotizar</button>
+      </div>
+    </div>
 
-      <div class="producto-info">
-        <h3>{{ producto.name }}</h3>
-        <p><strong>Descripción:</strong> {{ producto.description }}</p>
-
-        <!-- BOTONES LADO A LADO -->
-     <div class="producto-buttons">
-  <button class="btn-detalles" (click)="verDetalles(producto)">
-    Ver detalles
-  </button>
-
-  <button class="btn-cotizar" (click)="cotizarProducto(producto)">
-    Cotizar
-  </button>
+    <div class="etiqueta-oferta">Disponible</div>
+  </div>
 </div>
 
-      </div>
+<!-- PAGINACIÓN -->
+<div class="paginacion" *ngIf="totalPages > 1">
+  <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
 
-      <div class="etiqueta-oferta">Disponible</div>
-    </div>
-  </div>
+  <button 
+    *ngFor="let page of pages"
+    (click)="goToPage(page)"
+    [class.active]="page === currentPage">
+    {{ page }}
+  </button>
 
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+</div>
 
 
 </div>

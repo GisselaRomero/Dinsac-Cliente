@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BannerService } from '../../services/banner.service';
 
-
 @Component({
   selector: 'app-ofertas',
   standalone: true,
@@ -19,14 +18,19 @@ export class OfertasComponent implements OnInit {
   loading: boolean = false;
   error: string | null = null;
   searchQuery: string = '';
-
   bannerUrl: string = '';
+
+  // PAGINACIÓN - 5 columnas × 6 filas = 30 productos por página
+  currentPage: number = 1;
+  itemsPerPage: number = 30;
+  totalPages: number = 0;
+  paginatedProductos: Product[] = [];
+  pages: number[] = [];
 
   constructor(
     private productService: ProductService,
     private router: Router,
-        private bannerService: BannerService   
-
+    private bannerService: BannerService   
   ) {}
 
   ngOnInit(): void {
@@ -34,18 +38,18 @@ export class OfertasComponent implements OnInit {
     this.cargarProductos();
   }
 
-cargarBanner(): void {
-  this.bannerService.getBanner('principal').subscribe({
-    next: (data) => {
-      this.bannerUrl = data?.image || '';
-    },
-    error: (e) => console.error('Error cargando banner ofertas', e)
-  });
-}
-irAOfertas() {
-  this.router.navigate(['/ofertas']); // o la ruta que uses
-}
+  cargarBanner(): void {
+    this.bannerService.getBanner('principal').subscribe({
+      next: (data) => {
+        this.bannerUrl = data?.image || '';
+      },
+      error: (e) => console.error('Error cargando banner ofertas', e)
+    });
+  }
 
+  irAOfertas(): void {
+    this.router.navigate(['/ofertas']);
+  }
 
   cargarProductos(): void {
     this.loading = true;
@@ -56,6 +60,7 @@ irAOfertas() {
         this.productos = productos;
         this.filteredProductos = productos;
         this.loading = false;
+        this.actualizarPaginacion();
       },
       error: (err) => {
         console.error('Error al obtener productos', err);
@@ -67,54 +72,92 @@ irAOfertas() {
 
   filtrarProductos(): void {
     const query = this.searchQuery.toLowerCase().trim();
+
     this.filteredProductos = this.productos.filter(producto =>
       producto.name.toLowerCase().includes(query) ||
       producto.description.toLowerCase().includes(query)
     );
+
+    this.currentPage = 1;
+    this.actualizarPaginacion();
   }
 
   verDetalles(producto: Product): void {
     const id = producto._id ?? producto.id;
     if (id) this.router.navigate(['/producto-detalle', id]);
   }
-    cotizarProducto(producto: Product): void {
-  const id = producto.id ?? producto._id;
 
-  if (!id) {
-    console.error("Producto sin ID");
-    return;
+  cotizarProducto(producto: Product): void {
+    const id = producto.id ?? producto._id;
+
+    if (!id) {
+      console.error("Producto sin ID");
+      return;
+    }
+
+    const itemCarrito = {
+      id: id,
+      name: producto.name,
+      description: producto.description,
+      cantidad: 1,
+      category: producto.category,
+      image: producto.image
+    };
+
+    const carritoActual = JSON.parse(localStorage.getItem("carrito") || "[]");
+    const existe = carritoActual.find((p: any) => p.id === id);
+    
+    if (existe) {
+      existe.cantidad += 1;
+    } else {
+      carritoActual.push(itemCarrito);
+    }
+
+    localStorage.setItem("carrito", JSON.stringify(carritoActual));
+
+    localStorage.setItem("productos_cotizacion", JSON.stringify([{
+      categoria: producto.category,
+      equipo: producto.name,
+      cantidad: 1
+    }]));
+
+    this.router.navigate(['/cotizar']);
   }
 
-  // 🔹 Armar item para carrito
-  const itemCarrito = {
-    id: id,
-    name: producto.name,
-    description: producto.description,
-    cantidad: 1,
-    category: producto.category,
-    image: producto.image
-  };
+  actualizarPaginacion(): void {
+    this.totalPages = Math.ceil(this.filteredProductos.length / this.itemsPerPage);
+    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
 
-  // 🔹 Guardar en carrito
-  const carritoActual = JSON.parse(localStorage.getItem("carrito") || "[]");
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
 
-  // Si ya existe, solo aumentar cantidad
-  const existe = carritoActual.find((p: any) => p.id === id);
-  if (existe) {
-    existe.cantidad += 1;
-  } else {
-    carritoActual.push(itemCarrito);
+    this.paginatedProductos = this.filteredProductos.slice(start, end);
+    this.scrollToTop();
   }
 
-  localStorage.setItem("carrito", JSON.stringify(carritoActual));
+  goToPage(page: number): void {
+    this.currentPage = page;
+    this.actualizarPaginacion();
+  }
 
-  // 🔹 Enviar a cotizar
-  localStorage.setItem("productos_cotizacion", JSON.stringify([{
-    categoria: producto.category,
-    equipo: producto.name,
-    cantidad: 1
-  }]));
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.actualizarPaginacion();
+    }
+  }
 
-  this.router.navigate(['/cotizar']);
-}
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.actualizarPaginacion();
+    }
+  }
+
+  scrollToTop(): void {
+    const elemento = document.getElementById('productos');
+    if (elemento) {
+      elemento.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 }

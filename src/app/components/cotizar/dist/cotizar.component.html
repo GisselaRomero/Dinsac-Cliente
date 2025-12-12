@@ -3,186 +3,374 @@
   <button routerLink="/login-cliente" class="btn-iniciar">Iniciar sesión</button>
 </div>
 
-<div class="cotizar-form">
-  <h2>📧 Solicitar Cotización</h2>
+<div class="cotizar-wrapper">
+  
+  <!-- SECCIÓN DE CARACTERÍSTICAS -->
+  <div class="preview-incluye">
+    <h3>✨ Tu cotización incluye:</h3>
+    <div class="preview-grid">
+      <div class="preview-item">
+        <i class="bi bi-card-checklist"></i>
+        <div class="preview-content">
+          <h4>Selección múltiple</h4>
+          <p>Cotiza varios productos a la vez</p>
+        </div>
+      </div>
+      <div class="preview-item">
+        <i class="bi bi-funnel"></i>
+        <div class="preview-content">
+          <h4>Filtrado inteligente</h4>
+          <p>Encuentra productos por categoría</p>
+        </div>
+      </div>
+      <div class="preview-item">
+        <i class="bi bi-file-earmark-pdf"></i>
+        <div class="preview-content">
+          <h4>Cotización en PDF</h4>
+          <p>Descarga tu presupuesto detallado</p>
+        </div>
+      </div>
+      <div class="preview-item">
+        <i class="bi bi-envelope-check"></i>
+        <div class="preview-content">
+          <h4>Envío automático</h4>
+          <p>Recibe la cotización por email</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <!-- ✅ FORMULARIO UNIFICADO - Solo envía correo -->
-<form (ngSubmit)="onSubmit()" #cotizarForm="ngForm">
-    
-    <!-- Datos personales -->
-    <div class="form-group">
-      <label for="nombre">Nombres y apellidos *</label>
-      <input type="text" id="nombre" class="form-control" name="nombre" [(ngModel)]="formData.nombre" required>
+  <!-- FORMULARIO PRINCIPAL -->
+  <div class="cotizar-form">
+    <div class="form-header">
+      <h2>📧 Solicitar Cotización</h2>
+      <p class="subtitle">Completa el formulario y recibe tu presupuesto personalizado</p>
     </div>
 
-    <div class="form-group">
-      <label for="dniRuc">DNI/RUC *</label>
-      <input type="text" id="dniRuc" class="form-control" name="dniRuc" [(ngModel)]="formData.dniRuc" required>
-    </div>
-
-    <div class="form-group">
-      <label for="email">Correo Electrónico *</label>
-      <input type="email" id="email" class="form-control" name="email" [(ngModel)]="formData.email" required>
-    </div>
-
-    <div class="form-group">
-      <label for="telefonoMovil">Teléfono móvil (9 dígitos) *</label>
-      <input type="text" id="telefonoMovil" class="form-control" name="telefonoMovil" [(ngModel)]="formData.telefonoMovil" required maxlength="9">
-    </div>
-
-    <!-- Productos -->
-    <div *ngFor="let producto of formData.productos; let i = index" class="producto-group">
-      <label>Producto {{ i + 1 }}</label>
+    <form (ngSubmit)="onSubmit()" #cotizarForm="ngForm">
       
-      <div class="producto-grid">
-        <!-- Dropdown Categoría -->
-        <div class="dropdown-container">
-          <div class="dropdown-header" (click)="toggleCategoria(i)">
-            <span class="selected">
-              {{ producto.categoria || 'Selecciona una categoría' }}
-            </span>
-            <span class="arrow" [class.open]="dropdownAbiertoCategoria[i]">▾</span>
+      <!-- CONTENEDOR EN DOS COLUMNAS -->
+      <div class="form-columns">
+        
+        <!-- COLUMNA IZQUIERDA: DATOS PERSONALES -->
+        <div class="column-left">
+          <h3 class="column-title">
+            <i class="bi bi-person-circle"></i>
+            Datos Personales
+          </h3>
+
+          <div class="form-group">
+            <label for="nombre">
+              <i class="bi bi-person"></i>
+              Nombres y apellidos *
+            </label>
+            <input 
+              type="text" 
+              id="nombre" 
+              class="form-control" 
+              name="nombre" 
+              [(ngModel)]="formData.nombre" 
+              placeholder="Ej: Juan Pérez García"
+              required
+            >
           </div>
 
-          <div class="dropdown-body" *ngIf="dropdownAbiertoCategoria[i]">
-            <input type="text"
-                   placeholder="Buscar categoría..."
-                   [(ngModel)]="categoriaBusqueda[i]"
-                   name="categoriaBusqueda{{i}}"
-                   class="form-control buscador" />
-
-            <div class="dropdown-option"
-                 *ngFor="let categoria of getCategoriasFiltradas(i)"
-                 (click)="selectCategoria(i, categoria)">
-              {{ categoria }}
-              <small class="muted"> ({{ countProductsInCategory(categoria) }})</small>
-            </div>
-            <div *ngIf="getCategoriasFiltradas(i).length === 0" class="dropdown-empty">
-              No hay categorías que coincidan
-            </div>
+          <div class="form-group">
+            <label for="dniRuc">
+              <i class="bi bi-card-text"></i>
+              DNI/RUC *
+            </label>
+            <input 
+              type="text" 
+              id="dniRuc" 
+              class="form-control" 
+              name="dniRuc" 
+              [(ngModel)]="formData.dniRuc" 
+              placeholder="Ej: 12345678 o 20123456789"
+              required
+            >
           </div>
+
+          <div class="form-group">
+            <label for="email">
+              <i class="bi bi-envelope"></i>
+              Correo Electrónico *
+            </label>
+            <input 
+              type="email" 
+              id="email" 
+              class="form-control" 
+              name="email" 
+              [(ngModel)]="formData.email" 
+              placeholder="ejemplo@correo.com"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="telefonoMovil">
+              <i class="bi bi-phone"></i>
+              Teléfono móvil (9 dígitos) *
+            </label>
+            <input 
+              type="text" 
+              id="telefonoMovil" 
+              class="form-control" 
+              name="telefonoMovil" 
+              [(ngModel)]="formData.telefonoMovil" 
+              placeholder="987654321"
+              required 
+              maxlength="9"
+              pattern="[0-9]{9}"
+            >
+          </div>
+
+
+           <!-- Mensaje adicional -->
+          <div class="form-group">
+            <label for="mensaje">
+              <i class="bi bi-chat-left-text"></i>
+              Mensaje adicional (opcional)
+            </label>
+            <textarea 
+              id="mensaje" 
+              class="form-control" 
+              name="mensaje" 
+              [(ngModel)]="formData.mensaje" 
+              rows="4" 
+              placeholder="Escribe aquí cualquier detalle adicional sobre tu cotización..."
+            ></textarea>
+          </div>
+          
         </div>
 
-        <!-- Dropdown Equipo -->
-        <div class="dropdown-container" [class.disabled]="!producto.categoria">
-          <div class="dropdown-header" (click)="producto.categoria ? toggleEquipo(i) : null">
-            <span class="selected">
-              {{ producto.equipo || (producto.categoria ? 'Selecciona un equipo' : 'Selecciona categoría primero') }}
-            </span>
-            <span class="arrow" [class.open]="dropdownAbiertoEquipo[i]">▾</span>
-          </div>
-          <!-- Mostrar precio e IGV -->
-<div class="precio-info" *ngIf="producto.equipo && obtenerPrecioProducto(producto.equipo)">
+        <!-- COLUMNA DERECHA: PRODUCTOS Y CONTACTO -->
+        <div class="column-right">
+          <h3 class="column-title">
+            <i class="bi bi-box-seam"></i>
+            Productos a Cotizar
+          </h3>
 
-  <p><strong>Precio unitario:</strong> S/ {{ obtenerPrecioProducto(producto.equipo) }}</p>
-
-  <p><strong>IGV (18%):</strong> 
-    S/ {{ (obtenerPrecioProducto(producto.equipo) * 0.18).toFixed(2) }}
-  </p>
-
-  <p><strong>Precio con IGV:</strong> 
-    S/ {{ (obtenerPrecioProducto(producto.equipo) * 1.18).toFixed(2) }}
-  </p>
-
-</div>
-
-
-          <div class="dropdown-body" *ngIf="dropdownAbiertoEquipo[i]">
-            <input type="text"
-                   placeholder="Buscar equipo..."
-                   [(ngModel)]="equipoBusqueda[i]"
-                   name="equipoBusqueda{{i}}"
-                   class="form-control buscador" />
-
-            <div class="dropdown-option"
-                 *ngFor="let equipo of getEquiposFiltrados(producto.categoria, equipoBusqueda[i])"
-                 (click)="selectEquipo(i, equipo)">
-              {{ equipo }}
-            </div>
-
-            <div *ngIf="getEquiposFiltrados(producto.categoria, equipoBusqueda[i]).length === 0" class="dropdown-empty">
-              No hay equipos en esta categoría
-            </div>
-          </div>
-        </div>
-
-        <!-- Cantidad -->
-        <input type="number"
-               class="form-control"
-               [(ngModel)]="producto.cantidad"
-               name="cantidad{{i}}"
-               min="1"
-               placeholder="Cant."
-               required>
-
-        <!-- Botón eliminar -->
-        <button type="button"
-                class="btn btn-danger btn-sm eliminar-btn"
+          <!-- PRODUCTOS -->
+          <div *ngFor="let producto of formData.productos; let i = index" class="producto-group">
+            <div class="producto-header">
+              <label>
+                <i class="bi bi-cart-check"></i>
+                Producto {{ i + 1 }}
+              </label>
+              <button 
+                type="button"
+                class="btn-eliminar"
                 (click)="quitarProducto(i)"
-                *ngIf="formData.productos.length > 1">
-          Eliminar
+                *ngIf="formData.productos.length > 1"
+                title="Eliminar producto"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+            
+            <div class="producto-grid">
+              <!-- Dropdown Categoría -->
+              <div class="dropdown-container">
+                <label class="dropdown-label">Categoría *</label>
+                <div class="dropdown-header" (click)="toggleCategoria(i)">
+                  <span class="selected">
+                    {{ producto.categoria || 'Selecciona una categoría' }}
+                  </span>
+                  <span class="arrow" [class.open]="dropdownAbiertoCategoria[i]">
+                    <i class="bi bi-chevron-down"></i>
+                  </span>
+                </div>
+
+                <div class="dropdown-body" *ngIf="dropdownAbiertoCategoria[i]">
+                  <input 
+                    type="text"
+                    placeholder="🔍 Buscar categoría..."
+                    [(ngModel)]="categoriaBusqueda[i]"
+                    name="categoriaBusqueda{{i}}"
+                    class="form-control buscador"
+                  />
+
+                  <div 
+                    class="dropdown-option"
+                    *ngFor="let categoria of getCategoriasFiltradas(i)"
+                    (click)="selectCategoria(i, categoria)"
+                    [title]="categoria"
+                  >
+                    {{ categoria }}
+                    <small class="badge">{{ countProductsInCategory(categoria) }}</small>
+                  </div>
+                  
+                  <div *ngIf="getCategoriasFiltradas(i).length === 0" class="dropdown-empty">
+                    <i class="bi bi-search"></i>
+                    <p>No hay categorías que coincidan</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dropdown Equipo -->
+              <div class="dropdown-container" [class.disabled]="!producto.categoria">
+                <label class="dropdown-label">Equipo *</label>
+                <div class="dropdown-header" (click)="producto.categoria ? toggleEquipo(i) : null">
+                  <span class="selected">
+                    {{ producto.equipo || (producto.categoria ? 'Selecciona un equipo' : 'Selecciona categoría primero') }}
+                  </span>
+                  <span class="arrow" [class.open]="dropdownAbiertoEquipo[i]">
+                    <i class="bi bi-chevron-down"></i>
+                  </span>
+                </div>
+
+                <!-- Precio e IGV -->
+                <div class="precio-info" *ngIf="producto.equipo && obtenerPrecioProducto(producto.equipo)">
+                  <div class="precio-item">
+                    <span>Precio unitario:</span>
+                    <strong>S/ {{ obtenerPrecioProducto(producto.equipo) }}</strong>
+                  </div>
+                  <div class="precio-item">
+                    <span>IGV (18%):</span>
+                    <strong>S/ {{ (obtenerPrecioProducto(producto.equipo) * 0.18).toFixed(2) }}</strong>
+                  </div>
+                  <div class="precio-item total">
+                    <span>Precio con IGV:</span>
+                    <strong>S/ {{ (obtenerPrecioProducto(producto.equipo) * 1.18).toFixed(2) }}</strong>
+                  </div>
+                </div>
+
+                <div class="dropdown-body" *ngIf="dropdownAbiertoEquipo[i]">
+                  <input 
+                    type="text"
+                    placeholder="🔍 Buscar equipo..."
+                    [(ngModel)]="equipoBusqueda[i]"
+                    name="equipoBusqueda{{i}}"
+                    class="form-control buscador"
+                  />
+
+                  <div 
+                    class="dropdown-option"
+                    *ngFor="let equipo of getEquiposFiltrados(producto.categoria, equipoBusqueda[i])"
+                    (click)="selectEquipo(i, equipo)"
+                    [title]="equipo"
+                  >
+                    {{ equipo }}
+                  </div>
+
+                  <div *ngIf="getEquiposFiltrados(producto.categoria, equipoBusqueda[i]).length === 0" class="dropdown-empty">
+                    <i class="bi bi-inbox"></i>
+                    <p>No hay equipos en esta categoría</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cantidad -->
+              <div class="cantidad-container">
+                <label class="dropdown-label">Cantidad *</label>
+                <input 
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="producto.cantidad"
+                  name="cantidad{{i}}"
+                  min="1"
+                  placeholder="1"
+                  required
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Botón agregar producto -->
+          <button 
+            type="button" 
+            class="btn-agregar-producto" 
+            (click)="agregarProducto()"
+          >
+            <i class="bi bi-plus-circle"></i>
+            Agregar otro producto
+          </button>
+
+         
+
+          <!-- Método de contacto -->
+          <div class="form-group">
+            <label class="main-label">
+              <i class="bi bi-telephone"></i>
+              ¿Cómo deseas que te contactemos? *
+            </label>
+            
+            <div class="contacto-options">
+              <div class="form-check">
+                <input 
+                  type="radio" 
+                  id="telefono" 
+                  name="contacto" 
+                  [(ngModel)]="formData.contacto" 
+                  value="Telefono"
+                  required
+                >
+                <label for="telefono">
+                  <i class="bi bi-phone"></i>
+                  Teléfono
+                </label>
+              </div>
+              
+              <div class="form-check">
+                <input 
+                  type="radio" 
+                  id="whatsapp" 
+                  name="contacto" 
+                  [(ngModel)]="formData.contacto" 
+                  value="Whatsapp"
+                >
+                <label for="whatsapp">
+                  <i class="bi bi-whatsapp"></i>
+                  WhatsApp
+                </label>
+              </div>
+              
+              <div class="form-check">
+                <input 
+                  type="radio" 
+                  id="correo" 
+                  name="contacto" 
+                  [(ngModel)]="formData.contacto" 
+                  value="Correo"
+                >
+                <label for="correo">
+                  <i class="bi bi-envelope"></i>
+                  Correo
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Términos -->
+          <div class="form-check-terms">
+            <input 
+              type="checkbox" 
+              id="terminos" 
+              name="terminos" 
+              [(ngModel)]="formData.terminos" 
+              required
+            >
+            <label for="terminos">
+              Acepto los <a href="/terminos" target="_blank">términos y condiciones</a> *
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTÓN DE ENVÍO (DEBAJO DE TODO) -->
+      <div class="form-footer">
+        <button 
+          type="button" 
+          class="btn-generar-pdf" 
+          (click)="generarPDF()"
+          [disabled]="!cotizarForm.valid"
+        >
+          <i class="bi bi-file-earmark-pdf"></i>
+          Generar Cotización PDF
         </button>
       </div>
-    </div>
+    </form>
+  </div>
 
-    <!-- Botón agregar producto -->
-    <button type="button" class="btn btn-outline-secondary btn-sm mb-3" (click)="agregarProducto()">
-      + Agregar otro producto
-    </button>
-
-    <!-- Mensaje (OPCIONAL) -->
-    <div class="form-group">
-      <label for="mensaje">Mensaje adicional (opcional)</label>
-      <textarea id="mensaje" 
-                class="form-control" 
-                name="mensaje" 
-                [(ngModel)]="formData.mensaje" 
-                rows="4" 
-                placeholder="Escribe aquí cualquier detalle adicional sobre tu cotización..."></textarea>
-    </div>
-
-    <!-- Contacto -->
-    <div class="form-group">
-      <label>¿Cómo deseas que te contactemos? *</label>
-      
-      <div class="form-check">
-        <input type="radio" 
-               id="telefono" 
-               name="contacto" 
-               [(ngModel)]="formData.contacto" 
-               value="Telefono"
-               required>
-        <label for="telefono">Teléfono</label>
-      </div>
-      
-      <div class="form-check">
-        <input type="radio" 
-               id="whatsapp" 
-               name="contacto" 
-               [(ngModel)]="formData.contacto" 
-               value="Whatsapp">
-        <label for="whatsapp">WhatsApp</label>
-      </div>
-      
-      <div class="form-check">
-        <input type="radio" 
-               id="correo" 
-               name="contacto" 
-               [(ngModel)]="formData.contacto" 
-               value="Correo">
-        <label for="correo">Correo</label>
-      </div>
-    </div>
-
-    <!-- Términos -->
-    <div class="form-check">
-      <input type="checkbox" id="terminos" name="terminos" [(ngModel)]="formData.terminos" required>
-      <label for="terminos">Acepto términos y condiciones *</label>
-    </div>
-
-    <!-- ✅ BOTÓN PRINCIPAL - Envía correo -->
-<button type="button" class="btn btn-outline-primary" (click)="generarPDF()">
-  🧾 Generar Cotización PDF
-</button>
-  </form>
 </div>
