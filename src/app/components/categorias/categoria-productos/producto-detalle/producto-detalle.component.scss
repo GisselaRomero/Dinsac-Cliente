@@ -374,3 +374,69 @@
   display: inline-block;
   box-shadow: 0 3px 8px rgba(22, 77, 108, 0.15);
 }
+/* Estilos para la tabla de productos (productos.component.css) */
+.precio-tachado {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 0.9em;
+  display: block;
+}
+
+.precio-oferta {
+  color: #e74c3c;
+  font-weight: bold;
+  font-size: 1.1em;
+  display: block;
+}
+
+/* Estilos para el detalle del producto (producto-detalle.component.scss) */
+.precio-container {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.precio-container .precio-tachado {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 1em;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.precio-container .precio-oferta {
+  color: #e74c3c;
+  font-weight: bold;
+  font-size: 1.8em;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.precio-container .precio {
+  font-size: 1.5em;
+  color: #2c3e50;
+  font-weight: bold;
+}
+
+.descuento-badge {
+  display: inline-block;
+  background-color: #27ae60;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.9em;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .precio-container .precio-oferta {
+    font-size: 1.5em;
+  }
+  
+  .precio-container .precio {
+    font-size: 1.3em;
+  }
+}

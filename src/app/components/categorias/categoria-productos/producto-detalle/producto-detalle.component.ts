@@ -47,6 +47,7 @@ export class ProductoDetalleComponent implements OnInit {
         this.producto = product;
         this.imagenSeleccionada = product.image;
         this.loading = false;
+        console.log('Producto cargado:', product);
       },
       error: (err) => {
         console.error('Error al cargar producto:', err);
@@ -68,5 +69,12 @@ export class ProductoDetalleComponent implements OnInit {
     const direccionCodificada = encodeURIComponent(this.direccion);
     const url = `https://www.google.com/maps/search/?api=1&query=${direccionCodificada}`;
     window.open(url, '_blank');
+  }
+
+  // ✅ Calcular porcentaje de descuento
+  calcularDescuento(precioOferta: number, precioReal: number): number {
+    if (!precioReal || precioReal === 0) return 0;
+    const descuento = ((precioReal - precioOferta) / precioReal) * 100;
+    return Math.round(descuento);
   }
 }

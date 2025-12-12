@@ -33,11 +33,21 @@
     <h1>{{ producto.name }}</h1>
     <p class="categoria">Categoría: {{ producto.category }}</p>
     <p class="descripcion">{{ producto.description }}</p>
-    <p class="precio">Precio: S/ {{ producto.price }}</p>
-<div *ngIf="producto.estado === 'Oferta'">
-  <span class="precio-tachado">S/ {{ producto.precioReal }}</span>
-  <span class="precio-final">S/ {{ producto.price }}</span>
-</div>
+    
+    <!-- ✅ MOSTRAR PRECIO CORRECTAMENTE -->
+    <div class="precio-container">
+      <div *ngIf="producto.estado === 'Oferta' && producto.precioReal; else precioNormal">
+        <span class="precio-tachado">Antes: S/ {{ producto.precioReal | number:'1.2-2' }}</span>
+        <span class="precio-oferta">Ahora: S/ {{ producto.price | number:'1.2-2' }}</span>
+        <span class="descuento-badge">
+          -{{ calcularDescuento(producto.price, producto.precioReal) }}% OFF
+        </span>
+      </div>
+      
+      <ng-template #precioNormal>
+        <span class="precio">Precio: S/ {{ producto.price | number:'1.2-2' }}</span>
+      </ng-template>
+    </div>
 
     <p class="codigo"><strong>Código:</strong> {{ producto.codigo }}</p>
 
