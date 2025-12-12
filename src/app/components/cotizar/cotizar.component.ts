@@ -370,6 +370,12 @@ export class CotizarComponent implements OnInit {
     return true;
   }
 
+  obtenerPrecioProducto(nombreEquipo: string): number {
+  const producto = this.productosList.find(p => p.name === nombreEquipo);
+return producto ? Number(producto.price || 0) : 0;
+}
+
+
   // ✅ PDF sin precios ni IGV
   private getDocumentDefinition() {
     const fecha = new Date().toLocaleDateString('es-PE');

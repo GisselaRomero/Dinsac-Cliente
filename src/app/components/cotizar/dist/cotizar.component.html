@@ -71,6 +71,21 @@
             </span>
             <span class="arrow" [class.open]="dropdownAbiertoEquipo[i]">▾</span>
           </div>
+          <!-- Mostrar precio e IGV -->
+<div class="precio-info" *ngIf="producto.equipo && obtenerPrecioProducto(producto.equipo)">
+
+  <p><strong>Precio unitario:</strong> S/ {{ obtenerPrecioProducto(producto.equipo) }}</p>
+
+  <p><strong>IGV (18%):</strong> 
+    S/ {{ (obtenerPrecioProducto(producto.equipo) * 0.18).toFixed(2) }}
+  </p>
+
+  <p><strong>Precio con IGV:</strong> 
+    S/ {{ (obtenerPrecioProducto(producto.equipo) * 1.18).toFixed(2) }}
+  </p>
+
+</div>
+
 
           <div class="dropdown-body" *ngIf="dropdownAbiertoEquipo[i]">
             <input type="text"
