@@ -343,4 +343,40 @@
   box-shadow: 0 3px 8px rgba(22, 77, 108, 0.15);
 }
 
+/* ===== PRECIO OFERTA ===== */
+.precio-oferta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.2rem 0;
+}
+
+.precio-tachado {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 1.3rem;
+}
+
+.precio-final {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #d62828;
+  /* rojo oferta */
+  text-shadow: 0 2px 6px rgba(214, 40, 40, 0.3);
+}
+
+/* ===== PRECIO NORMAL ===== */
+.precio-normal {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0d5275;
+  margin: 1rem 0;
+  background: #e3f3f9;
+  padding: 10px 14px;
+  border-left: 5px solid #0d5275;
+  border-radius: 10px;
+  display: inline-block;
+  box-shadow: 0 3px 8px rgba(22, 77, 108, 0.15);
+}
+
 /*# sourceMappingURL=producto-detalle.component.css.map */

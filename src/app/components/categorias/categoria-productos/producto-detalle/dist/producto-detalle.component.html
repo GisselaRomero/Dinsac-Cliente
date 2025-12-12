@@ -34,6 +34,10 @@
     <p class="categoria">Categoría: {{ producto.category }}</p>
     <p class="descripcion">{{ producto.description }}</p>
     <p class="precio">Precio: S/ {{ producto.price }}</p>
+<div *ngIf="producto.estado === 'Oferta'">
+  <span class="precio-tachado">S/ {{ producto.precioReal }}</span>
+  <span class="precio-final">S/ {{ producto.price }}</span>
+</div>
 
     <p class="codigo"><strong>Código:</strong> {{ producto.codigo }}</p>
 
