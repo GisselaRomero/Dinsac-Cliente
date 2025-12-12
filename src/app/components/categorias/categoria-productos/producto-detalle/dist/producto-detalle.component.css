@@ -326,4 +326,21 @@
   }
 }
 
+/* ===== PRECIO ===== */
+.precio {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #0d5275;
+  /* mismo estilo azul */
+  margin: 1rem 0;
+  background: #e3f3f9;
+  /* suave celeste */
+  padding: 10px 14px;
+  border-left: 5px solid #0d5275;
+  border-radius: 10px;
+  display: inline-block;
+  letter-spacing: 0.5px;
+  box-shadow: 0 3px 8px rgba(22, 77, 108, 0.15);
+}
+
 /*# sourceMappingURL=producto-detalle.component.css.map */
