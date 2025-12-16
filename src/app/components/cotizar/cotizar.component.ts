@@ -97,7 +97,7 @@ export class CotizarComponent implements OnInit {
   }
 
   obtenerUltimoNumero(): void {
-    this.http.get<{ total: number }>('https://backend-dinsac-hlf0.onrender.com/cotizaciones/total')
+    this.http.get<{ total: number }>('https://backend-dinsac-77sq.onrender.com/cotizaciones/total')
       .subscribe({
         next: (res) => {
           this.ultimoNumero = res.total;
@@ -221,9 +221,9 @@ export class CotizarComponent implements OnInit {
         console.log('   - userId:', body.userId);
 
         console.log('\n📤 Enviando solicitud POST a /cotizaciones...');
-        console.log('   URL: https://backend-dinsac-hlf0.onrender.com/cotizaciones');
+        console.log('   URL: https://backend-dinsac-77sq.onrender.com/cotizaciones');
 
-        this.http.post('https://backend-dinsac-hlf0.onrender.com/cotizaciones', body).subscribe({
+        this.http.post('https://backend-dinsac-77sq.onrender.com/cotizaciones', body).subscribe({
           next: (res: any) => {
             console.log('\n✅ Respuesta recibida del servidor:');
             console.log(JSON.stringify(res, null, 2));
