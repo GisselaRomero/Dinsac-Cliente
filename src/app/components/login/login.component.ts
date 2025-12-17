@@ -58,7 +58,8 @@ login() {
     next: (res: any) => {
       if (res.success && res.cliente && res.cliente._id) {
         localStorage.setItem('usuario_logueado', 'true');
-        localStorage.setItem('usuario_id', res.cliente._id);  // 👈 Guardar el ID real
+localStorage.setItem('cliente', JSON.stringify(res.cliente));
+localStorage.setItem('usuario_id', res.cliente._id); // opcional
         localStorage.setItem('usuario_email', res.cliente.email);
 localStorage.setItem('usuario_nombre', res.cliente.nombre);
 

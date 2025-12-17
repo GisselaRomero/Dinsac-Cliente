@@ -37,9 +37,10 @@ export class HistorialComponent implements OnInit {
   userId: string | null = null;
   loading = false;
   error: string | null = null;
-
   mostrarModal = false;
   cotizacionSeleccionada: Cotizacion | null = null;
+  cliente: any = null;
+
 
   private readonly API_URL = 'https://backend-dinsac-hlf0.onrender.com';
 
@@ -65,8 +66,23 @@ export class HistorialComponent implements OnInit {
     } else {
       this.error = 'Debes iniciar sesión para ver tu historial de cotizaciones.';
     }
+
+    const clienteStorage = localStorage.getItem('cliente');
+
+  if (!clienteStorage) {
+    this.router.navigate(['/login']);
+    return;
   }
 
+  this.cliente = JSON.parse(clienteStorage);
+
+  //this.http
+    //.get<any>(`https://backend-dinsac-77sq.onrender.com/cotizaciones/usuario/${this.cliente._id}`)
+   // .subscribe(res => {
+    //  this.cotizaciones = res.data;
+   // });
+  //
+  }
 cargarHistorial(): void {
   if (!this.userId) return;
 

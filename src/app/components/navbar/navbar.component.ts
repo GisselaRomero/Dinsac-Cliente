@@ -21,7 +21,55 @@ export class NavbarComponent implements OnInit, OnDestroy {
   sugerencias: Product[] = []; // 🔥 Sugerencias en tiempo real
   mostrarSugerencias: boolean = false; // 🔥 Mostrar/ocultar dropdown
   indiceSeleccionado: number = -1; // 🔥 Para navegar con flechas
+clienteLogueado: any = null;
 
+isScrolled = false;
+categoriasAbiertas = false;
+
+// reutilizamos tus categorías
+categorias = [
+  { name: 'Agroindustria' },
+  { name: 'Artículos del Hogar' },
+  { name: 'Bombeo de Fluidos' },
+  { name: 'Carpintería' },
+  { name: 'Compresoras' },
+  { name: 'Construcción' },
+  { name: 'Electrobombas' },
+  { name: 'Generadores' },
+  { name: 'Grupos Electrógenos' },
+  { name: 'Herramientas Eléctricas' },
+  { name: 'Jardinería' },
+  { name: 'Limpieza Industrial' },
+  { name: 'Maquinaria Pesada' },
+  { name: 'Metalmecánica' },
+  { name: 'Minería' },
+  { name: 'Motores' },
+  { name: 'Novedades' },
+  { name: 'Ofertas y Liquidaciones' },
+  { name: 'Proceso de Alimentos' },
+  { name: 'Soldadura y Corte' },
+  { name: 'Taller Automotriz' }
+];
+
+
+toggleCategorias(event: Event) {
+  event.preventDefault(); // ❌ no navega
+  this.categoriasAbiertas = !this.categoriasAbiertas;
+}
+
+cerrarCategorias() {
+  this.categoriasAbiertas = false;
+  this.cerrarMenu(); // cierra menú mobile si está abierto
+}
+
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.isScrolled = window.scrollY > 120;
+
+
+    
+  }
   constructor(
     private carritoService: CarritoService,
     private productService: ProductService,
@@ -32,7 +80,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.cantidadProductos = this.carritoService.obtenerTotalItems();
     this.carritoSubscription = this.carritoService.getCarritoObservable().subscribe(() => {
       this.cantidadProductos = this.carritoService.obtenerTotalItems();
+
+       const cliente = localStorage.getItem('cliente');
+  if (cliente) {
+    this.clienteLogueado = JSON.parse(cliente);
+  }
+
+   this.productService.getProducts().subscribe({
+    next: (data) => {
+      this.productos = data;
+      console.log('✅ Productos cargados:', this.productos.length);
+    },
+    error: (err) => console.error('❌ Error cargando productos:', err)
+  });
     });
+
+
+    
 
     // ✅ Cargar TODOS los productos al iniciar
     this.productService.getProducts().subscribe({
@@ -43,6 +107,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
       error: (err) => console.error('❌ Error cargando productos:', err)
     });
   }
+  
+logout() {
+  localStorage.removeItem('cliente');
+  this.clienteLogueado = null;
+  this.router.navigate(['/login']);
+}
 
   ngOnDestroy(): void {
     this.carritoSubscription.unsubscribe();
@@ -153,13 +223,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 }
 
-toggleCategorias(event: Event) {
-  if (window.innerWidth <= 991) {
-    event.preventDefault(); // evita navegar
-    const item = (event.target as HTMLElement).closest('.categories-menu');
-    item?.classList.toggle('open');
-  }
-}
+
 
 cerrarMenuBusqueda() {
   const navbar = document.getElementById('navbarMain');
