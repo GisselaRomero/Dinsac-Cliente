@@ -685,4 +685,276 @@
   border-radius: 0 0 12px 12px;
 }
 
+/* ================= MOBILE PANEL ================= */
+.mobile-panel {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ffffff;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🔍 buscador */
+.mobile-search {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.mobile-search input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+/* Tabs */
+.mobile-tabs {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.mobile-tabs button {
+  flex: 1;
+  padding: 14px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.mobile-tabs button.active {
+  color: #1a4d6c;
+  border-bottom: 3px solid #1a4d6c;
+}
+
+/* Contenido */
+.mobile-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.mobile-content ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-content li a {
+  display: block;
+  padding: 16px 20px;
+  font-size: 17px;
+  color: #374151;
+  text-decoration: none;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.mobile-content li a:hover {
+  background: #f9fafb;
+  color: #111827;
+}
+
+/* ===========================
+   OCULTAR NAVBARS DE ESCRITORIO EN MÓVIL
+   =========================== */
+@media (max-width: 991px) {
+  /* Ocultar navbar superior y principal */
+  .custom-navbar-social,
+.custom-navbar-main {
+    display: none !important;
+  }
+  /* Mostrar navbar móvil */
+  .navbar-mobile-header {
+    display: flex !important;
+  }
+}
+
+/* Mantener todo normal en escritorio */
+@media (min-width: 992px) {
+  .custom-navbar-social,
+.custom-navbar-main {
+    display: flex !important;
+  }
+  .navbar-mobile-header {
+    display: none !important;
+  }
+}
+
+/* ================= MOBILE PANEL ================= */
+.mobile-panel {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ffffff;
+  z-index: 1050;
+  /* más alto que navbar principal */
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+  overflow-y: auto;
+}
+
+.mobile-panel.open {
+  transform: translateY(0);
+}
+
+/* 🔍 buscador */
+.mobile-search {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.mobile-search input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+/* Tabs */
+.mobile-tabs {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.mobile-tabs button {
+  flex: 1;
+  padding: 14px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: color 0.25s, border-bottom 0.25s;
+}
+
+.mobile-tabs button.active {
+  color: #1a4d6c;
+  border-bottom: 3px solid #1a4d6c;
+}
+
+/* Contenido */
+.mobile-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.mobile-content ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-content li a {
+  display: block;
+  padding: 16px 20px;
+  font-size: 17px;
+  color: #374151;
+  text-decoration: none;
+  border-bottom: 1px solid #f1f1f1;
+  transition: background 0.25s, color 0.25s;
+}
+
+.mobile-content li a:hover {
+  background: #f9fafb;
+  color: #111827;
+}
+
+/* ================= MOBILE HEADER NAVBAR ================= */
+/* ================= MOBILE HEADER NAVBAR ================= */
+.navbar-mobile-header {
+  display: none;
+}
+
+@media (max-width: 991px) {
+  .navbar-mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: #1a4d6c;
+    border-bottom: 1px solid #e5e7eb;
+    z-index: 1060;
+    /* sobre el mobile panel */
+  }
+  .mobile-logo img {
+    height: 38px;
+    object-fit: contain;
+  }
+  .mobile-icons {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .mobile-icons i {
+    font-size: 18px;
+    color: #111827;
+  }
+  .navbar-toggler {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .navbar-toggler i {
+    font-size: 20px;
+    color: #111827;
+  }
+  .badge {
+    font-size: 11px;
+    top: -6px;
+    right: -8px;
+  }
+}
+
+@media (max-width: 991px) {
+  .navbar-mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: #1a4d6c;
+    border-bottom: 1px solid #e5e7eb;
+    /* Nuevo: mantener fijo */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1060;
+    /* sobre el mobile panel */
+  }
+  .mobile-icons {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .mobile-icons i {
+    font-size: 18px;
+    color: #111827;
+  }
+  .navbar-toggler {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .navbar-toggler i {
+    font-size: 20px;
+    color: #111827;
+  }
+  .badge {
+    font-size: 11px;
+    top: -6px;
+    right: -8px;
+  }
+}
+
 /*# sourceMappingURL=navbar.component.css.map */

@@ -77,10 +77,16 @@
 <nav class="navbar navbar-expand-lg navbar-dark custom-navbar-main">
   <div class="container-fluid">
 
-    <!-- Toggler (botón hamburguesa) -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+
+
+
+    
+<button
+  class="navbar-toggler mobile-toggler d-lg-none"
+  type="button"
+  (click)="toggleMobilePanel()">
+  <i class="fa-solid fa-bars"></i>
+</button>
 
     <!-- Collapse (menú + buscador desktop + iconos) -->
     <div class="collapse navbar-collapse" id="navbarMain">
@@ -139,5 +145,85 @@
 
     </div>
 
+  </div>
+
+  <!-- ================= MOBILE PANEL ================= -->
+<div class="mobile-panel" *ngIf="mobilePanelOpen">
+
+  <!-- 🔍 Buscador -->
+  <div class="mobile-search">
+    <input
+      type="text"
+      placeholder="Buscar productos..."
+      [(ngModel)]="terminoBusqueda"
+      (input)="onInputChange()"
+    />
+  </div>
+
+  <!-- Tabs -->
+  <div class="mobile-tabs">
+    <button
+      [class.active]="mobileTab === 'menu'"
+      (click)="setMobileTab('menu')">
+      MENÚ
+    </button>
+
+    <button
+      [class.active]="mobileTab === 'categorias'"
+      (click)="setMobileTab('categorias')">
+      CATEGORÍAS
+    </button>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="mobile-content">
+
+    <!-- MENU -->
+    <ul *ngIf="mobileTab === 'menu'">
+      <li><a routerLink="/" (click)="toggleMobilePanel()">INICIO</a></li>
+      <li><a routerLink="/ofertas" (click)="toggleMobilePanel()">OFERTAS</a></li>
+      <li><a routerLink="/favoritos" (click)="toggleMobilePanel()">FAVORITOS</a></li>
+      <li><a routerLink="/nosotros" (click)="toggleMobilePanel()">NOSOTROS</a></li>
+      <li><a routerLink="/contactenos" (click)="toggleMobilePanel()">CONTACTENOS</a></li>
+      <li><a routerLink="/productos" (click)="toggleMobilePanel()">PRODUCTOS</a></li>
+    </ul>
+
+    <!-- CATEGORIAS -->
+    <ul *ngIf="mobileTab === 'categorias'">
+      <li *ngFor="let cat of categorias">
+        <a
+          [routerLink]="['/categoria-productos', cat.name]"
+          (click)="toggleMobilePanel()">
+          {{ cat.name }}
+        </a>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+</nav>
+
+<!-- ================= MOBILE HEADER NAVBAR ================= -->
+<nav class="navbar-mobile-header d-lg-none">
+  <button class="navbar-toggler" type="button" (click)="toggleMobilePanel()">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <div class="mobile-logo">
+    <a routerLink="/">
+      <img src="assets/logoB.png" alt="Logo">
+    </a>
+  </div>
+
+  <div class="mobile-icons">
+    <a routerLink="/carrito" class="icon-btn position-relative">
+      <i class="fa-solid fa-cart-arrow-down"></i>
+      <span class="badge">{{ cantidadProductos }}</span>
+    </a>
+
+    <a routerLink="/historial" class="icon-btn">
+      <i class="fa-regular fa-user"></i>
+    </a>
   </div>
 </nav>
