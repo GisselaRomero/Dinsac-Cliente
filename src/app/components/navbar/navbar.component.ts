@@ -29,7 +29,6 @@ categoriasAbiertas = false;
 // reutilizamos tus categorías
 categorias = [
   { name: 'Agroindustria' },
-  { name: 'Artículos del Hogar' },
   { name: 'Bombeo de Fluidos' },
   { name: 'Carpintería' },
   { name: 'Compresoras' },
@@ -40,11 +39,9 @@ categorias = [
   { name: 'Herramientas Eléctricas' },
   { name: 'Jardinería' },
   { name: 'Limpieza Industrial' },
-  { name: 'Maquinaria Pesada' },
   { name: 'Metalmecánica' },
   { name: 'Minería' },
   { name: 'Motores' },
-  { name: 'Novedades' },
   { name: 'Ofertas y Liquidaciones' },
   { name: 'Proceso de Alimentos' },
   { name: 'Soldadura y Corte' },
@@ -229,6 +226,15 @@ cerrarMenuBusqueda() {
   const navbar = document.getElementById('navbarMain');
   if (navbar?.classList.contains('show')) {
     navbar.classList.remove('show');
+  }
+}
+
+@HostListener('document:click', ['$event'])
+cerrarCategoriasClickFuera(event: Event) {
+  const target = event.target as HTMLElement;
+
+  if (!target.closest('.categorias-item')) {
+    this.categoriasAbiertas = false;
   }
 }
 
