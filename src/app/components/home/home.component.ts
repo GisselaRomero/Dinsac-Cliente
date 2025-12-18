@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   
   // Productos destacados
   ofertasDestacadas: Product[] = [];
+isContactMenuOpen = false;
 
   // Marcas partners
   marcas = [
@@ -75,6 +76,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private productService: ProductService,
     private http: HttpClient
   ) {}
+  toggleContactMenu() {
+    this.isContactMenuOpen = !this.isContactMenuOpen;
+  }
+
+  closeContactMenu() {
+    this.isContactMenuOpen = false;
+  }
 
   ngOnInit() {
     this.cargarOfertasDestacadas();
@@ -211,7 +219,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   cargarOfertasDestacadas() {
     this.productService.getProductsByEstado('Oferta').subscribe({
       next: (productos) => {
-        this.ofertasDestacadas = productos.slice(0, 6);
+        this.ofertasDestacadas = productos.slice(0, 8);
       },
       error: (err) => {
         console.error('Error cargando productos en oferta', err);
@@ -261,4 +269,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 trackByBanner(index: number, banner: BannerCarrusel): string {
   return banner.id;
 }
+
+
 }

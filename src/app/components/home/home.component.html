@@ -54,11 +54,24 @@
     <span class="visually-hidden">Siguiente</span>
   </button>
 
+
+  
   <!-- Botón de cotización -->
-  <button class="btn-cotizacion" (click)="irACotizar()">
-    Cotiza tu producto
-  </button>
-</div>
+<button class="btn-cotizacion" (click)="irACotizar()">
+  <span class="btn-icon">
+    <i class="fa-solid fa-calculator"></i>
+  </span>
+  <span class="btn-text">
+    <span class="btn-title">COTIZA AQUI</span>
+    <span class="btn-subtitle">Obtén tu presupuesto al instante</span>
+  </span>
+  <span class="btn-arrow">
+    <i class="fa-solid fa-arrow-right"></i>
+  </span>
+  <span class="btn-shine"></span>
+</button>
+
+
 
 <!-- Mensaje si no hay banners -->
 <div 
@@ -73,7 +86,7 @@
 
 <!-- ==================== SECCIÓN HERO DE COTIZACIÓN (PRINCIPAL) ==================== -->
 <section class="cotizacion-hero">
-  <div class="container">
+<div class="container-fluid">
     <div class="cotizacion-hero-box">
       <!-- Decoración de fondo -->
       <div class="hero-decoration-1"></div>
@@ -156,7 +169,6 @@
 
 <!-- ==================== SECCIÓN OFERTAS ==================== -->
 <section class="ofertas-home">
-  <div class="container">
 
     <!-- Header con barra vertical -->
     <div class="section-header">
@@ -172,24 +184,25 @@
 </section>
 
     <!-- GRID DE PRODUCTOS -->
-    <div class="productos-grid">
-      <div class="producto-card" *ngFor="let producto of ofertasDestacadas">
-        
-        <img [src]="producto.image" [alt]="producto.name">
+<div class="productos-grid">
+  <div class="producto-card"
+       *ngFor="let producto of ofertasDestacadas | slice:0:8">
 
-        <div class="producto-info">
-          <h3>{{ producto.name }}</h3>
-          <p>{{ producto.description }}</p>
+    <img [src]="producto.image" [alt]="producto.name">
 
-          <button class="btn-ver-detalles" (click)="verDetalles(producto)">
-            Ver más detalles
-          </button>
-        </div>
+    <div class="producto-info">
+      <h3>{{ producto.name }}</h3>
+      <p>{{ producto.description }}</p>
 
-        <!-- Etiqueta -->
-        <div class="etiqueta-disponible">Disponible</div>
-      </div>
+      <button class="btn-ver-detalles"
+              (click)="verDetalles(producto)">
+        Ver más detalles
+      </button>
     </div>
+
+    <div class="etiqueta-disponible">Disponible</div>
+  </div>
+</div>
 
     <!-- BOTÓN VER MÁS -->
     <div class="ver-mas-container">
@@ -198,7 +211,6 @@
       </button>
     </div>
 
-  </div>
 </section>
 
 
@@ -265,44 +277,61 @@
 <!-- ==================== BOTONES FLOTANTES ==================== -->
 <!-- ==================== BOTONES FLOTANTES ==================== -->
 <!-- ==================== BOTONES FLOTANTES ==================== -->
+<!-- ==================== HTML LIMPIO - SOLO SISTEMA DE CONTACTO ==================== -->
 
-<!-- Botón flotante de WhatsApp -->
-<a href="https://wa.me/51934307489" class="whatsapp-float" target="_blank">
-  <div class="whatsapp-pulse"></div>
-  <img src="assets/whatsapp.png" alt="WhatsApp">
-  <span class="whatsapp-tooltip">¡Chatea con nosotros!</span>
-</a>
+<!-- ==================== SISTEMA DE CONTACTO FLOTANTE ==================== -->
+<div class="contact-hub">
+  <!-- Botón principal -->
+  <button class="contact-main-btn" (click)="toggleContactMenu()" [class.active]="isContactMenuOpen">
+    <div class="main-pulse"></div>
+    <i class="fa-solid fa-comments"></i>
+    <span class="main-badge">3</span>
+  </button>
 
-<!-- Botón flotante de Chatbot con IA -->
-<a href="/chatbot-prueba" class="chatbot-float">
-  <div class="chatbot-pulse"></div>
-  <div class="chatbot-message">
-    <span class="message-icon">🤖</span>
-    <span class="message-text">¿Necesitas ayuda? ¡Pregúntame!</span>
-  </div>
-  <div class="chatbot-icon">
-    <img src="assets/ia2.png" alt="Asistente Virtual">
-    <span class="online-indicator"></span>
-  </div>
-</a>
+  <!-- Backdrop para cerrar al hacer clic fuera -->
+  <div class="contact-backdrop" 
+       *ngIf="isContactMenuOpen" 
+       (click)="closeContactMenu()"></div>
 
-<!-- Botón flotante de Chat en Vivo (Admin-Cliente) -->
-<a routerLink="/chat-cliente" class="chat-live-float">
-  <div class="chat-pulse"></div>
-  <div class="chat-badge">
-    <span class="badge-dot"></span>
+  <!-- Menú de opciones -->
+  <div class="contact-options" [class.active]="isContactMenuOpen">
+    
+    <!-- Opción 1: WhatsApp -->
+    <a href="https://wa.me/51934307489" 
+       class="contact-option whatsapp-option" 
+       target="_blank">
+      <div class="option-pulse"></div>
+      <div class="option-content">
+        <img src="assets/whatsapp.png" alt="WhatsApp">
+        <span class="option-label">WhatsApp</span>
+      </div>
+    </a>
+
+    <!-- Opción 2: Chatbot IA -->
+    <a [routerLink]="['/chatbot-prueba']" 
+       class="contact-option chatbot-option">
+      <div class="option-pulse"></div>
+      <div class="option-content">
+        <img src="assets/ia2.png" alt="Chatbot IA">
+        <span class="option-label">Asistente IA</span>
+      </div>
+      <span class="online-dot"></span>
+    </a>
+
+    <!-- Opción 3: Chat en Vivo -->
+    <a [routerLink]="['/chat-cliente']" 
+       class="contact-option live-chat-option">
+      <div class="option-pulse"></div>
+      <div class="option-content">
+        <i class="fa-solid fa-headset"></i>
+        <span class="option-label">Chat en Vivo</span>
+      </div>
+      <span class="available-dot"></span>
+    </a>
+
   </div>
-  <div class="chat-live-message">
-    <span class="message-icon">👨‍💼</span>
-    <span class="message-text">Habla con un asesor</span>
-  </div>
-  <div class="chat-live-icon">
-    <i class="fa-solid fa-headset"></i>
-    <span class="available-indicator">
-      <i class="fa-solid fa-circle"></i>
-    </span>
-  </div>
-</a>
+</div>
 
 <!-- Script Tidio Chatbot -->
 <script src="//code.tidio.co/glqvw5arrqvfxeyzbtw8niv4uksxhxar.js" async></script>
+

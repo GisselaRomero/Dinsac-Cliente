@@ -51,18 +51,18 @@
     SECCIÓN CARACTERÍSTICAS
 ============================= */
 .preview-incluye {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #91c7cd41 0%, #7995983e 100%);
   padding: 50px 40px;
   border-radius: 20px;
   margin-bottom: 40px;
-  box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 10px 40px rgba(5, 17, 72, 0.175);
 }
 
 .preview-incluye h3 {
   text-align: center;
   font-size: 2.2rem;
   font-weight: 800;
-  color: #ffffff;
+  color: #26384a;
   margin-bottom: 40px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -75,9 +75,9 @@
 }
 
 .preview-item {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(51, 101, 120, 0.15);
   backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(156, 129, 129, 0.3);
   border-radius: 16px;
   padding: 30px 25px;
   display: flex;
@@ -88,27 +88,27 @@
 }
 
 .preview-item:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(94, 82, 82, 0.164);
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(63, 44, 44, 0.2);
 }
 
 .preview-item i {
   font-size: 3rem;
-  color: #ffffff;
+  color: #3c536a;
   min-width: 50px;
 }
 
 .preview-content h4 {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #2c3e50;
   margin-bottom: 5px;
 }
 
 .preview-content p {
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(15, 13, 13, 0.9);
   margin: 0;
 }
 
@@ -472,7 +472,7 @@ textarea.form-control {
     BOTÓN AGREGAR PRODUCTO
 ============================= */
 .btn-agregar-producto {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #254f7abf, #265e7ed1);
   color: white;
   border: none;
   border-radius: 10px;
