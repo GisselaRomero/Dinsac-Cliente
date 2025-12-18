@@ -5,6 +5,8 @@ import { ProductService, Product } from '../../services/product.service';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ViewportScroller } from '@angular/common';
+
 
 @Component({
   selector: 'app-navbar',
@@ -82,8 +84,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private carritoService: CarritoService,
     private productService: ProductService,
-    private router: Router
+    private router: Router,
+    private viewportScroller: ViewportScroller
+
   ) {}
+
+
+  irAlInicio(): void {
+  this.router.navigate(['/']).then(() => {
+    this.viewportScroller.scrollToPosition([0, 0]);
+  });
+}
 
   ngOnInit(): void {
     this.cantidadProductos = this.carritoService.obtenerTotalItems();

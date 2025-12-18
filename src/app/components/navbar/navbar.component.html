@@ -87,13 +87,26 @@
   (click)="toggleMobilePanel()">
   <i class="fa-solid fa-bars"></i>
 </button>
+<a class="navbar-brand mini-logo-fixed" (click)="irAlInicio()">
+  <img src="assets/logoB.png" alt="Logo">
+</a>
+
+    <!-- 🔥 ICONOS DERECHA SOLO MOBILE -->
+    <div class="mobile-right-icons d-lg-none">
+      <a routerLink="/carrito" class="icon-btn position-relative">
+        <i class="fa-solid fa-cart-arrow-down"></i>
+        <span class="badge">{{ cantidadProductos }}</span>
+      </a>
+
+      <a routerLink="/historial" class="icon-btn">
+        <i class="fa-regular fa-user"></i>
+      </a>
+    </div>
+
 
     <!-- Collapse (menú + buscador desktop + iconos) -->
     <div class="collapse navbar-collapse" id="navbarMain">
 <!-- Logo mini fijo -->
-<a class="navbar-brand mini-logo-fixed" routerLink="/">
-  <img src="assets/logoB.png" alt="Logo">
-</a>
 
     <div class="menu-center-wrapper">
   <ul class="navbar-nav menu-center mb-2 mb-lg-0">
@@ -151,14 +164,44 @@
 <div class="mobile-panel" *ngIf="mobilePanelOpen">
 
   <!-- 🔍 Buscador -->
-  <div class="mobile-search">
-    <input
-      type="text"
-      placeholder="Buscar productos..."
-      [(ngModel)]="terminoBusqueda"
-      (input)="onInputChange()"
-    />
-  </div>
+<!-- 🔍 Buscador -->
+<!-- 🔍 BUSCADOR MOBILE (MISMO DEL NAVBAR) -->
+<div class="mobile-search">
+
+  <form class="search-container-top" (ngSubmit)="buscarProducto()">
+    <div class="search-wrapper">
+      <input
+        class="form-control"
+        type="search"
+        placeholder="Buscar producto..."
+        [(ngModel)]="terminoBusqueda"
+        name="busquedaMobile"
+        (input)="onInputChange()"
+        (keydown)="onKeyDown($event)"
+        autocomplete="off"
+      />
+
+      <div class="sugerencias-dropdown"
+           *ngIf="mostrarSugerencias && sugerencias.length > 0">
+        <div
+          class="sugerencia-item"
+          *ngFor="let producto of sugerencias; let i = index"
+          [class.selected]="i === indiceSeleccionado"
+          (click)="seleccionarSugerencia(producto)">
+          <img [src]="producto.image" class="sugerencia-img">
+          <div>
+            <div class="sugerencia-nombre">{{ producto.name }}</div>
+            <div class="sugerencia-categoria">{{ producto.category }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+
+  
 
   <!-- Tabs -->
   <div class="mobile-tabs">
@@ -204,11 +247,26 @@
 
 </nav>
 
-<!-- ================= MOBILE HEADER NAVBAR ================= -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ================= MOBILE HEADER NAVBAR 
 <nav class="navbar-mobile-header d-lg-none">
-  <button class="navbar-toggler" type="button" (click)="toggleMobilePanel()">
-    <i class="fa-solid fa-bars"></i>
-  </button>
+<button
+  class="navbar-toggler mobile-toggler d-lg-none"
+  type="button"
+  (click)="toggleMobilePanel()">
+  <i class="fa-solid fa-bars"></i>
+</button>
 
   <div class="mobile-logo">
     <a routerLink="/">
@@ -227,3 +285,4 @@
     </a>
   </div>
 </nav>
+================= -->

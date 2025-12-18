@@ -9,6 +9,9 @@
   flex-wrap: nowrap;
   gap: 21px;
   color: #fff;
+   position: relative;
+  top: 0;
+  z-index: 1040;
 }
 .navbar-brand {
   margin-left: 40px;   /* 🔥 separa del borde */
@@ -140,11 +143,9 @@
 .mini-logo-fixed {
   display: flex;              /* 🔥 SIEMPRE ocupa su espacio */
   align-items: center;
-  margin-right: 23px;
 
   opacity: 0;                 /* oculto */
   visibility: hidden;         /* no clickable */
-  transform: translateX(-8px);
 
   transition: 
     opacity 0.3s ease,
@@ -159,7 +160,7 @@
 }
 
 .mini-logo-fixed img {
-  height: 44px;
+  height: 53px;
 }
 
 /* ===================== NAVBAR PRINCIPAL ===================== */
@@ -167,7 +168,7 @@
   background-color: #1a4d6c;
   padding: 18px 28px;
   position: sticky;
-  top: 0;
+  top: 86px; /* altura del navbar superior */
   z-index: 1030;
   font-size: 19px;
   
@@ -181,6 +182,21 @@
 
 .custom-navbar-main .nav-link:hover {
   color: #66bb6a !important;
+}
+.custom-navbar-social {
+  position: relative;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.custom-navbar-social.scrolled {
+  display: none;
+}
+
+.custom-navbar-main {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  transition: top 0.3s ease;
 }
 
 /* ===================== 🔍 BUSCADOR ===================== */
@@ -749,22 +765,17 @@
 
 
 
-
-
-
-
-
 /* ================= MOBILE PANEL ================= */
 
 .mobile-panel {
   position: fixed;
-  top: 64px;
+  top: 86px;
   left: 0;
   right: 0;
   bottom: 0;
 
   background: #ffffff;
-  z-index: 9999;
+    z-index: 1040;    /* debajo del navbar */
 
   display: flex;
   flex-direction: column;
@@ -773,7 +784,7 @@
 /* 🔍 buscador */
 .mobile-search {
   padding: 14px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #1a4d6c;
 }
 
 .mobile-search input {
@@ -830,217 +841,316 @@
   background: #f9fafb;
   color: #111827;
 }
-/* ===========================
-   OCULTAR NAVBARS DE ESCRITORIO EN MÓVIL
-   =========================== */
 @media (max-width: 991px) {
-  /* Ocultar navbar superior y principal */
-  .custom-navbar-social,
-  .custom-navbar-main {
-    display: none !important;
-  }
-
-  /* Mostrar navbar móvil */
-  .navbar-mobile-header {
-    display: flex !important;
+  .menu-center-wrapper {
+    display: none;
   }
 }
 
-/* Mantener todo normal en escritorio */
-@media (min-width: 992px) {
-  .custom-navbar-social,
-  .custom-navbar-main {
-    display: flex !important;
-  }
-
-  .navbar-mobile-header {
-    display: none !important;
-  }
-}
-/* ================= MOBILE PANEL ================= */
-.mobile-panel {
-  position: fixed;
-  top: 64px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #ffffff;
-  z-index: 1050; /* más alto que navbar principal */
-  display: flex;
-  flex-direction: column;
-  transform: translateY(-100%);
-  transition: transform 0.3s ease-in-out;
-  overflow-y: auto;
-}
-
-.mobile-panel.open {
-  transform: translateY(0);
-}
-
-/* 🔍 buscador */
-.mobile-search {
-  padding: 14px;
-  border-bottom: 1px solid #eee;
-}
-
-.mobile-search input {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  font-size: 16px;
-}
-
-/* Tabs */
-.mobile-tabs {
-  display: flex;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.mobile-tabs button {
-  flex: 1;
-  padding: 14px;
-  background: none;
-  border: none;
-  font-size: 16px;
-  font-weight: 600;
-  color: #6b7280;
-  cursor: pointer;
-  transition: color 0.25s, border-bottom 0.25s;
-}
-
-.mobile-tabs button.active {
-  color: #1a4d6c;
-  border-bottom: 3px solid #1a4d6c;
-}
-
-/* Contenido */
-.mobile-content {
-  flex: 1;
-  overflow-y: auto;
-}
-
-.mobile-content ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.mobile-content li a {
-  display: block;
-  padding: 16px 20px;
-  font-size: 17px;
-  color: #374151;
-  text-decoration: none;
-  border-bottom: 1px solid #f1f1f1;
-  transition: background 0.25s, color 0.25s;
-}
-
-.mobile-content li a:hover {
-  background: #f9fafb;
-  color: #111827;
-}
 
 
 
-/* ================= MOBILE HEADER NAVBAR ================= */
 
-/* ================= MOBILE HEADER NAVBAR ================= */
-.navbar-mobile-header {
-  display: none;
-}
 
+/* ================= LOGO CENTRADO EN MOBILE ================= */
 @media (max-width: 991px) {
-  .navbar-mobile-header {
+
+  .custom-navbar-main .container-fluid {
+    position: relative;
+  }
+
+  .mini-logo-fixed {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+
+    opacity: 1;
+    visibility: visible;
+    z-index: 1050;
+  }
+
+  .mini-logo-fixed img {
+    height: 52px; /* ajusta si deseas */
+  }
+}
+/* ================= LOGO 100% ESTÁTICO EN MOBILE ================= */
+@media (max-width: 991px) {
+
+  .custom-navbar-main .container-fluid {
+    position: relative;
+  }
+
+  .mini-logo-fixed {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) !important;
+
+    margin: 0 !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    transition: opacity 0.3s ease; /* ❌ sin movimiento */
+    z-index: 1050;
+  }
+
+  /* ❌ desactiva animaciones por scroll */
+  .custom-navbar-main.scrolled .mini-logo-fixed {
+    transform: translate(-50%, -50%) !important;
+  }
+
+  .mini-logo-fixed img {
+    height: 52px;
+  }
+}
+
+
+/* ================= ICONOS DERECHA - SOLO MOBILE ================= */
+@media (max-width: 991px) {
+
+  .custom-navbar-main .container-fluid {
+    position: relative;
+  }
+
+  .mobile-right-icons {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px 14px;
-    background: #1a4d6c;
-    border-bottom: 1px solid #e5e7eb;
-    z-index: 1060; /* sobre el mobile panel */
+    gap:25px;
+
+    z-index: 1050;
   }
 
-  .mobile-logo img {
-    height: 38px;
-    object-fit: contain;
+  .mobile-right-icons .icon-btn {
+    color: #ffffff;
+    font-size: 24px;
+    text-decoration: none;
+    position: relative;
   }
 
-  .mobile-icons {
+ .mobile-right-icons .badge {
+    min-width: 16px;
+    height: 16px;
+
+    padding: 0;
+    margin: 0;
+
     display: flex;
     align-items: center;
-    gap: 14px;
-  }
+    justify-content: center;
 
-  .mobile-icons i {
-    font-size: 18px;
-    color: #111827;
-  }
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
 
-  .navbar-toggler {
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
+    border-radius: 50%;
+    background: #ff3b3b;
+    color: #fff;
 
-  .navbar-toggler i {
-    font-size: 20px;
-    color: #111827;
-  }
-
-  .badge {
-    font-size: 11px;
+    position: absolute;
     top: -6px;
     right: -8px;
   }
 }
 
-@media (max-width: 991px) {
-  .navbar-mobile-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 14px;
-    background: #1a4d6c;
-    border-bottom: 1px solid #e5e7eb;
 
-    /* Nuevo: mantener fijo */
+
+/* ================= OCULTAR NAVBAR SUPERIOR EN MOBILE ================= */
+@media (max-width: 991px) {
+  .custom-navbar-social {
+    display: none !important;
+  }
+}
+
+
+
+/* ================= NAVBAR MOBILE MÁS ALTO / ANCHO ================= */
+@media (max-width: 991px) {
+
+  .custom-navbar-main {
+    padding: 19px 15px;   /* 🔥 MÁS ALTO */
+    min-height: 86px;     /* 🔥 fuerza altura elegante */
+  }
+
+  .custom-navbar-main .container-fluid {
+    min-height: 86px;
+    align-items: center;
+  }
+
+  /* Logo un poquito más grande */
+  .mini-logo-fixed img {
+    height: 57px;         /* antes 52px */
+  }
+
+  /* Íconos derecha más centrados verticalmente */
+  .mobile-right-icons .icon-btn {
+    font-size: 27px;
+  }
+
+  /* Badge más proporcionado */
+  .mobile-right-icons .badge {
+    min-width: 17px;
+    height: 17px;
+    font-size: 11px;
+    top: -5px;
+    right: -7px;
+  }
+}
+/* ================= MOBILE PANEL – VENTANA FLOTANTE ================= */
+
+@media (max-width: 991px) {
+
+  .mobile-panel {
+    position: fixed;
+
+    /* 🔥 tamaño de ventanita */
+    top: 97px;                 /* debajo del navbar */
+    left: 12px;
+    right: 12px;
+    bottom: 13px;              /* NO ocupa todo */
+
+    background: #ffffff;
+    z-index: 1040;
+
+    display: flex;
+    flex-direction: column;
+
+    /* ✨ look elegante */
+    border-radius: 5px;
+    box-shadow:
+      0 12px 30px rgba(0, 0, 0, 0.18),
+      0 4px 10px rgba(0, 0, 0, 0.12);
+
+    overflow: hidden;
+
+    /* animación suave */
+    animation: mobilePanelFade 0.25s ease;
+  }
+
+  @keyframes mobilePanelFade {
+    from {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* 🔍 buscador */
+  .mobile-search {
+    padding: 16px;
+    border-bottom: 1px solid rgba(26, 77, 108, 0.2);
+    background: #f9fafb;
+  }
+
+  /* Tabs */
+  .mobile-tabs {
+    border-bottom: 1px solid #e5e7eb;
+    background: #ffffff;
+  }
+
+  /* Contenido con scroll */
+  .mobile-content {
+    flex: 1;
+    overflow-y: auto;
+  }
+}
+
+
+
+
+
+/* ================= MOBILE DRAWER LATERAL ================= */
+@media (max-width: 991px) {
+
+  .mobile-panel {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
 
-    z-index: 1060; /* sobre el mobile panel */
-  }
+    /* 🔥 ancho tipo imagen */
+width: 85%;             /* 🔥 NO 90% */
+    max-width: 360px;       /* 🔥 MÁS SEGURO */
+    height: 100vh;
 
-  .mobile-icons {
+    background: #ffffff;
+    z-index: 1050;
+
     display: flex;
-    align-items: center;
-    gap: 14px;
-  }
+    flex-direction: column;
 
-  .mobile-icons i {
-    font-size: 18px;
-    color: #111827;
+    /* sombra elegante */
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.25);
+ overflow-x: hidden;  /* 🔥 CLAVE */
+    overflow-y: auto;
+    /* animación */
+    animation: slideDrawer 0.3s ease forwards;
   }
+  
 
-  .navbar-toggler {
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-
-  .navbar-toggler i {
-    font-size: 20px;
-    color: #111827;
-  }
-
-  .badge {
-    font-size: 11px;
-    top: -6px;
-    right: -8px;
+  @keyframes slideDrawer {
+    from {
+      transform: translateX(-100%);
+      opacity: 0.9;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
 }
+@media (max-width: 991px) {
+  body.mobile-open::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1040;
+  }
+}
+.mobile-search {
+  padding: 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
 
+.mobile-search input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 16px;
+}
+.mobile-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.mobile-content li a {
+  display: block;
+  padding: 18px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #111827;
+  text-decoration: none;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.mobile-content li a:hover {
+  background: #f9fafb;
+}
+
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden !important;
+}
 
 
