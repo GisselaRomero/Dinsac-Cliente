@@ -249,3 +249,71 @@
   transform: scale(1.15);
   color: #b00000;
 }
+
+
+
+
+/* ================= PERFIL DEL CLIENTE ================= */
+
+.perfil-cliente {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 22px 26px;
+  margin-bottom: 30px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  font-family: 'Poppins', sans-serif;
+}
+
+.perfil-cliente h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2b7a78;
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0f2f1;
+}
+
+/* filas de datos */
+.perfil-cliente p {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  align-items: center;
+  margin: 0;
+  padding: 10px 0;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+/* separador elegante */
+.perfil-cliente p:not(:last-child) {
+  border-bottom: 1px dashed #e5e7eb;
+}
+
+/* etiquetas */
+.perfil-cliente p strong {
+  font-weight: 600;
+  color: #205b57;
+}
+
+/* valores */
+.perfil-cliente p span,
+.perfil-cliente p {
+  line-height: 1.4;
+}
+
+/* responsive */
+@media (max-width: 480px) {
+  .perfil-cliente p {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .perfil-cliente p strong {
+    font-size: 0.85rem;
+    color: #6b7280;
+  }
+}

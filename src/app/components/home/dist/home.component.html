@@ -1,4 +1,4 @@
-<!-- ==================== CARRUSEL PRINCIPAL PREMIUM ==================== -->
+
 <div 
   id="carouselMain" 
   class="carousel slide carousel-fade premium-carousel" 
@@ -79,8 +79,6 @@
   *ngIf="bannersPrincipal.length === 0">
   <p>📸 No hay imágenes en el carrusel</p>
 </div>
-
-
 
 
 
@@ -183,7 +181,7 @@
       Productos disponibles con las mejores condiciones del mercado.
     </p>
 <section class="banner-ofertas" *ngIf="bannerOfertasUrl">
-  <img [src]="bannerOfertasUrl" alt="Banner Ofertas" class="banner-img">
+  <img [src]="bannerOfertasUrl" alt="Banner Ofertas" class="banner-img"loading="lazy">
 </section>
 
     <!-- GRID DE PRODUCTOS -->
@@ -191,7 +189,7 @@
   <div class="producto-card"
        *ngFor="let producto of ofertasDestacadas | slice:0:8">
 
-    <img [src]="producto.image" [alt]="producto.name">
+    <img [src]="producto.image" [alt]="producto.name" loading="lazy"> 
 
     <div class="producto-info">
       <h3>{{ producto.name }}</h3>
@@ -235,7 +233,7 @@
     <div class="partners-logos">
       <div *ngFor="let marca of marcas" class="logo-card">
         <a [href]="marca.url" target="_blank">
-          <img [src]="marca.logo" [alt]="marca.name">
+          <img [src]="marca.logo" [alt]="marca.name" loading="lazy">
         </a>
       </div>
     </div>
@@ -255,7 +253,7 @@
     muted
     loop
     playsinline
-    preload="auto"
+    preload="none"
     class="main-video"
   >
     <source src="assets/videos/v1.mp4" type="video/mp4" />
