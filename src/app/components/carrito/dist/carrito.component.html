@@ -32,6 +32,30 @@
         <h4>{{ producto.name }}</h4>
         <p>{{ producto.description }}</p>
         <p><strong>Categoría:</strong> {{ producto.category }}</p>
+<!-- PRECIO DEL PRODUCTO -->
+<div class="precio-carrito">
+  <!-- Si está en oferta -->
+  <ng-container *ngIf="producto.estado === 'Oferta' && producto.precioReal; else precioNormal">
+    <span class="precio-real">
+      S/ {{ producto.precioReal | number:'1.2-2' }}
+    </span>
+    <span class="precio-oferta">
+      S/ {{ producto.price | number:'1.2-2' }}
+    </span>
+  </ng-container>
+
+  <!-- Precio normal -->
+  <ng-template #precioNormal>
+    <span class="precio-normal">
+      S/ {{ producto.price | number:'1.2-2' }}
+    </span>
+  </ng-template>
+</div>
+
+<p class="subtotal">
+  Subtotal: 
+  <strong>S/ {{ producto.price * producto.cantidad | number:'1.2-2' }}</strong>
+</p>
 
         <div class="cantidad-control">
           <label for="cantidad">Cantidad:</label>

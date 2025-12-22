@@ -25,7 +25,7 @@ export class CotizarComponent implements OnInit {
     telefonoMovil: '',
     mensaje: '',
     contacto: '',
-    terminos: false,
+
     productos: [
       { categoria: '', equipo: '', cantidad: 1 }
     ]
@@ -359,13 +359,7 @@ export class CotizarComponent implements OnInit {
       console.log(`   ✅ Producto ${i + 1}: ${p.categoria} - ${p.equipo} (${p.cantidad})`);
     }
 
-    if (!f.terminos) {
-      console.error('   ❌ Términos no aceptados');
-      alert('⚠️ Debes aceptar los términos y condiciones.');
-      return false;
-    }
-    console.log('   ✅ Términos: Aceptados');
-
+  
     console.log('✅ Todas las validaciones pasaron correctamente\n');
     return true;
   }
@@ -532,7 +526,6 @@ export class CotizarComponent implements OnInit {
       telefonoMovil: '',
       mensaje: '',
       contacto: '',
-      terminos: false,
       productos: [{ categoria: '', equipo: '', cantidad: 1 }]
     };
   }
@@ -583,6 +576,12 @@ export class CotizarComponent implements OnInit {
     this.formData.productos.push({ categoria: '', equipo: '', cantidad: 1 });
     this.ensureIndices();
   }
+soloNumeros(event: KeyboardEvent) {
+  const charCode = event.which ? event.which : event.keyCode;
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault();
+  }
+}
 
   quitarProducto(i: number): void {
     if (this.formData.productos.length > 1) {
@@ -594,3 +593,4 @@ export class CotizarComponent implements OnInit {
     }
   }
 }
+

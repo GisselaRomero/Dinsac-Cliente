@@ -199,4 +199,48 @@ input.form-control:focus {
   }
 }
 
+/* ================== PRECIO EN CARDS DE CATEGORÍA ================== */
+.precio-container {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Precio normal */
+.precio {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #111827;
+  /* gris oscuro elegante */
+}
+
+/* Precio anterior (OFERTA) */
+.precio-tachado {
+  font-size: 1rem;
+  color: #dc2626;
+  /* rojo suave */
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #dc2626;
+}
+
+/* Precio actual en OFERTA */
+.precio-oferta {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #16a34a;
+  /* verde éxito */
+}
+
+/* Precio normal (más grande y en negrita) */
+.precio {
+  font-size: 1.2rem;
+  /* más grandecito */
+  font-weight: 700;
+  /* negrita */
+  color: #0f515ad6;
+  /* gris oscuro elegante */
+}
+
 /*# sourceMappingURL=categoria-productos.component.css.map */

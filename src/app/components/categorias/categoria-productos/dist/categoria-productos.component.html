@@ -19,6 +19,28 @@
       <div class="producto-info">
         <h3>{{ producto.name }}</h3>
         <p><strong>Descripción:</strong> {{ producto.description }}</p>
+<!-- 💰 PRECIO DEL PRODUCTO -->
+<div class="precio-container">
+
+  <!-- 🏷️ Producto en OFERTA -->
+  <div *ngIf="producto.estado === 'Oferta' && producto.precioReal; else precioNormal">
+    <span class="precio-tachado">
+      Antes: S/ {{ producto.precioReal | number:'1.2-2' }}
+    </span>
+
+    <span class="precio-oferta">
+      Ahora: S/ {{ producto.price | number:'1.2-2' }}
+    </span>
+  </div>
+
+  <!-- 💰 Precio NORMAL -->
+  <ng-template #precioNormal>
+    <span class="precio">
+      Precio: S/ {{ producto.price | number:'1.2-2' }}
+    </span>
+  </ng-template>
+
+</div>
 
         <!-- 🔹 Sin precios -->
         <!-- <p class="precio">{{ producto.price | currency }}</p> -->

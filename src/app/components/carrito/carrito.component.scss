@@ -260,3 +260,68 @@ h2 {
     padding: 20px;
   }
 }
+
+
+/* ============================
+    PRECIO DEL PRODUCTO
+============================ */
+.precio-carrito {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+/* Precio normal */
+.precio-normal {
+  font-size: 22px;
+  font-weight: 800;
+  color: #164d6c;
+}
+
+/* Precio original (antes de oferta) */
+.precio-real {
+  font-size: 16px;
+  font-weight: 600;
+  color: #9aa5b1;
+  text-decoration: line-through;
+  position: relative;
+}
+
+/* Precio en oferta */
+.precio-oferta {
+  font-size: 20px;
+  font-weight: 800;
+  color: #e63946;
+  background: rgba(230, 57, 70, 0.1);
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+/* Subtotal por producto */
+.subtotal {
+  margin-top: 4px;
+  font-size: 15px;
+  color: #4a5d73;
+  
+}
+
+.subtotal strong {
+  font-size: 18px;
+  color: #2c8ead;
+}
+
+/* Subtotal por producto */
+.subtotal {
+  margin-top: 4px;
+  font-size: 15px;
+  color: #4a5d73;
+  font-weight: 700; /* 👈 ahora en negrita */
+}
+
+.subtotal strong {
+  font-size: 16px;
+  color: #2c8ead;
+  font-weight: 800;
+}
+
