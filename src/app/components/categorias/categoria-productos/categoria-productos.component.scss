@@ -63,6 +63,8 @@ input.form-control:focus {
   display: flex;
   flex-direction: column;
   cursor: pointer;
+    height: 100%; /* 🔑 importante */
+
 }
 
 .producto-card:hover {
@@ -89,6 +91,9 @@ input.form-control:focus {
 
 .producto-info {
   padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;      
 }
 
 .producto-info h3 {
@@ -102,6 +107,11 @@ input.form-control:focus {
   color: #3a5a73;
   font-size: 1rem;
   margin-bottom: 18px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;      /* ← máximo 3 líneas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 72px;           /* ← reserva espacio igual */
 }
 
 /* =============================== */
@@ -214,6 +224,8 @@ input.form-control:focus {
   margin-top: 8px;
   display: flex;
   flex-direction: column;
+    margin-top: auto;           /* 🔥 empuja hacia abajo */
+
   gap: 4px;
 }
 
