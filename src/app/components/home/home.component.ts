@@ -4,6 +4,7 @@ import {
   ElementRef,
   AfterViewInit,
   OnInit,
+
   OnDestroy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,6 +14,7 @@ import { CotizarComponent } from '../cotizar/cotizar.component';
 import { RouterModule, Router } from '@angular/router';
 import { Product, ProductService } from '../../services/product.service';
 import { HttpClient } from '@angular/common/http';
+import { FooterComponent } from '../footer/footer.component';
 
 declare var bootstrap: any;
 let homeYaCargado = false;
@@ -44,6 +46,7 @@ interface BannerIndividualResponse {
     VideosHomeComponent,
     FormsModule,
     CotizarComponent,
+      FooterComponent,
     RouterModule
   ],
   templateUrl: './home.component.html',
