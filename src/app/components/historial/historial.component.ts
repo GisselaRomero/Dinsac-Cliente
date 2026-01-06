@@ -194,4 +194,15 @@ eliminar(id: string) {
 }
 
 
+cerrarSesion(): void {
+  localStorage.removeItem('usuario_logueado');
+  localStorage.removeItem('usuario_email');
+  localStorage.removeItem('usuario_id');
+  localStorage.removeItem('cliente');
+
+  alert('👋 Sesión cerrada');
+  this.router.navigate(['/login']);
+}
+
+
 }

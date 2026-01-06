@@ -322,4 +322,26 @@
   }
 }
 
+.perfil-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.btn-cerrar-sesion {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-cerrar-sesion:hover {
+  background-color: #b52a37;
+}
+
 /*# sourceMappingURL=historial.component.css.map */

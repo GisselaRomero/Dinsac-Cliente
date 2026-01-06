@@ -1,6 +1,11 @@
 <section class="perfil-cliente">
-  <h2>👤 Mis datos</h2>
-  <p><strong>Nombre:</strong> {{ cliente.nombre }}</p>
+ <div class="perfil-header">
+    <h2>👤 Mis datos</h2>
+
+    <button class="btn-cerrar-sesion" (click)="cerrarSesion()">
+      🚪 Cerrar sesión
+    </button>
+  </div>  <p><strong>Nombre:</strong> {{ cliente.nombre }}</p>
   <p><strong>Email:</strong> {{ cliente.email }}</p>
   <p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
   <p><strong>Dirección:</strong> {{ cliente.direccion }}</p>
