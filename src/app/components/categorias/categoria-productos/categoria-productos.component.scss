@@ -4,10 +4,12 @@
 
 .productos-container {
   padding: 80px 25px;
-  max-width: 1400px;
-  margin: 0 auto;
+  max-width: 100%;          /* ← permite usar todo el ancho */
+  margin-left: 120px;       /* ← ~3 cm desde el borde izquierdo */
+  margin-right: 40px;       /* ← un poco de aire a la derecha */
   background: #f8fafc;
 }
+
 
 .productos-container h2 {
   font-size: 2.8rem;
