@@ -6,6 +6,30 @@ $white: #ffffff;
 $shadow-strong: 0 20px 60px rgb(244, 243, 243);
 $shadow-medium: 0 10px 30px rgb(255, 250, 250);
 
+
+// ✅ AGREGAR ESTO AQUÍ - ESCALA TODO AL 75%
+html {
+  zoom: 0.75;
+}
+
+// O ESTA ALTERNATIVA (más compatible)
+html {
+  font-size: 75%; // Reduce el tamaño base del 100% al 75%
+}  
+
+
+:host {
+  display: block;
+  transform: scale(0.75);
+  transform-origin: top left;
+  width: 133.33%; // Compensa el ancho (100/0.75)
+  min-height: 133.33vh; // Compensa la altura
+}
+.container-fluid {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 /* ===== BOTÓN PREMIUM RECTANGULAR DERECHA ===== */
 /* ===== BOTÓN COTIZACIÓN – PREMIUM MODERNO ===== */
 /* ===== BOTÓN COTIZACIÓN – PREMIUM MEJORADO ===== */
@@ -310,7 +334,7 @@ $shadow-medium: 0 10px 30px rgb(255, 250, 250);
   }
 
   .cotizacion-hero .cotizacion-hero-box {
-    padding: 28px 16px;   // 🔽 menos alto
+  padding: 60px 5vw; /* antes 80px 8vw */
   }
 
   /* ICONO */

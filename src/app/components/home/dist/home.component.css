@@ -1,4 +1,25 @@
 @charset "UTF-8";
+html {
+  zoom: 0.75;
+}
+
+html {
+  font-size: 75%;
+}
+
+:host {
+  display: block;
+  transform: scale(0.75);
+  transform-origin: top left;
+  width: 133.33%;
+  min-height: 133.33vh;
+}
+
+.container-fluid {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 /* ===== BOTÓN PREMIUM RECTANGULAR DERECHA ===== */
 /* ===== BOTÓN COTIZACIÓN – PREMIUM MODERNO ===== */
 /* ===== BOTÓN COTIZACIÓN – PREMIUM MEJORADO ===== */
@@ -250,7 +271,8 @@
     margin-top: -30px;
   }
   .cotizacion-hero .cotizacion-hero-box {
-    padding: 28px 16px;
+    padding: 60px 5vw;
+    /* antes 80px 8vw */
   }
   /* ICONO */
   .hero-header .hero-icon {
