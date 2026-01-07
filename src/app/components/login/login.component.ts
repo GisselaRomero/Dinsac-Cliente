@@ -28,6 +28,11 @@ export class LoginComponent implements AfterViewInit {
     password: ''
   };
 
+ togglePanel() {
+    const container = document.getElementById('container');
+    container?.classList.toggle('right-panel-active');
+  }
+
   constructor(private logiclienteService: LogiclienteService) {}
 
   ngAfterViewInit(): void {

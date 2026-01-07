@@ -138,7 +138,7 @@ cargarHistorial(): void {
     const estadosMap: { [key: string]: string } = {
       'pendiente': 'Pendiente',
       'en proceso': 'En Proceso',
-      'completada': 'Completada',
+      'vendida': 'Vendida',
       'cancelada': 'Cancelada'
     };
 

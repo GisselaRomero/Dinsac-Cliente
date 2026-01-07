@@ -1,59 +1,117 @@
-@charset "UTF-8";
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
-  background: #f6f5f7;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  height: 100vh;
-  margin: 0;
+  justify-content: center;
   padding: 20px;
+  position: relative;
+  overflow-x: hidden;
+  background-image: url("/src/assets/2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Overlay oscuro sobre la imagen */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
 }
 
 h1 {
-  font-weight: bold;
-  margin: 0;
+  font-weight: 700;
+  margin: 0 0 15px 0;
+  font-size: 2rem;
+  color: #2d3748;
 }
 
 p {
-  font-size: 18px;
-  font-weight: 100;
-  line-height: 20px;
-  letter-spacing: 0.5px;
-  margin: 20px 0 30px;
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+  margin: 15px 0 25px;
+  color: #555;
 }
 
 span {
-  font-size: 12px;
+  font-size: 0.85rem;
+  color: #888;
+  margin: 15px 0;
+  display: block;
 }
 
 a {
-  color: #333;
-  font-size: 14px;
+  color: #7c9cbf;
+  font-size: 0.9rem;
   text-decoration: none;
   margin: 15px 0;
+  display: inline-block;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
+a:hover {
+  color: #5a7a9a;
+  text-decoration: underline;
+}
+
+/* Botones mejorados */
 button {
-  border-radius: 20px;
-  border: 1px solid #4CAF50;
-  background-color: #4CAF50;
+  border-radius: 50px;
+  border: none;
+  background: #9fa8da;
   color: #FFFFFF;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 12px 45px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: transform 80ms ease-in;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 14px 50px;
+  letter-spacing: 0.5px;
+  text-transform: capitalize;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  box-shadow: 0 4px 15px rgba(159, 168, 218, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+button:hover::before {
+  left: 100%;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(159, 168, 218, 0.4);
+  background: #8e99d0;
 }
 
 button:active {
-  transform: scale(0.95);
+  transform: scale(0.98);
 }
 
 button:focus {
@@ -61,53 +119,88 @@ button:focus {
 }
 
 button.ghost {
-  background-color: transparent;
+  background: transparent;
+  border: 2px solid #FFFFFF;
+  color: #FFFFFF;
+  box-shadow: none;
+}
+
+button.ghost:hover {
+  background: rgba(255, 255, 255, 0.15);
   border-color: #FFFFFF;
 }
 
+/* Formularios mejorados */
 form {
   background-color: #FFFFFF;
   display: flex;
   flex-direction: column;
-  padding: 0 50px;
+  padding: 40px 50px;
   height: 100%;
   justify-content: center;
   align-items: center;
   text-align: center;
 }
 
+/* Inputs modernos */
 input {
-  background-color: #eee;
-  border: none;
-  padding: 12px 15px;
+  background-color: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 14px 18px;
   margin: 8px 0;
   width: 100%;
+  max-width: 350px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  color: #333;
+  font-family: 'Poppins', sans-serif;
 }
 
-.container {
+input:focus {
+  outline: none;
   background-color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  border-color: #9fa8da;
+  box-shadow: 0 0 0 3px rgba(159, 168, 218, 0.1);
+}
+
+input::placeholder {
+  color: #aaa;
+  font-size: 0.85rem;
+}
+
+/* Container principal mejorado */
+.container {
+  background-color: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border-radius: 25px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   position: relative;
   overflow: hidden;
   width: 900px;
-  /* ⬅️ más ancho */
-  max-width: 100%;
-  min-height: 560px;
-  /* ⬅️ más alto */
+  max-width: 95%;
+  min-height: 550px;
+  animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
 }
 
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Contenedores de formularios */
 .form-container {
   position: absolute;
   top: 0;
   height: 100%;
   transition: all 0.6s ease-in-out;
-}
-
-h1 {
-  font-weight: bold;
-  margin-bottom: 15px;
-  font-size: 26px;
 }
 
 .sign-in-container {
@@ -127,14 +220,25 @@ h1 {
   transform: translateX(100%);
   opacity: 1;
   z-index: 5;
+  animation: show 0.6s;
+}
+
+@keyframes show {
+  0%, 49.99% {
+    opacity: 0;
+    z-index: 1;
+  }
+  50%, 100% {
+    opacity: 1;
+    z-index: 5;
+  }
 }
 
 .container.right-panel-active .sign-in-container {
   transform: translateX(100%);
-  opacity: 0;
-  z-index: 1;
 }
 
+/* Overlay mejorado con colores suaves */
 .overlay-container {
   position: absolute;
   top: 0;
@@ -151,11 +255,8 @@ h1 {
 }
 
 .overlay {
-  background: #4CAF50;
-  background: linear-gradient(to right, #4CAF50, #388E3C);
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: #FFFFFF;
+  background: linear-gradient(135deg, #b8d4e6 0%, #a8c9df 50%, #9fb9d1 100%);
+  color: #2d3748;
   position: relative;
   left: -100%;
   height: 100%;
@@ -174,13 +275,27 @@ h1 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 40px;
+  padding: 0 50px;
   text-align: center;
   top: 0;
   height: 100%;
   width: 50%;
   transform: translateX(0);
   transition: transform 0.6s ease-in-out;
+}
+
+.overlay-panel h1 {
+  color: #2d3748;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.overlay-panel p {
+  color: #4a5568;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
 }
 
 .overlay-left {
@@ -200,19 +315,91 @@ h1 {
   transform: translateX(20%);
 }
 
+/* Social icons mejorados */
 .social-container {
   margin: 20px 0;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
 }
 
 .social-container a {
-  border: 1px solid #DDDDDD;
+  border: 1.5px solid #d0d5dd;
   border-radius: 50%;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
-  width: 40px;
-  margin: 0 5px;
+  height: 42px;
+  width: 42px;
+  margin: 0;
+  transition: all 0.3s ease;
+  background: #fff;
+}
+
+.social-container a:hover {
+  background: #f8f9fa;
+  border-color: #9fa8da;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(159, 168, 218, 0.2);
+}
+
+.social-container i {
+  color: #6b7280;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.social-container a:hover i {
+  color: #9fa8da;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .container {
+    min-height: 520px;
+    width: 95%;
+  }
+  form {
+    padding: 30px 35px;
+  }
+  h1 {
+    font-size: 1.8rem;
+  }
+  .overlay-panel h1 {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  body {
+    background-position: center;
+    padding: 10px;
+  }
+  .container {
+    flex-direction: column;
+    min-height: auto;
+    border-radius: 20px;
+  }
+  .form-container {
+    position: relative;
+    width: 100% !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .overlay-container {
+    display: none;
+  }
+  .sign-up-container,
+.sign-in-container {
+    width: 100%;
+    position: relative;
+  }
+  form {
+    padding: 30px 25px;
+  }
+  input {
+    max-width: 100%;
+  }
 }
 
 /*# sourceMappingURL=login.component.css.map */
