@@ -49,8 +49,8 @@
 }
 
 .mensaje.mensaje-cliente .mensaje-contenido {
-  background: #667eea;
-  color: white;
+  background: rgba(157, 140, 232, 0.678);
+  color: #221717;
   border-radius: 15px 15px 0 15px;
 }
 
@@ -60,7 +60,7 @@
 
 .mensaje.mensaje-admin .mensaje-contenido {
   background: white;
-  color: #333;
+  color: #151414;
   border-radius: 15px 15px 15px 0;
   border: 1px solid #e0e0e0;
 }
@@ -152,12 +152,12 @@
 }
 
 .mensaje-admin .pdf-preview .btn-abrir-pdf {
-  background: #667eea;
+  background: #7586d19e;
   color: white;
 }
 
 .mensaje-admin .pdf-preview .btn-abrir-pdf:hover {
-  background: #5568d3;
+  background: #5568d38a;
 }
 
 .chat-input {

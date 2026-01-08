@@ -47,8 +47,8 @@
     align-self: flex-end;
     
     .mensaje-contenido {
-      background: #667eea;
-      color: white;
+      background: hsla(251, 67%, 73%, 0.678);
+      color: rgb(34, 23, 23);
       border-radius: 15px 15px 0 15px;
     }
   }
@@ -58,7 +58,7 @@
     
     .mensaje-contenido {
       background: white;
-      color: #333;
+      color: #151414;
       border-radius: 15px 15px 15px 0;
       border: 1px solid #e0e0e0;
     }
@@ -154,11 +154,11 @@
   }
 
   .mensaje-admin & .btn-abrir-pdf {
-    background: #667eea;
+    background: #7586d19e;
     color: white;
 
     &:hover {
-      background: #5568d3;
+      background: #5568d38a;
     }
   }
 }

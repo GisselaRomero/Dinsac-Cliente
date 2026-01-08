@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { GeminiService } from '../../services/gemini.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http'; // IMPORTANTE
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 interface Message {
   sender: 'user' | 'gemini';
@@ -12,84 +11,68 @@ interface Message {
 @Component({
   selector: 'app-chatbot-prueba',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule], // Asegúrate de importar HttpClientModule aquí
+  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './chatbot-prueba.component.html',
   styleUrl: './chatbot-prueba.component.scss',
 })
 export class ChatbotPruebaComponent implements OnInit {
 
   messages: Message[] = [];
-  newMessage: string = '';
-  isLoading: boolean = false;
-  voiceEnabled: boolean = true;
+  newMessage = '';
+  isLoading = false;
 
-  constructor(
-    private geminiService: GeminiService,
-    private http: HttpClient // INYECCIÓN DEL SERVICIO HTTP
-  ) {}
+  private API_URL = 'https://backend-dinsac-hlf0.onrender.com/api/gemini';
+
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.messages.push({ sender: 'gemini', text: '¡Hola! ¿En qué puedo ayudarte hoy?' });
+    this.messages.push({
+      sender: 'gemini',
+      text: '👋 Hola, soy el asistente de DINSAC. ¿En qué puedo ayudarte hoy?'
+    });
   }
 
   sendMessage(): void {
-    if (this.newMessage.trim() === '') return;
+    if (!this.newMessage.trim()) return;
 
     const userMessage = this.newMessage;
+
+    // Mostrar mensaje del usuario
     this.messages.push({ sender: 'user', text: userMessage });
     this.newMessage = '';
     this.isLoading = true;
 
-    // 👉 REGISTRA LA INTERACCIÓN EN EL BACKEND
-    this.http.post('https://backend-dinsac-hlf0.onrender.com/interacciones', {
-      usuario: 'Usuario Anónimo',
-      mensaje: userMessage,
-      fecha: new Date().toISOString()
-    }).subscribe({
-      next: () => console.log('Interacción registrada'),
-      error: (err: any) => console.error('Error al guardar interacción', err)
+    // Guardar interacción (opcional)
+    this.http.post(
+      'https://backend-dinsac-hlf0.onrender.com/interacciones',
+      {
+        usuario: 'Usuario Anónimo',
+        mensaje: userMessage,
+        fecha: new Date().toISOString()
+      }
+    ).subscribe({
+      error: () => {}
     });
 
-    this.geminiService.sendMessage(userMessage).subscribe({
-      next: (response) => {
-        let geminiResponseText = response?.candidates?.[0]?.content?.parts?.[0]?.text || 
-                                 'Lo siento, no pude obtener una respuesta.';
+    // 👉 HABLAR CON TU BACKEND (NO con Gemini directo)
+    this.http.post<any>(this.API_URL, {
+      message: userMessage
+    }).subscribe({
+      next: (res) => {
+        const text =
+          res?.candidates?.[0]?.content?.parts?.[0]?.text ||
+          'Puedo ayudarte con información y cotizaciones de nuestras máquinas.';
 
-        const lowerResponse = geminiResponseText.toLowerCase();
-        const palabrasClave = ['máquina', 'industrial', 'equipo', 'producción', 'mantenimiento', 'fabricación'];
-        const esRelevante = palabrasClave.some(palabra => lowerResponse.includes(palabra));
-
-        if (!esRelevante) {
-          geminiResponseText = 'Lo siento, solo puedo ayudarte con temas relacionados a nuestras máquinas industriales. ¿Qué necesitas saber?';
-        }
-
-        this.messages.push({ sender: 'gemini', text: geminiResponseText });
-        this.textToSpeech(geminiResponseText);
+        this.messages.push({ sender: 'gemini', text });
         this.isLoading = false;
       },
-      error: (error) => {
-        console.error('Error al comunicarse con Gemini API:', error);
-        const errorMsg = 'Ups, algo salió mal. Intenta de nuevo más tarde.';
-        this.messages.push({ sender: 'gemini', text: errorMsg });
-        this.textToSpeech(errorMsg);
+      error: () => {
+        this.messages.push({
+          sender: 'gemini',
+          text: 'En este momento no puedo responder, pero puedo ayudarte a solicitar una cotización.'
+        });
         this.isLoading = false;
       }
     });
-  }
-
-  textToSpeech(text: string): void {
-    if (!this.voiceEnabled) return;
-    const synth = window.speechSynthesis;
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'es-PE';
-    utterance.volume = 1;
-    utterance.rate = 1;
-    utterance.pitch = 1;
-    synth.speak(utterance);
-  }
-
-  responderAlUsuario(): void {
-    const respuesta = 'Hola, ¿en qué puedo ayudarte?';
-    this.textToSpeech(respuesta);
   }
 }
