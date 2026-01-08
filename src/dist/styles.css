@@ -1,8 +1,8 @@
+@charset "UTF-8";
 /* You can add global styles to this file, and also import other style files */
 /* ============================================
    CONFIGURACIÓN GLOBAL - ZOOM CONSISTENTE
    ============================================ */
-
 /* Reset básico */
 * {
   box-sizing: border-box;
@@ -14,16 +14,13 @@
 html {
   /* IMPORTANTE: Define el tamaño base para rem */
   font-size: 16px;
-  
   /* Previene ajuste automático del navegador */
   -webkit-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  
   /* Scroll suave */
   scroll-behavior: smooth;
-  
   /* 🔥 SI QUIERES FORZAR 75% GLOBALMENTE - DESCOMENTA ESTO */
   /* zoom: 0.75; */
   /* transform: scale(0.75); */
@@ -36,11 +33,9 @@ body {
   width: 100%;
   overflow-x: hidden;
   font-family: 'Poppins', 'Arial', sans-serif;
-  
   /* Renderizado mejorado */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
   background-color: #f4f4f9;
 }
 
@@ -53,12 +48,29 @@ body {
 }
 
 /* Headers responsivos globales */
-h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
-h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); }
-h3 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
-h4 { font-size: clamp(1.1rem, 2.5vw, 1.5rem); }
-h5 { font-size: clamp(1rem, 2vw, 1.25rem); }
-h6 { font-size: clamp(0.9rem, 1.5vw, 1rem); }
+h1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+}
+
+h3 {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+h4 {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+}
+
+h5 {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+}
+
+h6 {
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+}
 
 /* Texto general */
 p, span, li, a {
@@ -83,17 +95,27 @@ select {
 
 /* Media Queries para ajustes finos */
 @media (min-width: 1920px) {
-  html { font-size: 18px; }
+  html {
+    font-size: 18px;
+  }
 }
 
 @media (max-width: 1024px) {
-  html { font-size: 15px; }
+  html {
+    font-size: 15px;
+  }
 }
 
 @media (max-width: 768px) {
-  html { font-size: 14px; }
+  html {
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 480px) {
-  html { font-size: 13px; }
+  html {
+    font-size: 13px;
+  }
 }
+
+/*# sourceMappingURL=styles.css.map */
