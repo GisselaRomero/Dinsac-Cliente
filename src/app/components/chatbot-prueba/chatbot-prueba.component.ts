@@ -21,7 +21,7 @@ export class ChatbotPruebaComponent implements OnInit {
   newMessage = '';
   isLoading = false;
 
-  // 👉 TU BACKEND EN RENDER (Groq)
+  // ✅ TU BACKEND EN RENDER (Groq)
   private API_URL = 'https://backend-dinsac-hlf0.onrender.com/chat';
 
   constructor(private http: HttpClient) {}
@@ -36,7 +36,7 @@ export class ChatbotPruebaComponent implements OnInit {
   sendMessage(): void {
     if (!this.newMessage.trim()) return;
 
-    const userMessage = this.newMessage;
+    const userMessage = this.newMessage.trim();
 
     // Mostrar mensaje del usuario
     this.messages.push({
@@ -47,18 +47,22 @@ export class ChatbotPruebaComponent implements OnInit {
     this.newMessage = '';
     this.isLoading = true;
 
-    // 👉 LLAMADA AL BACKEND (Groq)
-    this.http.post<any>(this.API_URL, {
+    console.log('📤 Enviando mensaje:', userMessage);
+
+    // ✅ LLAMADA AL BACKEND (Groq)
+    this.http.post<{ reply: string }>(this.API_URL, {
       message: userMessage
     }).subscribe({
       next: (res) => {
+        console.log('✅ Respuesta recibida:', res);
         this.messages.push({
           sender: 'bot',
           text: res.reply || 'Puedo ayudarte con información y cotizaciones.'
         });
         this.isLoading = false;
       },
-      error: () => {
+      error: (err) => {
+        console.error('❌ Error:', err);
         this.messages.push({
           sender: 'bot',
           text: '⚠️ En este momento no puedo responder. Intenta nuevamente.'
