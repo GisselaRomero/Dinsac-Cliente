@@ -22,8 +22,7 @@ export class ChatbotPruebaComponent implements OnInit {
   isLoading = false;
 
   // ✅ TU BACKEND EN RENDER (Groq)
-  private API_URL = 'https://backend-dinsac-hlf0.onrender.com/chat';
-
+private API_URL = 'https://backend-dinsac-hlf0.onrender.com/chatia';
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
