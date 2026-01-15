@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 interface Message {
-  sender: 'user' | 'gemini';
+  sender: 'user' | 'bot';
   text: string;
 }
 
@@ -21,13 +21,14 @@ export class ChatbotPruebaComponent implements OnInit {
   newMessage = '';
   isLoading = false;
 
-  private API_URL = 'https://backend-dinsac-hlf0.onrender.com/api/gemini';
+  // 👉 TU BACKEND EN RENDER (Groq)
+  private API_URL = 'https://backend-dinsac-hlf0.onrender.com/chat';
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.messages.push({
-      sender: 'gemini',
+      sender: 'bot',
       text: '👋 Hola, soy el asistente de DINSAC. ¿En qué puedo ayudarte hoy?'
     });
   }
@@ -38,38 +39,29 @@ export class ChatbotPruebaComponent implements OnInit {
     const userMessage = this.newMessage;
 
     // Mostrar mensaje del usuario
-    this.messages.push({ sender: 'user', text: userMessage });
+    this.messages.push({
+      sender: 'user',
+      text: userMessage
+    });
+
     this.newMessage = '';
     this.isLoading = true;
 
-    // Guardar interacción (opcional)
-    this.http.post(
-      'https://backend-dinsac-hlf0.onrender.com/interacciones',
-      {
-        usuario: 'Usuario Anónimo',
-        mensaje: userMessage,
-        fecha: new Date().toISOString()
-      }
-    ).subscribe({
-      error: () => {}
-    });
-
-    // 👉 HABLAR CON TU BACKEND (NO con Gemini directo)
+    // 👉 LLAMADA AL BACKEND (Groq)
     this.http.post<any>(this.API_URL, {
       message: userMessage
     }).subscribe({
       next: (res) => {
-        const text =
-          res?.candidates?.[0]?.content?.parts?.[0]?.text ||
-          'Puedo ayudarte con información y cotizaciones de nuestras máquinas.';
-
-        this.messages.push({ sender: 'gemini', text });
+        this.messages.push({
+          sender: 'bot',
+          text: res.reply || 'Puedo ayudarte con información y cotizaciones.'
+        });
         this.isLoading = false;
       },
       error: () => {
         this.messages.push({
-          sender: 'gemini',
-          text: 'En este momento no puedo responder, pero puedo ayudarte a solicitar una cotización.'
+          sender: 'bot',
+          text: '⚠️ En este momento no puedo responder. Intenta nuevamente.'
         });
         this.isLoading = false;
       }
