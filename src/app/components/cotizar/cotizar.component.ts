@@ -16,6 +16,7 @@ declare var pdfMake: any;
 })
 export class CotizarComponent implements OnInit {
   usuarioActual: any = null;
+  usuarioLogueado: boolean = false;
 
   // 📋 Datos del formulario UNIFICADO
   formData = {

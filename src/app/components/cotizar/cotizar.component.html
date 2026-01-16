@@ -1,7 +1,9 @@
 <div *ngIf="!usuarioActual" class="alerta-sesion">
   ⚠️ Debes iniciar sesión para poder generar una cotización.
-  <button routerLink="/login-cliente" class="btn-iniciar">Iniciar sesión</button>
-</div>
+  <button *ngIf="!usuarioLogueado" (click)="irAlLogin()"
+          style="margin-left: 10px; background: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 3px;">
+    Iniciar Sesión
+  </button></div>
 
 <div class="cotizar-wrapper">
   
