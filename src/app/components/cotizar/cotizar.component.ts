@@ -4,13 +4,14 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { CarritoService, ProductoCarrito } from '../../services/carrito.service';
 import { ProductService, Product } from '../../services/product.service';
+import { RouterLink } from '@angular/router'; // ← AGREGAR
 
 declare var pdfMake: any;
 
 @Component({
   selector: 'app-cotizar',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,RouterLink],
   templateUrl: './cotizar.component.html',
   styleUrls: ['./cotizar.component.scss']
 })
