@@ -27,11 +27,9 @@
       [class.active]="i === 0">
 
       <div class="overlay-gradient"></div>
-      <img 
-        [src]="banner.image" 
-        class="d-block w-100 hero-img" 
-        [alt]="'Banner ' + (i + 1)"
-        loading="lazy">
+     <img [src]="banner.image" class="d-block w-100" alt="Banner" loading="eager"
+  decoding="async"
+>
     </div>
   </div>
 
@@ -181,7 +179,9 @@
       Productos disponibles con las mejores condiciones del mercado.
     </p>
 <section class="banner-ofertas" *ngIf="bannerOfertasUrl">
-  <img [src]="bannerOfertasUrl" alt="Banner Ofertas" class="banner-img"loading="lazy">
+  <img [src]="bannerOfertasUrl" alt="Banner Ofertas" class="banner-img"loading="eager"
+  decoding="async"
+>
 </section>
 
     <!-- GRID DE PRODUCTOS -->
@@ -189,8 +189,12 @@
   <div class="producto-card"
        *ngFor="let producto of ofertasDestacadas | slice:0:8">
 
-    <img [src]="producto.image" [alt]="producto.name" loading="lazy"> 
-
+<img 
+  [src]="producto.image"
+  loading="lazy"
+  decoding="async"
+  fetchpriority="low"
+/>
     <div class="producto-info">
       <h3>{{ producto.name }}</h3>
       <p>{{ producto.description }}</p>
