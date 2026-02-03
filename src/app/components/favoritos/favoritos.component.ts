@@ -64,25 +64,25 @@ cargarFavoritos(): void {
 toggleFavorito(producto: any): void {
   const id = producto._id || producto.id;
 
-  if (this.esFavorito(id)) {
-    this.favoriteService.removeFavorite(this.userId, id).subscribe({
-      next: () => {
-        this.favorites = this.favorites.filter(
-          fav => fav._id !== id && fav.id !== id
-        );
-        alert('❌ Producto quitado de favoritos');
-      },
-      error: (err) => console.error('❌ Error al quitar favorito:', err)
-    });
-  } else {
-    this.favoriteService.addFavorite(this.userId, id).subscribe({
-      next: () => {
-        this.favorites.push(producto);
-        alert('✅ Producto agregado a favoritos');
-      },
-      error: (err) => console.error('❌ Error al agregar favorito:', err)
-    });
-  }
+if (this.esFavorito(id)) {
+  this.favoriteService.removeFavorite(this.userId, id).subscribe({
+    next: () => {
+      this.cargarFavoritos(); // 🔥
+      alert('❌ Producto quitado de favoritos');
+    },
+    error: (err) => console.error('❌ Error al quitar favorito:', err)
+  });
+}
+ else {
+  this.favoriteService.addFavorite(this.userId, id).subscribe({
+    next: () => {
+      this.cargarFavoritos(); // 🔥 volver a cargar desde backend
+      alert('✅ Producto agregado a favoritos');
+    },
+    error: (err) => console.error('❌ Error al agregar favorito:', err)
+  });
+}
+
 }
 
   verDetalles(producto: Product): void {

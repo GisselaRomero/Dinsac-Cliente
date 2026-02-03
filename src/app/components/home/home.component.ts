@@ -136,12 +136,12 @@ ngOnInit(): void {
   }
 
   /* ===================== BANNERS ===================== */
-  cargarBannersCarrusel() {
-    const timestamp = new Date().getTime();
+cargarBannersCarrusel() {
+  this.http.get<BannerResponse>(
+    `https://backend-dinsac-hlf0.onrender.com/banner?tipo=carrusel`
+  )
 
-    this.http.get<BannerResponse>(
-      `https://backend-dinsac-hlf0.onrender.com/banner?tipo=carrusel&_=${timestamp}`
-    ).subscribe({
+.subscribe({
       next: (res) => {
         if (res.success && res.imagenes?.length) {
           this.bannersPrincipal = res.imagenes.sort(
@@ -177,12 +177,12 @@ ngOnInit(): void {
     }, 100);
   }
 
-  cargarBannerOfertas() {
-    const timestamp = new Date().getTime();
+cargarBannerOfertas() {
+  this.http.get<BannerIndividualResponse>(
+    `https://backend-dinsac-hlf0.onrender.com/banner?tipo=ofertasHome`
+  )
 
-    this.http.get<BannerIndividualResponse>(
-      `https://backend-dinsac-hlf0.onrender.com/banner?tipo=ofertasHome&_=${timestamp}`
-    ).subscribe({
+.subscribe({
       next: (res) => {
         this.bannerOfertasUrl = res.success ? res.image : '';
       },
