@@ -44,8 +44,14 @@
       </button>
 
       <!-- IMAGEN -->
-      <img [src]="producto.image" [alt]="producto.name"loading="lazy"
-  decoding="async">
+<img
+  [src]="producto.image"
+  [alt]="producto.name"
+  loading="lazy"
+  decoding="async"
+  fetchpriority="low"
+/>
+
 
       <!-- INFORMACIÓN -->
       <div class="producto-info">

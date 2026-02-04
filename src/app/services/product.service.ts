@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { shareReplay } from 'rxjs/operators';
 
 // Modelo del producto
 export interface Product {
@@ -38,14 +39,18 @@ export class ProductService {
   private apiUrl = 'https://backend-dinsac-hlf0.onrender.com/products';
   
   constructor(private http: HttpClient) {}
-  
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiUrl);
+
+
+private products$!: Observable<Product[]>;
+
+getProducts(): Observable<Product[]> {
+  if (!this.products$) {
+    this.products$ = this.http
+      .get<Product[]>(this.apiUrl)
+      .pipe(shareReplay(1));
   }
-  
-
-
-
+  return this.products$;
+}
 
   createProduct(product: Product): Observable<Product> {
     return this.http.post<Product>(this.apiUrl, product);
