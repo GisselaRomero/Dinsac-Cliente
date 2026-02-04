@@ -90,7 +90,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private productService: ProductService,
     private http: HttpClient
+
   ) {}
+
+
+
+
 
   /* ===================== INIT ===================== */
 ngOnInit(): void {
@@ -136,32 +141,26 @@ ngOnInit(): void {
   }
 
   /* ===================== BANNERS ===================== */
-cargarBannersCarrusel() {
-  this.http.get<BannerResponse>(
-    `https://backend-dinsac-hlf0.onrender.com/banner?tipo=carrusel`
-  )
+private static bannersCache: BannerCarrusel[] | null = null;
 
-.subscribe({
-      next: (res) => {
-        if (res.success && res.imagenes?.length) {
-          this.bannersPrincipal = res.imagenes.sort(
-            (a, b) => a.orden - b.orden
-          );
-          this.inicializarCarrusel();
-        } else {
-          this.bannersPrincipal = [];
-        }
-         this.loadingHome = false;     // ✅ AQUÍ
-  homeYaCargado = true;         // ✅ Y AQUÍ
-},
-      
-     error: () => {
-  this.bannersPrincipal = [];
-  this.loadingHome = false;
+cargarBannersCarrusel() {
+  if (HomeComponent.bannersCache) {
+    this.bannersPrincipal = HomeComponent.bannersCache;
+    this.loadingHome = false;
+    return;
+  }
+
+  this.http.get<BannerResponse>(`https://backend-dinsac-hlf0.onrender.com/banner?tipo=carrusel`)
+    .subscribe(res => {
+      if (res.success) {
+        this.bannersPrincipal = res.imagenes.sort((a, b) => a.orden - b.orden);
+        HomeComponent.bannersCache = this.bannersPrincipal;
+        this.inicializarCarrusel();
+      }
+      this.loadingHome = false;
+    });
 }
 
-    });
-  }
 
   private inicializarCarrusel() {
     setTimeout(() => {
@@ -176,19 +175,28 @@ cargarBannersCarrusel() {
       });
     }, 100);
   }
-
+    private static bannerOfertasCache: string | null = null
+;
 cargarBannerOfertas() {
+  if (HomeComponent.bannerOfertasCache) {
+    this.bannerOfertasUrl = HomeComponent.bannerOfertasCache;
+    return;
+  }
+
   this.http.get<BannerIndividualResponse>(
     `https://backend-dinsac-hlf0.onrender.com/banner?tipo=ofertasHome`
-  )
-
-.subscribe({
-      next: (res) => {
-        this.bannerOfertasUrl = res.success ? res.image : '';
-      },
-      error: () => this.bannerOfertasUrl = ''
-    });
-  }
+  ).subscribe({
+    next: (res) => {
+      if (res.success) {
+        this.bannerOfertasUrl = res.image;
+        HomeComponent.bannerOfertasCache = res.image;
+      } else {
+        this.bannerOfertasUrl = '';
+      }
+    },
+    error: () => this.bannerOfertasUrl = ''
+  });
+}
 
   cargarOfertasDestacadas() {
     this.productService.getProductsByEstado('Oferta').subscribe({
@@ -230,4 +238,5 @@ cargarBannerOfertas() {
   trackByBanner(index: number, banner: BannerCarrusel): string {
     return banner.id;
   }
+  
 }

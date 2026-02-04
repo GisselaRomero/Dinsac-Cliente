@@ -38,6 +38,27 @@
   }
 }
 
+
+
+/* ============================
+   BANNER OFERTAS (IMAGEN COMPLETA)
+============================ */
+.banner-ofertas {
+  width: 100%;
+  display: block;
+  margin-bottom: 20px;
+  background-color: #f8fafc;
+}
+
+/* Imagen completa sin recorte */
+.banner-ofertas .banner-img {
+  width: 100%;
+  height: auto;        /* CLAVE */
+  display: block;
+  object-fit: contain; /* NO recorta */
+  cursor: pointer;
+}
+
 /* ============================
     CONTENEDOR PRODUCTOS
 ============================ */

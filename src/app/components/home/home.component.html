@@ -4,7 +4,8 @@
   class="carousel slide carousel-fade premium-carousel" 
   data-bs-ride="carousel" 
   data-bs-interval="3000"
-  *ngIf="bannersPrincipal.length > 0">
+    [hidden]="bannersPrincipal.length === 0"
+>
 
   <!-- Indicadores Premium -->
   <div class="carousel-indicators">
@@ -27,9 +28,11 @@
       [class.active]="i === 0">
 
       <div class="overlay-gradient"></div>
-     <img [src]="banner.image" class="d-block w-100" alt="Banner" loading="eager"
-  decoding="async"
->
+ <img [src]="banner.image" class="d-block w-100" alt="Banner"
+     loading="lazy"
+     decoding="async"
+     fetchpriority="high">
+
     </div>
   </div>
 

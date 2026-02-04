@@ -1,13 +1,13 @@
 /* ===================== NAVBAR SUPERIOR ===================== */
 .custom-navbar-social {
   background-color: #1a4d6c;
-  padding: 10px 30px;
+  padding: 6px 30px;
   border-bottom: 2px solid #368a91;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: nowrap;
-  gap: 21px;
+  gap: 20px;
   color: #fff;
    position: relative;
   top: 0;
@@ -15,12 +15,12 @@
 }
 .navbar-brand {
   margin-left: 40px;   /* 🔥 separa del borde */
-  margin-right: 20px;  /* 🔥 lo acerca al buscador */
+  margin-right: 30px;  /* 🔥 lo acerca al buscador */
 }
 
 
 .navbar-logo {
-  max-height: 92px;
+  max-height: 70px;
 }
 /* Mini logo oculto por defecto */
 .mini-logo-fixed {
@@ -52,7 +52,7 @@
 .navbar-contact-container-main {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 27px;
   padding-right: 30px;   /* 🔥 separa del borde derecho */
   padding-left: 10px;    /* opcional, balance visual */
 }
@@ -166,11 +166,11 @@
 /* ===================== NAVBAR PRINCIPAL ===================== */
 .custom-navbar-main {
   background-color: #1a4d6c;
-  padding: 18px 28px;
+  padding: 13px 25px;
   position: sticky;
-  top: 86px; /* altura del navbar superior */
+  top: 80px; /* altura del navbar superior */
   z-index: 1030;
-  font-size: 19px;
+  font-size: 18px;
   
 }
 
@@ -181,7 +181,7 @@
 }
 
 .custom-navbar-main .nav-link:hover {
-  color: #66bb6a !important;
+  color: #5dd263 !important;
 }
 .custom-navbar-social {
   position: relative;
@@ -206,18 +206,18 @@
 }
 
 .search-container-top {
-  max-width: 700px;
+  max-width: 600px;
   width: 100%;
-  margin-left: 75px;   /* 🔥 lo acerca un poco al logo */
+  margin-left: 60px;   /* 🔥 lo acerca un poco al logo */
   margin-right: auto;  /* 🔥 mantiene equilibrio visual */
 }
 
 
 .search-wrapper input.form-control {
   width: 100%;
-  height: 56px;
+  height: 50px;
   font-size: 19px;
-  border-radius: 16px;
+  border-radius: 17px;
   padding: 0 20px;
 }
 
@@ -227,7 +227,7 @@
 .top-contact {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 15px;
 
   white-space: nowrap;
   margin-left: auto;   /* 🔥 lo empuja a la derecha */

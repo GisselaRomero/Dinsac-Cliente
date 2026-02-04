@@ -32,7 +32,7 @@ export class ProductosTodosComponent implements OnInit {
 
   // --- Paginación: 5 columnas × 6 filas = 30 productos ---
   paginaActual: number = 1;
-  productosPorPagina: number = 30;
+  productosPorPagina: number = 20;
   totalPaginas: number = 0;
   paginas: number[] = [];
 

@@ -114,8 +114,9 @@ export class CotizarComponent implements OnInit {
     this.productService.getProducts().subscribe({
       next: (products) => {
         this.productosList = products;
-        this.categorias = [...new Set(products.map(p => p.category))].sort();
-        this.equipos = [...new Set(products.map(p => p.name))].sort();
+       this.categorias = [...new Set((products as Product[]).map((p: Product) => p.category))].sort();
+this.equipos = [...new Set((products as Product[]).map((p: Product) => p.name))].sort();
+
       },
       error: () => {
         this.categorias = [

@@ -248,6 +248,31 @@ html {
   }
 }
 
+/* Botón visible en todas las pantallas */
+.btn-cotizacion {
+  position: absolute;
+  /* sigue siendo absolute */
+  bottom: 130px;
+  /* ajusta según altura del carrusel */
+  left: 32px;
+  z-index: 1000;
+}
+
+/* Estilos móviles */
+@media (max-width: 768px) {
+  .btn-cotizacion {
+    bottom: 20px;
+    left: 20px;
+    padding: 18px 32px;
+    gap: 12px;
+  }
+}
+
+.premium-carousel {
+  position: relative;
+  /* ¡esto es clave para que absolute funcione dentro del carrusel! */
+}
+
 @media (max-width: 576px) {
   /* HERO GENERAL */
   .cotizacion-hero {
@@ -356,13 +381,14 @@ html {
 
 .premium-carousel {
   position: relative;
-  height: 653px;
-  overflow: visible;
+  height: 100vh;
+  max-height: 680px;
+  overflow: hidden;
   background: #eeebebe6;
-  margin-bottom: 120px;
 }
 
-.premium-carousel .overlay-gradient {
+.premium-carousel margin
+.overlay-gradient {
   position: absolute;
   top: 0;
   left: 0;
@@ -374,7 +400,7 @@ html {
 
 .premium-carousel .hero-img {
   width: 100%;
-  height: 653px;
+  height: 100%;
   object-fit: cover;
   object-position: center;
 }
@@ -2097,35 +2123,28 @@ html {
 /* Contenedor del banner dentro de ofertas-home */
 .ofertas-home .banner-ofertas {
   width: 100%;
-  max-height: 500px;
-  /* altura máxima, ajustable */
-  overflow: hidden;
-  /* evita que la imagen se salga */
   display: flex;
   justify-content: center;
-  /* centra horizontalmente */
   align-items: center;
-  /* centra verticalmente */
   margin: 30px 0;
-  /* separa del resto de la sección */
   background-color: #f8fafc;
-  /* color de fondo mientras carga */
 }
 
 /* Imagen del banner */
 .ofertas-home .banner-ofertas .banner-img {
-  width: 100%;
+  width: 90%;
   /* ocupa todo el ancho disponible */
   height: auto;
   /* mantiene proporción */
-  max-height: 100%;
-  /* no excede el contenedor */
   object-fit: contain;
-  /* se adapta sin recortarse */
+  /* no se recorta */
   display: block;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-  /* efecto hover */
+}
+
+.ofertas-home .banner-ofertas {
+  justify-content: center;
+  align-items: center;
+  /* centra verticalmente */
 }
 
 /* Hover sutil */

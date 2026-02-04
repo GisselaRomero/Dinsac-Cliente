@@ -30,7 +30,8 @@ export class OfertasComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private router: Router,
-    private bannerService: BannerService   
+    private bannerService: BannerService ,
+      
   ) {}
 
   ngOnInit(): void {
