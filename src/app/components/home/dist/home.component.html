@@ -28,10 +28,11 @@
       [class.active]="i === 0">
 
       <div class="overlay-gradient"></div>
- <img [src]="banner.image" class="d-block w-100" alt="Banner"
-     loading="lazy"
-     decoding="async"
-     fetchpriority="high">
+ <img  [src]="banner.image"
+  class="d-block w-100 hero-img"
+  alt="Banner"
+  loading="eager"
+  decoding="async">
 
     </div>
   </div>

@@ -467,6 +467,7 @@ html {
   position: relative;
   height: 100vh;        // ✅ Altura máxima de la ventana
   max-height: 680px;    // ✅ Límite máximo opcional
+  
   overflow: hidden;     // ✅ Cambiar a hidden
   background: #eeebebe6;
   margin
