@@ -342,3 +342,241 @@
 .btn-cerrar-sesion:hover {
   background-color: #b52a37;
 }
+/* ============================================
+   ESTILOS ADICIONALES PARA BOTONES DE PDF
+   ============================================ */
+
+/* Columna de PDF */
+.col-pdf {
+  text-align: center;
+  padding: 8px !important;
+}
+
+/* Contenedor de botones PDF */
+.pdf-buttons {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Botón base PDF */
+.btn-pdf {
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  position: relative;
+}
+
+.btn-pdf:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-pdf:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-pdf:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Botón VER PDF (azul) */
+.btn-ver-pdf {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-ver-pdf:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5568d3 0%, #63398b 100%);
+}
+
+/* Botón DESCARGAR PDF (verde) */
+.btn-descargar-pdf {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.btn-descargar-pdf:hover:not(:disabled) {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+/* Ícono dentro del botón */
+.icon-pdf {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.5;
+}
+
+/* Tooltip al pasar el mouse */
+.btn-pdf[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  margin-bottom: 8px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.btn-pdf[title]:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.9);
+  margin-bottom: 2px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* ============================================
+   BOTONES DE PDF EN EL MODAL
+   ============================================ */
+
+.modal-pdf-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.btn-modal-pdf {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-modal-pdf:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.btn-modal-pdf.btn-ver {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-modal-pdf.btn-ver:hover {
+  background: linear-gradient(135deg, #5568d3 0%, #63398b 100%);
+}
+
+.btn-modal-pdf.btn-descargar {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.btn-modal-pdf.btn-descargar:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .pdf-buttons {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .btn-pdf {
+    width: 32px;
+    height: 32px;
+  }
+
+  .icon-pdf {
+    width: 16px;
+    height: 16px;
+  }
+
+  .modal-pdf-actions {
+    flex-direction: column;
+  }
+
+  .btn-modal-pdf {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================
+   ESTADO DESHABILITADO CON MENSAJE
+   ============================================ */
+
+.btn-pdf:disabled::after {
+  content: '❌';
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #ef4444;
+  color: white;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================
+   ANIMACIONES
+   ============================================ */
+
+@keyframes pulse-pdf {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.btn-pdf.loading {
+  animation: pulse-pdf 1.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ============================================
+   MEJORAS ADICIONALES A LA TABLA
+   ============================================ */
+
+/* Asegurar que la tabla se vea bien con la nueva columna */
+.tabla-cotizaciones th:nth-child(6),
+.tabla-cotizaciones td:nth-child(6) {
+  min-width: 100px;
+}
+
+/* Ajustar el ancho de la columna de acciones */
+.tabla-cotizaciones th:nth-child(5),
+.tabla-cotizaciones td:nth-child(5) {
+  min-width: 120px;
+}
