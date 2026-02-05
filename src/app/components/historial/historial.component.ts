@@ -13,7 +13,6 @@ interface Producto {
   categoria?: string;    // ✅ (opcional, si también la usas)
 }
 
-
 interface Cotizacion {
   _id: string;
   fecha: Date;
@@ -23,7 +22,6 @@ interface Cotizacion {
   userId: string;
   imagen?: string;     // ✅ nuevo
   categoria?: string;
-  pdfBase64?: string;   
 }
 
 @Component({
@@ -50,8 +48,6 @@ export class HistorialComponent implements OnInit {
     private http: HttpClient,
     private router: Router
   ) {}
-
-  
 
   ngOnInit(): void {
     this.inicializarComponente();
@@ -87,38 +83,6 @@ export class HistorialComponent implements OnInit {
    // });
   //
   }
-
-  verPDF(cotizacion: Cotizacion): void {
-  if (!cotizacion.pdfBase64) {
-    alert('❌ Esta cotización no tiene PDF disponible');
-    return;
-  }
-
-  const pdfWindow = window.open('', '_blank');
-  if (pdfWindow) {
-    pdfWindow.document.write(`
-      <iframe 
-        width="100%" 
-        height="100%" 
-        src="data:application/pdf;base64,${cotizacion.pdfBase64}">
-      </iframe>
-    `);
-  }
-}
-descargarPDF(cotizacion: Cotizacion): void {
-  if (!cotizacion.pdfBase64) {
-    alert('❌ No hay PDF disponible');
-    return;
-  }
-
-  const link = document.createElement('a');
-  link.href = `data:application/pdf;base64,${cotizacion.pdfBase64}`;
-  link.download = `Cotizacion_${cotizacion._id}.pdf`;
-  link.click();
-}
-
-
-
 cargarHistorial(): void {
   if (!this.userId) return;
 
